@@ -483,7 +483,7 @@ const BackstoryScreen = ({ onDone, muted, onMute }) => {
 };
 
 /* ═══ 설정 화면 ═══ */
-const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute }) => {
+const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume = [], secretEndings = [] }) => {
   const [pi, setPi] = useState(0);
   const [ci, setCi] = useState(0);
   const [custom, setCustom] = useState({말주변:33,외모:33,유머:34});
@@ -519,7 +519,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute }) => {
 
         {/* 탭 네비게이션 */}
         <div style={{display:"flex",gap:3,marginBottom:20,background:"rgba(0,0,0,0.4)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)",backdropFilter:"blur(16px)"}}>
-          {[["play","🎮","플레이"],["ach","🏆","도전과제"],["save","💾","저장"]].map(([id,icon,label])=>(
+          {[["play","🎮","플레이"],["ach","🏆","도전과제"],["resume","📋","이력서"],["gallery","🔓","갤러리"]].map(([id,icon,label])=>(
             <button key={id} onClick={()=>setTab(id)} style={{flex:1,padding:"9px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:tab===id?"rgba(255,179,71,0.15)":"transparent",border:tab===id?"1px solid rgba(255,179,71,0.28)":"1px solid transparent",borderRadius:10,color:tab===id?"#ffb347":"rgba(255,255,255,0.38)",fontSize:10,fontWeight:tab===id?700:400,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.2s",boxShadow:tab===id?"0 2px 10px rgba(255,179,71,0.12)":"none"}}>
               <span style={{fontSize:14}}>{icon}</span>
               <span>{label}</span>
@@ -699,6 +699,45 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute }) => {
                 저장된 게임이 없습니다
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── 이력서 탭 ── */}
+        {tab==="resume" && (
+          <div style={{padding:"4px 0"}}>
+            <div style={{fontSize:9,color:"rgba(255,255,255,0.3)",marginBottom:12,letterSpacing:3,fontFamily:"monospace"}}>준모의 소개팅 이력서</div>
+            {resume.length === 0 ? (
+              <div style={{textAlign:"center",padding:"32px 0",color:"rgba(255,255,255,0.2)",fontSize:12}}>아직 기록이 없어요.<br/>소개팅을 시작해보세요!</div>
+            ) : resume.map((r, i) => (
+              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:r.ok?"rgba(255,179,71,0.06)":"rgba(255,68,68,0.05)",border:`1px solid ${r.ok?"rgba(255,179,71,0.15)":"rgba(255,68,68,0.1)"}`,borderRadius:12,marginBottom:6}}>
+                <span style={{fontSize:18}}>{r.ok?"✅":"❌"}</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:12,color:"rgba(255,255,255,0.8)",fontFamily:"'Noto Sans KR',sans-serif"}}>{r.partner} · S{r.stage}</div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.35)"}}>{r.result} · {r.turns}턴 · {r.date}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── 갤러리 탭 ── */}
+        {tab==="gallery" && (
+          <div style={{padding:"4px 0"}}>
+            <div style={{fontSize:9,color:"rgba(255,255,255,0.3)",marginBottom:8,letterSpacing:3,fontFamily:"monospace"}}>숨겨진 엔딩 {secretEndings.length}/{SECRET_ENDINGS.length}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:8}}>
+              {SECRET_ENDINGS.map(se => {
+                const unlocked = secretEndings.includes(se.id);
+                return (
+                  <div key={se.id} style={{padding:"12px 16px",background:unlocked?"rgba(255,215,0,0.06)":"rgba(255,255,255,0.02)",border:`1px solid ${unlocked?"rgba(255,215,0,0.2)":"rgba(255,255,255,0.05)"}`,borderRadius:14,display:"flex",gap:12,alignItems:"center"}}>
+                    <span style={{fontSize:24,filter:unlocked?"none":"grayscale(1) brightness(0.3)"}}>{se.e}</span>
+                    <div>
+                      <div style={{fontSize:13,fontWeight:700,color:unlocked?"#ffd700":"rgba(255,255,255,0.2)",fontFamily:"'Noto Sans KR',sans-serif"}}>{unlocked ? se.t : "???"}</div>
+                      <div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginTop:2}}>{unlocked ? se.d : "아직 해금되지 않은 엔딩"}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -1161,6 +1200,14 @@ const EndingScreen = ({ ending, stage, partner, stats, onNext, muted, onMute }) 
 };
 
 
+/* ═══ 숨겨진 엔딩 정의 ═══ */
+const SECRET_ENDINGS = [
+  { id:"se_perfect",  e:"👑", t:"완벽한 준모",    d:"전 스테이지를 최고 엔딩으로 클리어했다. 준모는 더 이상 공대생이 아니다.", cond:"allGreat5" },
+  { id:"se_friend",   e:"🤝", t:"영원한 친구",    d:"3번 연속 '친구로 남기' 엔딩. 준모는 이제 소개팅 친구 전문가다.", cond:"friend3" },
+  { id:"se_speed",    e:"⚡", t:"소개팅 고수",    d:"10턴 이내로 클리어했다. 준모에게 무슨 일이 생긴 건지 아무도 모른다.", cond:"speed" },
+  { id:"se_doom",     e:"💀", t:"전설의 실패왕",  d:"첫 스테이지에서 최악 엔딩. 레전드는 이렇게 탄생한다.", cond:"firstFail" },
+];
+
 /* ═══ 루트 컴포넌트 ═══ */
 export default function App() {
   const [phase, setPhase]     = useState("loading");
@@ -1175,8 +1222,15 @@ export default function App() {
   const [muted, setMuted]     = useState(false);
   const [goCount, setGoCount] = useState(0);
   const [fStreak, setFStreak] = useState(0);
+  const [friendStreak, setFriendStreak] = useState(0);
   const [played, setPlayed]   = useState(new Set());
   const [allGreat, setAllGreat] = useState(true);
+  const [secretEndings, setSecretEndings] = useState(() =>
+    JSON.parse(localStorage.getItem("junmo_secrets") || "[]")
+  );
+  const [resume, setResume]   = useState(() =>
+    JSON.parse(localStorage.getItem("junmo_resume") || "[]")
+  );
 
   useEffect(() => {
     (async () => {
@@ -1204,25 +1258,62 @@ export default function App() {
 
   const onSave = useCallback(d => { setSaved(d); saveSave(d); }, []);
 
+  const unlockSecret = (id) => {
+    setSecretEndings(prev => {
+      if (prev.includes(id)) return prev;
+      const next = [...prev, id];
+      localStorage.setItem("junmo_secrets", JSON.stringify(next));
+      const se = SECRET_ENDINGS.find(s => s.id === id);
+      if (se) setToast({ e: se.e, t: `🔓 ${se.t}`, d: "숨겨진 엔딩 해금!" });
+      return next;
+    });
+  };
+
+  const addResume = (entry) => {
+    setResume(prev => {
+      const next = [entry, ...prev].slice(0, 20); // 최대 20개
+      localStorage.setItem("junmo_resume", JSON.stringify(next));
+      return next;
+    });
+  };
+
   const onEnd = (end, turns, loAff) => {
     setEnding(end);
     setHist(h => [...h, { s: STAGES[si].id, e: end.l }]);
     unlock("first_date");
+
+    // 준모 이력서 기록
+    addResume({
+      date: new Date().toLocaleDateString("ko-KR"),
+      partner: partner.name,
+      stage: si + 1,
+      result: end.l,
+      ok: end.next,
+      turns,
+    });
+
     if (end.next) {
       unlock("first_clear");
       if (si === 4) unlock("true_ending");
-      if (!end.l.includes("대성공")) setAllGreat(false);
-      if (allGreat && si === 4) unlock("perfect_run");
-      if (turns <= 10) unlock("speedrun");
+      if (end.l.includes("완벽") || end.l.includes("YES") || end.l.includes("이 사람")) {} else { setAllGreat(false); }
+      if (allGreat && si === 4) { unlock("perfect_run"); unlockSecret("se_perfect"); }
+      if (turns <= 10) { unlock("speedrun"); unlockSecret("se_speed"); }
       if (loAff <= 20) unlock("comeback");
       if (stats.말주변 <= 20) unlock("nerd_win");
       if (partner.id === "jieun") unlock("jieun_clear");
       if (partner.id === "sua") unlock("sua_clear");
       setPlayed(p => { const n = new Set(p).add(partner.id); if (n.size >= 3) unlock("all_partners"); return n; });
       setFStreak(0);
+      setFriendStreak(f => {
+        const isFriend = !end.next || end.l.includes("친구");
+        const next = isFriend ? f + 1 : 0;
+        if (next >= 3) unlockSecret("se_friend");
+        return next;
+      });
     } else {
       setGoCount(c => { const n = c + 1; if (n >= 5) unlock("masochist"); return n; });
       setFStreak(f => { const n = f + 1; if (n >= 3) unlock("fail_5"); return n; });
+      if (si === 0 && end.l.includes("다시는")) unlockSecret("se_doom");
     }
     setPhase("ending");
   };
@@ -1251,7 +1342,7 @@ export default function App() {
       <style>{css}</style>
       {toast && <AchToast ach={toast} onClose={() => setToast(null)}/>}
       {phase === "backstory" && <BackstoryScreen onDone={() => setPhase("setup")} muted={muted} onMute={onMute}/>}
-      {phase === "setup"     && <SetupScreen onStart={start} saved={saved} onClearSave={() => { saveSave(null); setSaved(null); }} achs={achs} muted={muted} onMute={onMute}/>}
+      {phase === "setup"     && <SetupScreen onStart={start} saved={saved} onClearSave={() => { saveSave(null); setSaved(null); }} achs={achs} muted={muted} onMute={onMute} resume={resume} secretEndings={secretEndings}/>}
       {phase === "game"      && <GameScreen stage={STAGES[si]} partner={partner} stats={stats} onStatChg={onStatChg} hist={hist} onEnd={onEnd} onSave={onSave} muted={muted} onMute={onMute}/>}
       {phase === "ending" && ending && <EndingScreen ending={ending} stage={STAGES[si]} partner={partner} stats={stats} onNext={onNext} muted={muted} onMute={onMute}/>}
     </>
