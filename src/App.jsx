@@ -631,6 +631,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
   const [ended, setEnded]   = useState(false);
   const [deltas, setDeltas] = useState({});
   const [showStats, setShowStats] = useState(false);
+  const [choices, setChoices] = useState([]);
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
   const turnsLeft = 20 - turn;
@@ -687,6 +688,42 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
     localStorage.setItem("junmo_daily", JSON.stringify({ date: today, count }));
   };
 
+  const generateChoices = async (lastAiMsg, currentAff) => {
+    try {
+      const prompt = `다음은 소개팅 게임에서 AI 상대방의 최근 대사야:
+"${lastAiMsg.slice(0, 300)}"
+
+현재 호감도: ${currentAff}/100
+상대방: ${partner.name} (${partner.personality.slice(0, 50)})
+
+준모가 할 수 있는 자연스러운 대화 선택지 3개를 만들어줘.
+- 선택지1: 적극적/공감하는 반응 (호감도 상승 가능성 높음)
+- 선택지2: 무난한/평범한 반응 (중립)
+- 선택지3: 솔직하지만 다소 어색한 반응 (준모다운 공대생 느낌)
+
+반드시 아래 JSON 형식으로만 답해. 다른 말 없이:
+{"choices":["선택지1 내용","선택지2 내용","선택지3 내용"]}`;
+
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          max_tokens: 300,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const text = data.choices?.[0]?.message?.content || "";
+      const match = text.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (parsed.choices?.length === 3) setChoices(parsed.choices);
+      }
+    } catch {}
+  };
+
   const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) => {
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -725,9 +762,12 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
     const userMsg = inp.trim(); setInp(""); setLoading(true);
     const newTurn = turn + 1; setTurn(newTurn);
     setMsgs(m => [...m, { r: "user", c: userMsg }]);
+    setChoices([]); // 선택지 초기화
     try {
+      // 최근 8턴만 전송 (토큰 절약)
       const history = msgs
         .filter(m => m.r === "user" || m.r === "ai")
+        .slice(-8)
         .map(m => ({ role: m.r === "user" ? "user" : "assistant", content: m.c }));
       const aiText = await callGroq(buildSys(stage, partner, stats, hist), history, userMsg);
       incDailyCount();
@@ -736,7 +776,12 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
       if (Object.keys(statDelta).length > 0) { onStatChg(statDelta); setDeltas(statDelta); setTimeout(() => setDeltas({}), 2500); }
       setMsgs(m => [...m, { r: "ai", c: aiText }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff || aff });
-      if (newTurn >= 20 || (newAff !== null && newAff <= 0)) setEnded(true);
+      if (newTurn >= 20 || (newAff !== null && newAff <= 0)) {
+        setEnded(true);
+      } else {
+        // 선택지 3개 자동 생성
+        generateChoices(aiText, newAff ?? aff);
+      }
     } catch (e) {
       setMsgs(m => [...m, { r: "system", c: `⚠️ API 오류: ${e.message}\n잠시 후 다시 시도해주세요.` }]);
     } finally { setLoading(false); inpRef.current?.focus(); }
@@ -853,6 +898,22 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
             )}
             {ended && <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.3)",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 판정중...</div>}
           </div>
+          {/* 선택지 카드 */}
+          {choices.length > 0 && !loading && !ended && (
+            <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
+              {choices.map((c, i) => (
+                <button key={i} onClick={() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); }}
+                  style={{textAlign:"left",padding:"7px 12px",background:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
+                    border:`1px solid ${i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:i===0?partner.color:"rgba(255,255,255,0.6)",
+                    fontSize:11.5,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
+                    display:"flex",alignItems:"center",gap:6}}>
+                  <span style={{fontSize:10,opacity:0.5}}>{["💕","💬","😅"][i]}</span>
+                  {c}
+                </button>
+              ))}
+              <div style={{fontSize:9.5,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4}}>선택하거나 직접 입력하세요</div>
+            </div>
+          )}
           {/* 입력 */}
           <div style={{padding:"8px 10px",borderTop:"1px solid rgba(255,255,255,0.05)",display:"flex",gap:6,background:"rgba(0,0,0,0.3)"}}>
             <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
