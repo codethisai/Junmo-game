@@ -259,6 +259,7 @@ const css = `
   @keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
   @keyframes achSlide { from{transform:translateY(-80px);opacity:0} to{transform:translateY(0);opacity:1} }
   @keyframes charAppear { from{opacity:0;transform:translateX(30px) scale(0.95)} to{opacity:1;transform:translateX(0) scale(1)} }
+  @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:0.3} 30%{transform:translateY(-6px);opacity:1} }
   @keyframes bgFade { from{opacity:0} to{opacity:1} }
   @keyframes toastIn { from{transform:translateX(120%)} to{transform:translateX(0)} }
 `;
@@ -843,8 +844,10 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
             {loading && (
               <div style={{display:"flex",gap:6,alignItems:"center",animation:"fadeIn 0.2s ease"}}>
                 <div style={{width:26,height:26,borderRadius:"50%",background:`linear-gradient(135deg,${partner.color},rgba(255,255,255,0.1))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12}}>{partner.emoji}</div>
-                <div style={{padding:"8px 14px",background:"rgba(255,255,255,0.04)",borderRadius:"4px 12px 12px 12px",border:"1px solid rgba(255,255,255,0.05)"}}>
-                  <span style={{color:"rgba(255,255,255,0.3)",fontSize:18,letterSpacing:6}}>···</span>
+                <div style={{padding:"10px 16px",background:"rgba(255,255,255,0.04)",borderRadius:"4px 12px 12px 12px",border:"1px solid rgba(255,255,255,0.05)",display:"flex",gap:5,alignItems:"center"}}>
+                  {[0,1,2].map(i=>(
+                    <span key={i} style={{width:6,height:6,borderRadius:"50%",background:partner.color,display:"inline-block",animation:`typingDot 1.2s ease ${i*0.2}s infinite`}}/>
+                  ))}
                 </div>
               </div>
             )}
@@ -859,7 +862,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
               onBlur={e=>{e.target.style.border="1px solid rgba(255,255,255,0.07)"}}/>
             <button onClick={send} disabled={loading||ended||!inp.trim()}
               style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.9))`:"rgba(255,255,255,0.04)",border:"none",borderRadius:10,color:"white",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
-              {loading?"⏳":"전송"}
+              {loading ? "···" : "전송"}
             </button>
           </div>
         </div>
