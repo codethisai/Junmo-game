@@ -18,7 +18,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
   const CP = PARTNERS[ci];
 
   return (
-    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",fontFamily:"'Noto Sans KR',sans-serif",overflow:"auto",position:"relative"}}>
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",fontFamily:"'Noto Sans KR',sans-serif",overflowY:"auto",overflowX:"hidden",WebkitOverflowScrolling:"touch",position:"relative"}}>
       {/* 배경 카페 이미지 */}
       <div style={{position:"fixed",inset:0,backgroundImage:`url(${IMGS.cafe_bg})`,backgroundSize:"cover",backgroundPosition:"center",filter:"brightness(0.28) saturate(0.75)"}}/>
       {/* 따뜻한 오버레이 레이어 */}
@@ -28,7 +28,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
 
       <MuteBtn muted={muted} onToggle={onMute}/>
 
-      <div style={{width:"100%",maxWidth:560,padding:"22px 18px 32px",position:"relative",zIndex:1}}>
+      <div style={{width:"100%",maxWidth:560,padding:"22px 18px 80px",position:"relative",zIndex:1}}>
 
         {/* 타이틀 헤더 */}
         <div style={{textAlign:"center",marginBottom:22,paddingTop:4}}>

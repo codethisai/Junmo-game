@@ -35,13 +35,13 @@ const css = `
   @keyframes toastIn { from{transform:translateX(120%)} to{transform:translateX(0)} }
 
   /* 모바일 최적화 */
-  html, body { height: 100%; overflow: hidden; }
+  html, body { height: 100%; }
   #root { height: 100%; }
   .game-root {
-    height: 100dvh; /* iOS Safari 주소창 대응 */
+    height: 100dvh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: hidden; /* 게임 화면만 스크롤 막음 */
   }
   .chat-area {
     flex: 1;
