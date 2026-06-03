@@ -262,6 +262,39 @@ const css = `
   @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:0.3} 30%{transform:translateY(-6px);opacity:1} }
   @keyframes bgFade { from{opacity:0} to{opacity:1} }
   @keyframes toastIn { from{transform:translateX(120%)} to{transform:translateX(0)} }
+
+  /* 모바일 최적화 */
+  html, body { height: 100%; overflow: hidden; }
+  #root { height: 100%; }
+  .game-root {
+    height: 100dvh; /* iOS Safari 주소창 대응 */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+  }
+  .input-area {
+    flex-shrink: 0;
+    padding-bottom: env(safe-area-inset-bottom, 8px); /* 아이폰 홈바 대응 */
+  }
+  .choice-btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 40px;
+  }
+  input, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  @media (max-width: 480px) {
+    .char-img { height: 55vw !important; max-height: 280px !important; }
+    .char-img-sub { height: 44vw !important; max-height: 220px !important; }
+  }
 `;
 
 /* 호감도 바 */
@@ -788,7 +821,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
   };
 
   return (
-    <div style={{minHeight:"100vh",maxHeight:"100vh",overflow:"hidden",display:"flex",flexDirection:"column",fontFamily:"'Noto Sans KR',sans-serif",position:"relative",background:"#050308"}}>
+    <div className="game-root" style={{fontFamily:"'Noto Sans KR',sans-serif",position:"relative",background:"#050308"}}>
       {/* 배경 이미지 */}
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${bgImg})`,backgroundSize:"cover",backgroundPosition:"center",transition:"opacity 1s ease",animation:"bgFade 1.2s ease"}}/>
       {/* 배경 오버레이 */}
@@ -838,17 +871,17 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
       {/* 캐릭터 영역 */}
       <div style={{flex:1,display:"flex",alignItems:"flex-end",justifyContent:"center",position:"relative",paddingBottom:0,minHeight:0}}>
         {/* 상대방 캐릭터 (중앙-우측) */}
-        <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-10%)",height:"78vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.8s cubic-bezier(.34,1.4,.64,1)"}}>
+        <div className="char-img" style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-10%)",height:"78vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.8s cubic-bezier(.34,1.4,.64,1)"}}>
           <img src={pImg} alt={partner.name} style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 40px rgba(0,0,0,0.8))"}}/>
         </div>
         {/* 준모 (좌측) */}
-        <div style={{position:"absolute",bottom:0,left:"0%",height:"62vh",display:"flex",alignItems:"flex-end",opacity:0.85,animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)",filter:"brightness(0.8) contrast(0.9)"}}>
+        <div className="char-img-sub" style={{position:"absolute",bottom:0,left:"0%",height:"62vh",display:"flex",alignItems:"flex-end",opacity:0.85,animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)",filter:"brightness(0.8) contrast(0.9)"}}>
           <img src={kImg} alt="준모" style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 30px rgba(0,0,0,0.9))"}}/>
         </div>
       </div>
 
       {/* 하단 대화 UI */}
-      <div style={{position:"relative",zIndex:10,padding:"0 12px 12px",maxHeight:"42vh",display:"flex",flexDirection:"column",gap:6}}>
+      <div className="input-area" style={{position:"relative",zIndex:10,padding:"0 12px 8px",maxHeight:"48vh",display:"flex",flexDirection:"column",gap:5}}>
         {/* 호감도 바 (항상 보임) */}
         <div style={{background:"rgba(0,0,0,0.6)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,255,255,0.07)"}}>
           <AffBar value={aff} color={partner.color}/>
@@ -862,7 +895,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
             <span style={{marginLeft:"auto",fontSize:9,color:"rgba(255,255,255,0.25)",fontFamily:"monospace"}}>T{turn}/20</span>
           </div>
           {/* 메시지 */}
-          <div ref={chatRef} style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:80,maxHeight:180}}>
+          <div ref={chatRef} className="chat-area" style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:60,maxHeight:160}}>
             {msgs.length === 0 && (
               <div style={{textAlign:"center",padding:"16px 8px"}}>
                 <div style={{fontSize:11,color:"rgba(255,255,255,0.25)",lineHeight:1.8,marginBottom:8}}>{partner.stages[stage.id-1]?.desc}</div>
@@ -902,11 +935,11 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
           {choices.length > 0 && !loading && !ended && (
             <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
               {choices.map((c, i) => (
-                <button key={i} onClick={() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); }}
-                  style={{textAlign:"left",padding:"7px 12px",background:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
+                <button key={i} className="choice-btn" onClick={() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); }}
+                  style={{textAlign:"left",padding:"8px 12px",background:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
                     border:`1px solid ${i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:i===0?partner.color:"rgba(255,255,255,0.6)",
-                    fontSize:11.5,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
-                    display:"flex",alignItems:"center",gap:6}}>
+                    fontSize:12,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
+                    display:"flex",alignItems:"center",gap:6,width:"100%"}}>
                   <span style={{fontSize:10,opacity:0.5}}>{["💕","💬","😅"][i]}</span>
                   {c}
                 </button>
@@ -918,7 +951,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
           <div style={{padding:"8px 10px",borderTop:"1px solid rgba(255,255,255,0.05)",display:"flex",gap:6,background:"rgba(0,0,0,0.3)"}}>
             <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
               placeholder={ended?"결과 판정중...":"무슨 말을 할까요? (Enter로 전송)"}
-              style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:12.5,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"border 0.2s"}}
+              style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"border 0.2s"}}
               onFocus={e=>{e.target.style.border=`1px solid ${partner.color}44`}}
               onBlur={e=>{e.target.style.border="1px solid rgba(255,255,255,0.07)"}}/>
             <button onClick={send} disabled={loading||ended||!inp.trim()}
