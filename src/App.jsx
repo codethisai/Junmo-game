@@ -1037,12 +1037,23 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
             </div>
           )}
           {/* 입력 */}
-          <div style={{padding:"8px 10px",borderTop:"1px solid rgba(255,255,255,0.05)",display:"flex",gap:6,background:"rgba(0,0,0,0.3)"}}>
+          {/* 턴 압박 바 */}
+          {turnsLeft <= 7 && !ended && (
+            <div style={{padding:"4px 14px 2px",display:"flex",alignItems:"center",gap:8}}>
+              <span style={{fontSize:10,color:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",fontFamily:"monospace",fontWeight:700,animation:turnsLeft<=3?"heartbeat 0.8s ease infinite":"none"}}>
+                {turnsLeft<=3?"🚨":"⚠️"} {turnsLeft}턴 남음
+              </span>
+              <div style={{flex:1,height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,overflow:"hidden"}}>
+                <div style={{height:"100%",width:`${(turnsLeft/20)*100}%`,background:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",borderRadius:3,transition:"width 0.5s ease"}}/>
+              </div>
+            </div>
+          )}
+          <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.05)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(255,30,30,0.05)":"rgba(0,0,0,0.3)",transition:"all 0.5s"}}>
             <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
-              placeholder={ended?"결과 판정중...":"무슨 말을 할까요? (Enter로 전송)"}
-              style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"border 0.2s"}}
-              onFocus={e=>{e.target.style.border=`1px solid ${partner.color}44`}}
-              onBlur={e=>{e.target.style.border="1px solid rgba(255,255,255,0.07)"}}/>
+              placeholder={ended?"결과 판정중...":turnsLeft<=3?`마지막 ${turnsLeft}턴! 신중하게...`:"무슨 말을 할까요? (Enter로 전송)"}
+              style={{flex:1,background:"rgba(255,255,255,0.04)",border:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.07)"}`,borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
+              onFocus={e=>{e.target.style.border=`1px solid ${partner.color}66`}}
+              onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(255,68,68,0.3)":"1px solid rgba(255,255,255,0.07)"}}/>
             <button onClick={send} disabled={loading||ended||!inp.trim()}
               style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.9))`:"rgba(255,255,255,0.04)",border:"none",borderRadius:10,color:"white",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
               {loading ? "···" : "전송"}
