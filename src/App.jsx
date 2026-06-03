@@ -315,6 +315,8 @@ const css = `
   @keyframes charAppear { from{opacity:0;transform:translateX(30px) scale(0.95)} to{opacity:1;transform:translateX(0) scale(1)} }
   @keyframes typingDot { 0%,60%,100%{transform:translateY(0);opacity:0.3} 30%{transform:translateY(-6px);opacity:1} }
   @keyframes bgFade { from{opacity:0} to{opacity:1} }
+  @keyframes stageIn { from{opacity:0;transform:scale(1.04)} to{opacity:1;transform:scale(1)} }
+  @keyframes stageTitleIn { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes toastIn { from{transform:translateX(120%)} to{transform:translateX(0)} }
 
   /* 모바일 최적화 */
@@ -759,7 +761,13 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
   const [showStats, setShowStats] = useState(false);
   const [choices, setChoices] = useState([]);
   const [event, setEvent] = useState(null);
+  const [showStageBanner, setShowStageBanner] = useState(true);
   const eventFiredRef = useRef(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowStageBanner(false), 2200);
+    return () => clearTimeout(t);
+  }, []);
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
   const turnsLeft = 20 - turn;
@@ -931,6 +939,19 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
       <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(5,3,8,0.3) 0%,rgba(5,3,8,0.15) 40%,rgba(5,3,8,0.6) 65%,rgba(5,3,8,0.95) 100%)"}}/>
 
       <MuteBtn muted={muted} onToggle={onMute}/>
+
+      {/* 스테이지 전환 배너 */}
+      {showStageBanner && (
+        <div style={{position:"absolute",inset:0,zIndex:100,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,0.75)",backdropFilter:"blur(8px)",animation:"stageIn 0.5s ease"}}>
+          <div style={{textAlign:"center",animation:"stageTitleIn 0.6s ease 0.2s both"}}>
+            <div style={{fontSize:11,letterSpacing:6,color:`${partner.color}88`,fontFamily:"monospace",marginBottom:12}}>STAGE {stage.id} / 5</div>
+            <div style={{fontSize:44,marginBottom:10}}>{stage.icon}</div>
+            <h2 style={{fontSize:26,fontWeight:900,color:"white",fontFamily:"'Nanum Myeongjo',serif",marginBottom:6}}>{stage.title}</h2>
+            <div style={{fontSize:13,color:"rgba(255,255,255,0.4)",marginBottom:4}}>{stage.sub}</div>
+            <div style={{fontSize:12,color:`${partner.color}99`,marginTop:12}}>{partner.emoji} {partner.name} · {partner.stages[stage.id-1]?.loc}</div>
+          </div>
+        </div>
+      )}
 
       {/* 상단 HUD */}
       <div style={{position:"relative",zIndex:10,padding:"14px 16px 0",display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
