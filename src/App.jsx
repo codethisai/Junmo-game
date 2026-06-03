@@ -673,29 +673,68 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
     return { newAff, statDelta };
   };
 
+  // 일일 플레이 횟수 체크
+  const getDailyCount = () => {
+    const today = new Date().toDateString();
+    const saved = JSON.parse(localStorage.getItem("junmo_daily") || "{}");
+    if (saved.date !== today) return 0;
+    return saved.count || 0;
+  };
+  const incDailyCount = () => {
+    const today = new Date().toDateString();
+    const count = getDailyCount() + 1;
+    localStorage.setItem("junmo_daily", JSON.stringify({ date: today, count }));
+  };
+
+  const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) => {
+    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        max_tokens: 1000,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...history,
+          { role: "user", content: userMsg }
+        ]
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (retryLeft > 0) {
+        await new Promise(r => setTimeout(r, 1000));
+        return callGroq(systemPrompt, history, userMsg, retryLeft - 1);
+      }
+      throw new Error(err.error?.message || `API ${res.status}`);
+    }
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || "...";
+  };
+
   const send = async () => {
     if (!inp.trim() || loading || ended) return;
+
+    // 일일 20회 제한
+    if (getDailyCount() >= 20) {
+      setMsgs(m => [...m, { r: "system", c: "⚠️ 오늘 플레이 횟수(20회)를 모두 사용했어요.\n자정이 지나면 다시 플레이할 수 있어요!" }]);
+      return;
+    }
+
     const userMsg = inp.trim(); setInp(""); setLoading(true);
     const newTurn = turn + 1; setTurn(newTurn);
     setMsgs(m => [...m, { r: "user", c: userMsg }]);
     try {
-      const history = msgs.map(m => ({ role: m.r === "user" ? "user" : "assistant", content: m.c }));
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/chat`, {
-        method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000,
-          system: buildSys(stage, partner, stats, hist),
-          messages: [...history, { role: "user", content: userMsg }] })
-      });
-      if (!res.ok) { const err = await res.json(); throw new Error(err.error?.message || `API ${res.status}`); }
-      const data = await res.json();
-      const aiText = data.content?.find(b => b.type === "text")?.text || "...";
+      const history = msgs
+        .filter(m => m.r === "user" || m.r === "ai")
+        .map(m => ({ role: m.r === "user" ? "user" : "assistant", content: m.c }));
+      const aiText = await callGroq(buildSys(stage, partner, stats, hist), history, userMsg);
+      incDailyCount();
       const { newAff, statDelta } = parseAI(aiText);
       if (newAff !== null) { setAff(newAff); setMinAff(m => Math.min(m, newAff)); }
       if (Object.keys(statDelta).length > 0) { onStatChg(statDelta); setDeltas(statDelta); setTimeout(() => setDeltas({}), 2500); }
       setMsgs(m => [...m, { r: "ai", c: aiText }]);
-      // 자동저장
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff || aff });
-      // 엔딩 판정
       if (newTurn >= 20 || (newAff !== null && newAff <= 0)) setEnded(true);
     } catch (e) {
       setMsgs(m => [...m, { r: "system", c: `⚠️ API 오류: ${e.message}\n잠시 후 다시 시도해주세요.` }]);

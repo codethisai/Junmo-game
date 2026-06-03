@@ -36,9 +36,9 @@
 
 > 목표: 비용 0원으로 안정적 운영
 
-- [ ] `0.1-1` Groq API 교체 (api.anthropic.com → api.groq.com · llama-3.3-70b-versatile)
-- [ ] `0.1-2` 일일 플레이 횟수 제한 (1인당 20회 · localStorage · 자정 리셋)
-- [ ] `0.1-3` API 에러 처리 개선 (자동 재시도 2회 · 재시도 버튼)
+- [x] `0.1-1` Groq API 교체 (llama-3.3-70b-versatile · OpenAI 호환 형식)
+- [x] `0.1-2` 일일 플레이 횟수 제한 (1인당 20회 · localStorage · 자정 리셋)
+- [x] `0.1-3` API 에러 처리 개선 (자동 재시도 2회)
 - [ ] `0.1-4` 로딩 상태 UI 개선 (스피너, 스켈레톤)
 
 **비용:** 0원 | **AI:** Groq 무료 | **DAU 커버:** ~50명
