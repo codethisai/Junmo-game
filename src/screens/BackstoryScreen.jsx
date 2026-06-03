@@ -14,7 +14,7 @@ export default function BackstoryScreen({ onDone, muted, onMute }) {
   };
   const s = BACKSTORY[sc];
   return (
-    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden",fontFamily:"'Noto Sans KR',sans-serif"}}>
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",position:"relative",overflowY:"auto",WebkitOverflowScrolling:"touch",fontFamily:"'Noto Sans KR',sans-serif"}}>
       {/* 배경 이미지 */}
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${IMGS.cafe_bg})`,backgroundSize:"cover",backgroundPosition:"center",filter:"brightness(0.35) saturate(0.8)"}}/>
       {/* 따뜻한 오버레이 */}
@@ -23,7 +23,7 @@ export default function BackstoryScreen({ onDone, muted, onMute }) {
       <div style={{position:"absolute",top:0,left:"30%",right:"30%",height:1,background:"linear-gradient(90deg,transparent,rgba(255,200,120,0.3),transparent)"}}/>
       <MuteBtn muted={muted} onToggle={onMute}/>
 
-      <div style={{width:"100%",maxWidth:500,padding:"0 22px",opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(14px)",transition:"all 0.28s cubic-bezier(.4,0,.2,1)",position:"relative",zIndex:1}}>
+      <div style={{width:"100%",maxWidth:500,padding:"48px 22px 32px",opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(14px)",transition:"all 0.28s cubic-bezier(.4,0,.2,1)",position:"relative",zIndex:1}}>
         {/* 로고 */}
         <div style={{textAlign:"center",marginBottom:28}}>
           <div style={{fontSize:9,letterSpacing:8,color:"rgba(255,200,140,0.45)",fontFamily:"monospace",marginBottom:8}}>PROLOGUE</div>
