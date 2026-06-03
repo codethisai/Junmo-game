@@ -1,10 +1,12 @@
+import { GROQ_URL, GROQ_MODEL, GROQ_MAX_TOKENS, GROQ_CHOICE_TOKENS } from "../constants.js";
+
 export const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) => {
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetch(GROQ_URL, {
     method: "POST",
     headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
     body: JSON.stringify({
-      model: "llama-3.3-70b-versatile",
-      max_tokens: 1000,
+      model: GROQ_MODEL,
+      max_tokens: GROQ_MAX_TOKENS,
       messages: [
         { role: "system", content: systemPrompt },
         ...history,
@@ -40,12 +42,12 @@ export const generateChoices = async (partner, lastAiMsg, currentAff, setChoices
 반드시 아래 JSON 형식으로만 답해. 다른 말 없이:
 {"choices":["선택지1 내용","선택지2 내용","선택지3 내용"]}`;
 
-    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const res = await fetch(GROQ_URL, {
       method: "POST",
       headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
-        max_tokens: 300,
+        model: GROQ_MODEL,
+        max_tokens: GROQ_CHOICE_TOKENS,
         messages: [{ role: "user", content: prompt }]
       })
     });

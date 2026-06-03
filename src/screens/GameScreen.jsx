@@ -3,6 +3,7 @@ import { STAGE_EVENTS } from "../data/stages.js";
 import { bgm } from "../utils/audio.js";
 import { callGroq, generateChoices } from "../utils/ai.js";
 import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
+import { MAX_TURNS, DAILY_LIMIT, MAX_HISTORY, EVENT_TURN_MIN, EVENT_TURN_MAX } from "../constants.js";
 import AffBar from "../components/AffBar.jsx";
 import StatChip from "../components/StatChip.jsx";
 import MuteBtn from "../components/MuteBtn.jsx";
@@ -28,7 +29,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   }, []);
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
-  const turnsLeft = 20 - turn;
+  const turnsLeft = MAX_TURNS - turn;
   const bgImg = bgForStage(stage.id - 1);
   const pImg  = partnerImg(partner, aff);
   const kImg  = kimoImg(aff);
@@ -86,8 +87,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     if (!inp.trim() || loading || ended) return;
 
     // 일일 20회 제한
-    if (getDailyCount() >= 20) {
-      setMsgs(m => [...m, { r: "system", c: "⚠️ 오늘 대화 횟수(20회)를 다 쓰셨어요.\n자정 넘으면 다시 할 수 있어요!" }]);
+    if (getDailyCount() >= DAILY_LIMIT) {
+      setMsgs(m => [...m, { r: "system", c: `⚠️ 오늘 대화 횟수(${DAILY_LIMIT}회)를 다 쓰셨어요.\n자정 넘으면 다시 할 수 있어요!` }]);
       return;
     }
 
@@ -99,7 +100,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       // 최근 8턴만 전송 (토큰 절약)
       const history = msgs
         .filter(m => m.r === "user" || m.r === "ai")
-        .slice(-8)
+        .slice(-MAX_HISTORY)
         .map(m => ({ role: m.r === "user" ? "user" : "assistant", content: m.c }));
       const aiText = await callGroq(buildSys(stage, partner, stats, hist), history, userMsg);
       incDailyCount();
@@ -108,11 +109,11 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       if (Object.keys(statDelta).length > 0) { onStatChg(statDelta); setDeltas(statDelta); setTimeout(() => setDeltas({}), 2500); }
       setMsgs(m => [...m, { r: "ai", c: aiText }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff || aff });
-      if (newTurn >= 20 || (newAff !== null && newAff <= 0)) {
+      if (newTurn >= MAX_TURNS || (newAff !== null && newAff <= 0)) {
         setEnded(true);
       } else {
         // 턴 8~12 사이에 스테이지 이벤트 1회 발생
-        if (newTurn >= 8 && newTurn <= 12 && !eventFiredRef.current) {
+        if (newTurn >= EVENT_TURN_MIN && newTurn <= EVENT_TURN_MAX && !eventFiredRef.current) {
           const stageEvents = STAGE_EVENTS[stage.id] || [];
           if (stageEvents.length > 0) {
             const ev = stageEvents[Math.floor(Math.random() * stageEvents.length)];
@@ -182,7 +183,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
             <StatChip icon="😂" label="유머" value={stats.유머} color="#ffd93d" delta={deltas.유머||0}/>
           </div>
           <div style={{marginTop:10,display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.3)",fontFamily:"monospace"}}>
-            <span>TURN {turn}/20</span>
+            <span>TURN {turn}/{MAX_TURNS}</span>
             <span style={{color:turnsLeft<=5?"#ff4444":"inherit"}}>{turnsLeft<=5?`⚠ ${turnsLeft}남음`:`${turnsLeft}턴 남음`}</span>
           </div>
         </div>
