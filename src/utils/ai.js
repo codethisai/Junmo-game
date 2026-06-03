@@ -1,9 +1,11 @@
-import { GROQ_URL, GROQ_MODEL, GROQ_MAX_TOKENS, GROQ_CHOICE_TOKENS } from "../constants.js";
+import { GROQ_MODEL, GROQ_MAX_TOKENS, GROQ_CHOICE_TOKENS } from "../constants.js";
+
+const API_ENDPOINT = "/api/chat";
 
 export const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) => {
-  const res = await fetch(GROQ_URL, {
+  const res = await fetch(API_ENDPOINT, {
     method: "POST",
-    headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
+    headers: { "content-type": "application/json" },
     body: JSON.stringify({
       model: GROQ_MODEL,
       max_tokens: GROQ_MAX_TOKENS,
@@ -45,9 +47,9 @@ export const generateChoices = async (partner, lastAiMsg, currentAff, setChoices
 반드시 JSON만 출력. 설명 없이:
 {"choices":["1번 대답","2번 대답","3번 대답"]}`;
 
-    const res = await fetch(GROQ_URL, {
+    const res = await fetch(API_ENDPOINT, {
       method: "POST",
-      headers: { "content-type": "application/json", "authorization": `Bearer ${process.env.REACT_APP_GROQ_KEY}` },
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
         model: GROQ_MODEL,
         max_tokens: GROQ_CHOICE_TOKENS,
