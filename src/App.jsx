@@ -177,6 +177,60 @@ const FAIL_Q = [
   "퇴근하고 게임이나 켜야겠다.",
 ];
 
+/* ═══ 스테이지 고유 이벤트 ═══ */
+const STAGE_EVENTS = {
+  1: [ // 첫 만남
+    { id:"e1a", desc:"갑자기 카페 BGM이 두 사람이 좋아할 것 같은 노래로 바뀐다.", choices:[
+      { t:"'이 노래 좋아하세요? 저도 이 가수 팬이에요.'", aff:+8 },
+      { t:"(그냥 모른 척하고 커피만 마신다)", aff:-3 }
+    ]},
+    { id:"e1b", desc:"옆 테이블 커플이 크게 싸우기 시작한다. 분위기가 어색해졌다.", choices:[
+      { t:"'저 두 사람... 괜찮을까요? 우리는 저렇게 되지 말아요.'", aff:+6 },
+      { t:"'못 본 척하는 게 나을 것 같아요'라며 자연스럽게 화제를 돌린다.", aff:+10 }
+    ]},
+    { id:"e1c", desc:"준모 핸드폰이 갑자기 울렸다. 어머니 전화다.", choices:[
+      { t:"조용히 무음으로 하고 '죄송해요, 나중에 드릴게요'라고 한다.", aff:+7 },
+      { t:"당황해서 '잠깐만요' 하고 실수로 받아버린다.", aff:-5 }
+    ]},
+  ],
+  2: [ // 두 번째 만남
+    { id:"e2a", desc:"산책 중 갑자기 비가 내리기 시작한다. 우산이 없다.", choices:[
+      { t:"재킷을 벗어 상대방 머리 위로 가려준다.", aff:+12 },
+      { t:"'빨리 저기 편의점으로 뛰어요!'라며 손을 잡아끈다.", aff:+8 }
+    ]},
+    { id:"e2b", desc:"지나가던 상대방 지인이 우연히 마주쳤다. 어색한 소개 상황이다.", choices:[
+      { t:"먼저 손을 내밀며 '안녕하세요, 준모입니다'라고 자연스럽게 인사한다.", aff:+9 },
+      { t:"뒤로 한 발짝 물러서서 상대방이 알아서 소개해주길 기다린다.", aff:-4 }
+    ]},
+  ],
+  3: [ // 연애 중
+    { id:"e3a", desc:"두 사람이 처음으로 크게 다퉜다. 상대방이 먼저 연락을 끊었다.", choices:[
+      { t:"다음날 아침 '어젯밤 내가 너무 했어. 미안해'라고 먼저 문자를 보낸다.", aff:+11 },
+      { t:"'쿨하게' 기다리기로 한다. 먼저 연락하면 지는 거니까.", aff:-8 }
+    ]},
+    { id:"e3b", desc:"상대방이 힘든 일이 있다고 했다. 자세한 말은 하지 않았다.", choices:[
+      { t:"'말하기 싫으면 안 해도 돼. 그냥 옆에 있어줄게.'라고 한다.", aff:+10 },
+      { t:"'무슨 일이야? 나한테도 말 못 해?'라며 답답함을 내비친다.", aff:-7 }
+    ]},
+  ],
+  4: [ // 동거
+    { id:"e4a", desc:"함께 고른 가구가 배송됐는데 조립 설명서가 완전히 엉터리다.", choices:[
+      { t:"유튜브 켜고 직접 해결한다. 2시간 후 완성. '됐다!'", aff:+8 },
+      { t:"포기하고 조립 기사를 부른다. 비용은 준모가 낸다.", aff:+5 }
+    ]},
+    { id:"e4b", desc:"상대방이 준모 허락 없이 준모 물건을 정리해버렸다.", choices:[
+      { t:"'고마워. 근데 다음엔 미리 물어봐줄 수 있어?'라고 부드럽게 말한다.", aff:+7 },
+      { t:"속으로 불편하지만 아무 말도 하지 않는다.", aff:-5 }
+    ]},
+  ],
+  5: [ // 프로포즈
+    { id:"e5a", desc:"반지를 꺼내려는 순간 웨이터가 와인을 엎질렀다. 분위기가 완전히 깨졌다.", choices:[
+      { t:"웃으며 '사실 이런 상황도 우리답잖아요'라고 하며 그대로 반지를 꺼낸다.", aff:+13 },
+      { t:"'오늘은... 다음에 다시 하죠'라며 프로포즈를 미룬다.", aff:-10 }
+    ]},
+  ],
+};
+
 const judge = (aff, st) => {
   const e = st.ends;
   if (aff >= 85) return e.great;
@@ -665,6 +719,8 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
   const [deltas, setDeltas] = useState({});
   const [showStats, setShowStats] = useState(false);
   const [choices, setChoices] = useState([]);
+  const [event, setEvent] = useState(null);
+  const eventFiredRef = useRef(false);
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
   const turnsLeft = 20 - turn;
@@ -812,7 +868,15 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
       if (newTurn >= 20 || (newAff !== null && newAff <= 0)) {
         setEnded(true);
       } else {
-        // 선택지 3개 자동 생성
+        // 턴 8~12 사이에 스테이지 이벤트 1회 발생
+        if (newTurn >= 8 && newTurn <= 12 && !eventFiredRef.current) {
+          const stageEvents = STAGE_EVENTS[stage.id] || [];
+          if (stageEvents.length > 0) {
+            const ev = stageEvents[Math.floor(Math.random() * stageEvents.length)];
+            eventFiredRef.current = true;
+            setTimeout(() => setEvent(ev), 800);
+          }
+        }
         generateChoices(aiText, newAff ?? aff);
       }
     } catch (e) {
@@ -931,6 +995,31 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
             )}
             {ended && <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.3)",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 판정중...</div>}
           </div>
+          {/* 돌발 이벤트 모달 */}
+          {event && (
+            <div style={{position:"absolute",inset:0,zIndex:50,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(12px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",borderRadius:16,animation:"fadeIn 0.3s ease"}}>
+              <div style={{width:"100%",maxWidth:360}}>
+                <div style={{textAlign:"center",marginBottom:16}}>
+                  <span style={{fontSize:11,letterSpacing:3,color:"#ffd93d",fontFamily:"monospace"}}>⚡ 돌발 상황</span>
+                </div>
+                <div style={{background:"rgba(255,217,61,0.06)",border:"1px solid rgba(255,217,61,0.2)",borderRadius:14,padding:"16px 18px",marginBottom:14,fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.7,fontFamily:"'Noto Sans KR',sans-serif"}}>
+                  {event.desc}
+                </div>
+                <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                  {event.choices.map((c, i) => (
+                    <button key={i} onClick={() => {
+                      setAff(a => Math.max(0, Math.min(100, a + c.aff)));
+                      setMsgs(m => [...m, { r:"system", c:`[돌발 상황] ${c.aff > 0 ? `💕 호감도 +${c.aff}` : `💔 호감도 ${c.aff}`}` }]);
+                      setEvent(null);
+                    }}
+                      style={{padding:"11px 14px",background:i===0?"rgba(255,217,61,0.1)":"rgba(255,255,255,0.04)",border:`1px solid ${i===0?"rgba(255,217,61,0.3)":"rgba(255,255,255,0.08)"}`,borderRadius:12,color:i===0?"#ffd93d":"rgba(255,255,255,0.7)",fontSize:12.5,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,textAlign:"left",touchAction:"manipulation"}}>
+                      {c.t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           {/* 선택지 카드 */}
           {choices.length > 0 && !loading && !ended && (
             <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
