@@ -1,15 +1,22 @@
 import { useState, useRef, useEffect } from "react";
 import { STAGE_EVENTS } from "../data/stages.js";
 import { bgm } from "../utils/audio.js";
-import { callGroq, generateChoices } from "../utils/ai.js";
+import { callGroq } from "../utils/ai.js";
 import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
 import { MAX_TURNS, DAILY_LIMIT, MAX_HISTORY, EVENT_TURN_MIN, EVENT_TURN_MAX } from "../constants.js";
+import { getScript } from "../data/scripts.js";
 import AffBar from "../components/AffBar.jsx";
 import StatChip from "../components/StatChip.jsx";
 import MuteBtn from "../components/MuteBtn.jsx";
 
 export default function GameScreen({ stage, partner, stats, onStatChg, hist, onEnd, onSave, muted, onMute }) {
-  const [msgs, setMsgs]     = useState([]);
+  const script = getScript(partner.id, stage.id);
+  const isScripted = !!script;
+
+  const [msgs, setMsgs]     = useState(() => {
+    if (script?.opening) return [{ r: "system", c: script.opening }];
+    return [];
+  });
   const [inp, setInp]       = useState("");
   const [loading, setLoading] = useState(false);
   const [aff, setAff]       = useState(50);
@@ -18,7 +25,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const [ended, setEnded]   = useState(false);
   const [deltas, setDeltas] = useState({});
   const [showStats, setShowStats] = useState(false);
-  const [choices, setChoices] = useState([]);
+  const [choices, setChoices] = useState(() => script?.turns[0]?.choices.map(c => c.text) || []);
   const [event, setEvent] = useState(null);
   const [showStageBanner, setShowStageBanner] = useState(true);
   const eventFiredRef = useRef(false);
@@ -86,10 +93,54 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     localStorage.setItem("junmo_daily", JSON.stringify({ date: today, count }));
   };
 
+  // 스크립트 방식: 선택지 클릭 → 미리 쓴 대사 출력
+  const sendScripted = (choiceIdx) => {
+    if (loading || ended) return;
+    const turnData = script.turns[turn];
+    if (!turnData) return;
+    const chosen = turnData.choices[choiceIdx];
+    if (!chosen) return;
+
+    const newTurn = turn + 1;
+    setTurn(newTurn);
+    setMsgs(m => [...m, { r: "user", c: chosen.text }]);
+    setChoices([]);
+
+    setTimeout(() => {
+      const newAff = Math.max(0, Math.min(100, aff + chosen.affChange));
+      setAff(newAff);
+      setMinAff(m => Math.min(m, newAff));
+      setMsgs(m => [...m, { r: "ai", c: chosen.response }]);
+      onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff });
+
+      if (newTurn >= MAX_TURNS || newAff <= 0) {
+        setEnded(true);
+      } else {
+        // 다음 턴 선택지 세팅
+        const nextTurn = script.turns[newTurn];
+        if (nextTurn) {
+          // 돌발 이벤트 체크
+          if (newTurn >= EVENT_TURN_MIN && newTurn <= EVENT_TURN_MAX && !eventFiredRef.current) {
+            const stageEvents = STAGE_EVENTS[stage.id] || [];
+            if (stageEvents.length > 0) {
+              const ev = stageEvents[Math.floor(Math.random() * stageEvents.length)];
+              eventFiredRef.current = true;
+              setTimeout(() => setEvent(ev), 400);
+            }
+          }
+          setTimeout(() => {
+            if (nextTurn.scene) setMsgs(m => [...m, { r: "scene", c: nextTurn.scene }]);
+            setChoices(nextTurn.choices.map(c => c.text));
+          }, 300);
+        }
+      }
+    }, 600);
+  };
+
+  // AI 방식 (스크립트 없는 스테이지 fallback)
   const send = async () => {
     if (!inp.trim() || loading || ended) return;
 
-    // 일일 20회 제한
     if (getDailyCount() >= DAILY_LIMIT) {
       setMsgs(m => [...m, { r: "system", c: `⚠️ 오늘 대화 횟수(${DAILY_LIMIT}회)를 다 쓰셨어요.\n자정 넘으면 다시 할 수 있어요!` }]);
       return;
@@ -98,9 +149,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     const userMsg = inp.trim(); setInp(""); setLoading(true);
     const newTurn = turn + 1; setTurn(newTurn);
     setMsgs(m => [...m, { r: "user", c: userMsg }]);
-    setChoices([]); // 선택지 초기화
+    setChoices([]);
     try {
-      // 최근 8턴만 전송 (토큰 절약)
       const history = msgs
         .filter(m => m.r === "user" || m.r === "ai")
         .slice(-MAX_HISTORY)
@@ -116,7 +166,6 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       if (newTurn >= MAX_TURNS || (newAff !== null && newAff <= 0)) {
         setEnded(true);
       } else {
-        // 턴 8~12 사이에 스테이지 이벤트 1회 발생
         if (newTurn >= EVENT_TURN_MIN && newTurn <= EVENT_TURN_MAX && !eventFiredRef.current) {
           const stageEvents = STAGE_EVENTS[stage.id] || [];
           if (stageEvents.length > 0) {
@@ -125,7 +174,6 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
             setTimeout(() => setEvent(ev), 800);
           }
         }
-        generateChoices(partner, aiText, newAff ?? aff, setChoices);
       }
     } catch (e) {
       setMsgs(m => [...m, { r: "system", c: `⚠️ 연결에 문제가 생겼어요: ${e.message}\n잠깐 기다렸다가 다시 시도해보세요.` }]);
@@ -230,19 +278,23 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
               </div>
             )}
             {msgs.map((m, i) => (
+              m.r === "scene"
+                ? <div key={i} style={{textAlign:"center",padding:"4px 8px",fontSize:11,color:"rgba(255,255,255,0.3)",fontStyle:"italic",lineHeight:1.7}}>{m.c}</div>
+                : (
               <div key={i} style={{display:"flex",flexDirection:m.r==="user"?"row-reverse":"row",gap:6,alignItems:"flex-start",animation:"fadeIn 0.3s ease"}}>
                 {m.r === "ai" && (
                   <div style={{width:26,height:26,borderRadius:"50%",background:`linear-gradient(135deg,${partner.color},rgba(255,255,255,0.1))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,flexShrink:0}}>{partner.emoji}</div>
                 )}
                 <div style={{maxWidth:"85%",padding:"8px 12px",borderRadius:m.r==="user"?"12px 4px 12px 12px":"4px 12px 12px 12px",
-                  background:m.r==="user"?"rgba(255,107,157,0.08)":m.r==="system"?"rgba(255,100,100,0.08)":"rgba(255,255,255,0.04)",
-                  border:`1px solid ${m.r==="user"?"rgba(255,107,157,0.15)":m.r==="system"?"rgba(255,100,100,0.15)":"rgba(255,255,255,0.05)"}`,
-                  fontSize:12.5,lineHeight:1.8,color:m.r==="system"?"rgba(255,150,150,0.8)":"rgba(255,255,255,0.85)"}}>
+                  background:m.r==="user"?"rgba(255,107,157,0.08)":m.r==="system"?"rgba(255,179,71,0.06)":"rgba(255,255,255,0.04)",
+                  border:`1px solid ${m.r==="user"?"rgba(255,107,157,0.15)":m.r==="system"?"rgba(255,179,71,0.15)":"rgba(255,255,255,0.05)"}`,
+                  fontSize:12.5,lineHeight:1.8,color:m.r==="system"?"rgba(255,200,100,0.8)":"rgba(255,255,255,0.85)"}}>
                   {m.r==="user"
                     ? <span style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>💬 {m.c}</span>
                     : <span dangerouslySetInnerHTML={{__html:fmt(m.c)}}/>}
                 </div>
               </div>
+                )
             ))}
             {loading && (
               <div style={{display:"flex",gap:6,alignItems:"center",animation:"fadeIn 0.2s ease"}}>
@@ -284,8 +336,10 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           {/* 선택지 카드 */}
           {choices.length > 0 && !loading && !ended && (
             <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
+              {isScripted && <div style={{fontSize:9,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4,marginBottom:2}}>선택하세요</div>}
               {choices.map((c, i) => (
-                <button key={i} className="choice-btn" onClick={() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); }}
+                <button key={i} className="choice-btn"
+                  onClick={() => isScripted ? sendScripted(i) : (() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); })()}
                   style={{textAlign:"left",padding:"8px 12px",background:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
                     border:`1px solid ${i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:i===0?partner.color:"rgba(255,255,255,0.6)",
                     fontSize:12,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
@@ -308,17 +362,20 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
               </div>
             </div>
           )}
-          <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.05)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(255,30,30,0.05)":"rgba(0,0,0,0.3)",transition:"all 0.5s"}}>
-            <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
-              placeholder={ended?"결과 집계중...":turnsLeft<=3?`남은 기회 ${turnsLeft}턴, 신중하게!`:"뭐라고 할까요? (Enter로 보내기)"}
-              style={{flex:1,background:"rgba(255,255,255,0.04)",border:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.07)"}`,borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
-              onFocus={e=>{e.target.style.border=`1px solid ${partner.color}66`}}
-              onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(255,68,68,0.3)":"1px solid rgba(255,255,255,0.07)"}}/>
-            <button onClick={send} disabled={loading||ended||!inp.trim()}
-              style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.9))`:"rgba(255,255,255,0.04)",border:"none",borderRadius:10,color:"white",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
-              {loading ? "···" : "전송"}
-            </button>
-          </div>
+          {/* 스크립트 방식: 선택지만 / AI 방식: 입력창 */}
+          {!isScripted && (
+            <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.05)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(255,30,30,0.05)":"rgba(0,0,0,0.3)",transition:"all 0.5s"}}>
+              <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
+                placeholder={ended?"결과 집계중...":turnsLeft<=3?`남은 기회 ${turnsLeft}턴, 신중하게!`:"뭐라고 할까요? (Enter로 보내기)"}
+                style={{flex:1,background:"rgba(255,255,255,0.04)",border:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.07)"}`,borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
+                onFocus={e=>{e.target.style.border=`1px solid ${partner.color}66`}}
+                onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(255,68,68,0.3)":"1px solid rgba(255,255,255,0.07)"}}/>
+              <button onClick={send} disabled={loading||ended||!inp.trim()}
+                style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.9))`:"rgba(255,255,255,0.04)",border:"none",borderRadius:10,color:"white",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
+                {loading ? "···" : "전송"}
+              </button>
+            </div>
+          )}
         </div>
         {/* 힌트 */}
         <div style={{display:"flex",justifyContent:"center",gap:12,fontSize:9,color:"rgba(255,255,255,0.18)",fontFamily:"monospace"}}>
