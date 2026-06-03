@@ -44,28 +44,31 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     }
   }, [ended]);
 
+  // thinking 태그 및 불필요한 마크업 제거
+  const cleanAI = (text) => text
+    .replace(/<think>[\s\S]*?<\/think>/gi, '')
+    .replace(/<\/?think>/gi, '')
+    .trim();
+
   const fmt = (text) => text
     .replace(/\*([^*]+)\*/g, '<em style="color:rgba(255,255,255,0.4);font-style:italic;font-size:12px;">$1</em>')
-    .replace(/\[호감도: (\d+)\/100\]/g, '')
-    .replace(/\[(말주변[±\d+-]+\s*외모[±\d+-]+\s*유머[±\d+-]+)\]/g, '')
-    .replace(new RegExp(partner.name + ':', 'g'), `<span style="color:${partner.color};font-weight:700;">${partner.name}:</span>`)
-    .replace(/준모 내면:/g, '<span style="color:rgba(255,200,100,0.7);font-size:11px;">💭 준모 내면:</span>');
+    .replace(/\[호감도:?\s*\d+\/?100\]/g, '')
+    .replace(/\[말주변[±+\-\d\s]+외모[±+\-\d\s]+유머[±+\-\d\s]+\]/g, '')
+    .replace(new RegExp(partner.name + '\\s*:', 'g'), `<span style="color:${partner.color};font-weight:700;">${partner.name}:</span>`)
+    .replace(/준모\s*속마음\s*:/g, '<span style="color:rgba(255,200,100,0.7);font-size:11px;">💭 준모 속마음:</span>')
+    .replace(/준모\s*내면\s*:/g, '<span style="color:rgba(255,200,100,0.7);font-size:11px;">💭 준모 속마음:</span>')
+    .trim();
 
   const parseAI = (text) => {
-    const affM = text.match(/\[호감도:\s*(\d+)\/100\]/);
-    const statM = text.match(/\[(?:스탯변화:|말주변([±\d+-]+)\s*외모([±\d+-]+)\s*유머([±\d+-]+))\]/);
+    const affM = text.match(/\[호감도:?\s*(\d+)\/?100\]/);
     const newAff = affM ? Math.max(0, Math.min(100, parseInt(affM[1]))) : null;
     let statDelta = {};
-    if (statM && statM[1]) {
-      const parse = s => { const n = parseInt(s.replace('±','')); return isNaN(n)?0:s.includes('-')?-Math.abs(n):Math.abs(n); };
-      statDelta = { 말주변: parse(statM[1]||"0"), 외모: parse(statM[2]||"0"), 유머: parse(statM[3]||"0") };
-    }
-    // 대안 파싱
-    if (!statM) {
-      const m2 = text.match(/말주변([+\-±]\d+)/); const m3 = text.match(/외모([+\-±]\d+)/); const m4 = text.match(/유머([+\-±]\d+)/);
-      if (m2) statDelta.말주변 = parseInt(m2[1]);
-      if (m3) statDelta.외모 = parseInt(m3[1]);
-      if (m4) statDelta.유머 = parseInt(m4[1]);
+    const m2 = text.match(/말주변\s*([+\-±]\d+)/);
+    const m3 = text.match(/외모\s*([+\-±]\d+)/);
+    const m4 = text.match(/유머\s*([+\-±]\d+)/);
+    const parse = s => { if (!s) return 0; const n = parseInt(s.replace('±','+')); return isNaN(n) ? 0 : n; };
+    if (m2 || m3 || m4) {
+      statDelta = { 말주변: parse(m2?.[1]), 외모: parse(m3?.[1]), 유머: parse(m4?.[1]) };
     }
     return { newAff, statDelta };
   };
@@ -102,7 +105,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
         .filter(m => m.r === "user" || m.r === "ai")
         .slice(-MAX_HISTORY)
         .map(m => ({ role: m.r === "user" ? "user" : "assistant", content: m.c }));
-      const aiText = await callGroq(buildSys(stage, partner, stats, hist), history, userMsg);
+      const raw = await callGroq(buildSys(stage, partner, stats, hist), history, userMsg);
+      const aiText = cleanAI(raw);
       incDailyCount();
       const { newAff, statDelta } = parseAI(aiText);
       if (newAff !== null) { setAff(newAff); setMinAff(m => Math.min(m, newAff)); }

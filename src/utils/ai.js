@@ -7,6 +7,7 @@ export const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) =>
     body: JSON.stringify({
       model: GROQ_MODEL,
       max_tokens: GROQ_MAX_TOKENS,
+      thinking: { type: "disabled" },
       messages: [
         { role: "system", content: systemPrompt },
         ...history,
