@@ -65,18 +65,18 @@ const bgm = new BGMPlayer();
 
 /* ═══ 도전과제 ═══ */
 const ACHS = [
-  { id:"first_date",   e:"☕", t:"첫 소개팅",       d:"생애 처음 소개팅을 나갔다" },
-  { id:"first_clear",  e:"🌟", t:"첫 클리어",       d:"스테이지 1을 클리어했다" },
-  { id:"true_ending",  e:"💒", t:"모솔 탈출",       d:"결혼 엔딩까지 도달했다" },
-  { id:"all_partners", e:"💌", t:"삼각관계",         d:"3명의 상대를 모두 소개팅했다" },
-  { id:"perfect_run",  e:"👑", t:"퍼펙트 런",       d:"전 스테이지 대성공 클리어" },
-  { id:"speedrun",     e:"⚡", t:"속전속결",         d:"10턴 안에 스테이지 클리어" },
-  { id:"masochist",    e:"💀", t:"마조히스트",       d:"게임오버를 5번 당했다" },
-  { id:"comeback",     e:"🔥", t:"역전의 명수",     d:"호감도 20↓에서 클리어" },
-  { id:"jieun_clear",  e:"📚", t:"문학소녀 공략",   d:"박지은 루트 클리어" },
-  { id:"sua_clear",    e:"🎤", t:"인플루언서 공략", d:"이수아 루트 클리어" },
-  { id:"nerd_win",     e:"🤓", t:"공대생의 역습",   d:"말주변 20↓으로 클리어" },
-  { id:"fail_5",       e:"😭", t:"연속 실패",       d:"같은 스테이지 3번 연속 실패" },
+  { id:"first_date",   e:"☕", t:"첫 소개팅",       d:"생애 처음으로 소개팅에 나갔다. 시작이 반이다" },
+  { id:"first_clear",  e:"🌟", t:"첫 클리어",       d:"스테이지 1 클리어. 준모가 드디어 첫발을 뗐다" },
+  { id:"true_ending",  e:"💒", t:"모솔 탈출",       d:"결혼 엔딩 도달. 29년 만의 쾌거" },
+  { id:"all_partners", e:"💌", t:"삼각관계",         d:"세 명 모두 소개팅해봤다. 준모 나름 바빠졌다" },
+  { id:"perfect_run",  e:"👑", t:"퍼펙트 런",       d:"전 스테이지 최고 엔딩으로 클리어. 말이 되냐" },
+  { id:"speedrun",     e:"⚡", t:"속전속결",         d:"10턴 안에 스테이지 클리어. 뭔가 다른 준모다" },
+  { id:"masochist",    e:"💀", t:"마조히스트",       d:"게임오버 5번. 이쯤 되면 취미 아닌가요" },
+  { id:"comeback",     e:"🔥", t:"역전의 명수",     d:"호감도 20 이하에서 역전 클리어. 포기를 모른다" },
+  { id:"jieun_clear",  e:"📚", t:"문학소녀 공략",   d:"박지은 루트 클리어. 취향이 맞았나 보다" },
+  { id:"sua_clear",    e:"🎤", t:"인플루언서 공략", d:"이수아 루트 클리어. 피드에 올라갈지도 모른다" },
+  { id:"nerd_win",     e:"🤓", t:"공대생의 역습",   d:"말주변 20 이하로 클리어. 진짜 말 못해도 된다는 증거" },
+  { id:"fail_5",       e:"😭", t:"연속 실패",       d:"같은 스테이지 3번 연속 실패. 그래도 포기 안 한다" },
 ];
 
 /* ═══ 파트너 데이터 ═══ */
@@ -85,7 +85,7 @@ const PARTNERS = [
     personality:"말 걸기 편하고 리액션이 좋은 편. 대화가 자연스럽게 이어지길 바람. 분위기 파악이 빠르고 침묵을 불편해함",
     weakness:"대화 중 핸드폰 보거나 건성으로 듣는 느낌 주면 바로 식음. 자기 얘기만 하는 사람 질색",
     fav:"공감능력 > 유머감각 > 외모",
-    intro:"직장 다니면서 주말마다 친구들이랑 브런치 가고, 새 카페 찾아다니는 걸 좋아해요. 소개팅은 몇 번 해봤는데 잘 안 맞아서 이번엔 솔직하게 대화해보고 싶어요.",
+    intro:"요즘 주말마다 친구들이랑 브런치 다니거나 새 카페 탐방하는 게 낙이에요. 소개팅 몇 번 해봤는데 다들 좀 어색해서... 이번엔 그냥 편하게 얘기해보고 싶어요.",
     stages:[
       {loc:"연남동 카페", desc:"통창으로 햇살이 들어오는 카페. 유정이 미리 와서 창가 자리 잡아뒀다."},
       {loc:"한강공원", desc:"유정이 '날씨 좋으면 한강 어때요?'라고 먼저 제안했다. 준모는 편의점 샌드위치를 사 들고 나왔다."},
@@ -99,7 +99,7 @@ const PARTNERS = [
     personality:"조용하지만 관찰력이 날카롭다. 상대방 말을 끝까지 잘 듣고 핵심을 짚는 편. 처음엔 말수가 적지만 마음 열면 생각보다 할 말이 많다",
     weakness:"아는 척하거나 과장하는 사람, 자기가 읽지도 않은 책 언급하는 사람은 바로 티가 남. 진부한 질문 ('취미가 뭐예요?') 연속이면 지쳐함",
     fav:"진솔함 > 배려 > 지적 호기심",
-    intro:"논문 때문에 요즘 좀 바쁘긴 한데, 친구 소개라서 한번 나와봤어요. 책이나 영화 얘기 좋아하고, 긴 산책도 좋아해요. 가볍게 대화하다 보면 자연스럽게 알 수 있지 않을까요.",
+    intro:"사실 요즘 논문 때문에 많이 지쳐있긴 한데, 친구가 워낙 강하게 권해서요. 책이나 영화 얘기 좋아하고, 그냥 같이 걷는 것도 좋아해요. 천천히 얘기해봐요.",
     stages:[
       {loc:"학교 앞 북카페", desc:"지은이 논문 쓰다 가끔 오는 카페. 조용하고 책 냄새 나는 곳이라 편하다고 했다."},
       {loc:"서촌 독립서점 → 경복궁 산책로", desc:"지은이 아끼는 독립서점에 함께 들렀다가 근처를 걷게 됐다. 책 한 권 고르는 데 한 시간이 넘었다."},
@@ -113,7 +113,7 @@ const PARTNERS = [
     personality:"에너지가 넘치고 즉흥적. 팔로워 28만 명. 매 순간 콘텐츠가 될 것 같은 장면을 본능적으로 찾음. 지루한 건 못 참지만 재미있으면 엄청 몰입함",
     weakness:"억지로 분위기 맞추는 척하는 거 바로 알아챔. 말 수 없이 스마트폰만 보는 사람, 자기 세계에 갇혀 있는 사람은 30분 만에 자리 뜸",
     fav:"텐션 > 외모 > 유머",
-    intro:"소개팅은 처음이에요, 진짜로요. 보통 DM으로 연락 오거나 행사장에서 만나는 편이라서. 친구가 '이번엔 좀 다른 사람 만나봐'라고 해서 나왔어요. 재미있는 사람이면 좋겠어요.",
+    intro:"소개팅은 사실 처음이에요. 주로 DM이나 행사에서 만나다 보니까요. 근데 친구가 하도 '한번만 나가봐'라고 해서요. 재미있는 자리가 됐으면 좋겠어요.",
     stages:[
       {loc:"성수동 팝업 스토어", desc:"수아가 콘텐츠 촬영 겸 구경 나온 곳. 소개팅이 반, 일이 반인 자리다."},
       {loc:"이태원 루프탑 카페", desc:"수아 인스타 피드에서 본 적 있는 카페. '여기 사진 잘 나와요'라고 했는데, 오늘 주인공은 카페가 아니어야 한다."},
@@ -128,105 +128,105 @@ const PARTNERS = [
 /* ═══ 스테이지 ═══ */
 const STAGES = [
   {id:1,title:"첫 만남",    sub:"소개팅 첫 자리",  icon:"☕",diff:1,bgm:"cafe",
-   ends:{great:{l:"완벽한 첫인상",next:true,e:"🌟",d:"헤어질 때 상대가 먼저 '다음에 또 봐요'라고 했다"},good:{l:"괜찮은 첫인상",next:true,e:"📱",d:"번호 교환하고 집에 오자마자 문자가 왔다"},friend:{l:"그냥 좋은 사람",next:false,e:"🤝",d:"카카오톡 친구 추가만 됐다. 그것도 준모가 먼저"},crush:{l:"일방통행",next:false,e:"💔",d:"준모 혼자 설렜다. 상대는 그냥 밥 한 끼였나 보다"},fail:{l:"다시는 없는 자리",next:false,e:"💀",d:"커피 반도 안 마시고 일어났다"}}},
+   ends:{great:{l:"완벽한 첫인상",next:true,e:"🌟",d:"헤어질 때 상대가 먼저 '다음에 또 봐요' 했다. 준모 발이 저절로 가벼워졌다"},good:{l:"나쁘지 않은 첫인상",next:true,e:"📱",d:"번호 교환하고 집에 오자마자 문자가 왔다. 심장이 좀 뛰었다"},friend:{l:"그냥 좋은 사람",next:false,e:"🤝",d:"카카오톡 친구 추가됐다. 그것도 준모가 먼저 신청했다"},crush:{l:"혼자 설렌 하루",next:false,e:"💔",d:"준모 혼자 설렜던 것 같다. 상대한테는 그냥 평범한 약속이었나 보다"},fail:{l:"다시는 없을 자리",next:false,e:"💀",d:"커피 반도 안 마시고 자리에서 일어났다. 이유도 없이"}}},
   {id:2,title:"두 번째 만남",sub:"다시 만난 날",    icon:"🌸",diff:2,bgm:"cafe",
-   ends:{great:{l:"자연스럽게 사귐",next:true,e:"💑",d:"누가 먼저랄 것도 없이 그냥 사귀게 됐다"},good:{l:"고백 성공",next:true,e:"💌",d:"떨리는 고백에 상대가 웃으면서 고개를 끄덕였다"},friend:{l:"친구로 남기로",next:false,e:"🪑",d:"'좋은 사람인데 그냥 친하게 지내면 안 될까요?'"},crush:{l:"고백 실패",next:false,e:"😶",d:"'저는 아직 잘 모르겠어요'라는 말을 듣고 집에 왔다"},fail:{l:"연락 끊김",next:false,e:"🔇",d:"보낸 문자 옆에 숫자 1이 사라지지 않는다"}}},
+   ends:{great:{l:"어느새 사귀게 됐다",next:true,e:"💑",d:"누가 먼저랄 것도 없이 그냥 자연스럽게 사귀게 됐다"},good:{l:"고백 성공",next:true,e:"💌",d:"떨리는 고백에 상대가 웃으면서 천천히 고개를 끄덕였다"},friend:{l:"친구로 남기로",next:false,e:"🪑",d:"'좋은 사람인데, 그냥 친하게 지내면 안 될까요?'"},crush:{l:"고백 실패",next:false,e:"😶",d:"'저는 아직 잘 모르겠어요'라는 말 들으며 집에 왔다"},fail:{l:"연락 두절",next:false,e:"🔇",d:"보낸 문자 옆에 숫자 1이 종일 사라지지 않는다"}}},
   {id:3,title:"연애 중",    sub:"사귀고 나서",     icon:"💕",diff:3,bgm:"success",
-   ends:{great:{l:"서로가 서로의 세계",next:true,e:"👫",d:"주변에서 '둘이 진짜 잘 어울린다'는 말을 자주 듣는다"},good:{l:"평범하게 잘 지냄",next:true,e:"🙂",d:"싸우기도 하고 화해하기도 하면서 조금씩 맞춰가는 중"},friend:{l:"서로 합의 이별",next:false,e:"🍂",d:"'우리 그냥 좋게 끝내자'는 말이 쉽게 나왔다"},crush:{l:"일방적 이별 통보",next:false,e:"📦",d:"문 앞에 준모 물건이 박스에 담겨 있었다"},fail:{l:"최악의 이별",next:false,e:"💥",d:"서로 하지 말아야 할 말을 했다. 돌이키기 어렵다"}}},
+   ends:{great:{l:"서로가 서로의 전부",next:true,e:"👫",d:"주변에서 '둘이 진짜 잘 어울린다'는 말을 자주 듣기 시작했다"},good:{l:"평범하지만 행복함",next:true,e:"🙂",d:"싸우기도 하고 화해하기도 하면서, 조금씩 서로에게 맞춰가는 중이다"},friend:{l:"합의 이별",next:false,e:"🍂",d:"'우리 그냥 좋게 끝내자'는 말이 생각보다 쉽게 나왔다"},crush:{l:"일방적 이별 통보",next:false,e:"📦",d:"현관 앞에 준모 물건이 박스에 담겨 있었다"},fail:{l:"최악의 마무리",next:false,e:"💥",d:"서로 하지 말았어야 할 말을 했다. 되돌리기 어렵다"}}},
   {id:4,title:"동거",       sub:"같이 살아보기",   icon:"🏠",diff:3,bgm:"cafe",
-   ends:{great:{l:"이 사람이 맞다",next:true,e:"✨",d:"같이 있는 게 편하고 혼자 있는 게 어색해졌다"},good:{l:"맞춰가는 중",next:true,e:"🧹",d:"생활 방식이 달라서 가끔 부딪히지만, 그러면서 맞춰가고 있다"},friend:{l:"각자의 공간으로",next:false,e:"🚪",d:"'같이 살아보니까 우리 별로인 것 같아요'라고 했다"},crush:{l:"냉전",next:false,e:"😤",d:"며칠째 각방을 쓰다가 대화가 점점 줄었다"},fail:{l:"합의 종료",next:false,e:"📋",d:"짐을 나눴다. 생각보다 깔끔하게 끝났다. 그게 더 씁쓸하다"}}},
+   ends:{great:{l:"이 사람이다",next:true,e:"✨",d:"같이 있는 게 너무 편하고, 이제 혼자 있는 게 오히려 어색해졌다"},good:{l:"맞춰가는 중",next:true,e:"🧹",d:"생활 방식이 달라서 부딪히기도 하지만, 그러면서 조금씩 맞춰가고 있다"},friend:{l:"각자의 공간으로",next:false,e:"🚪",d:"'같이 살아보니까 우리 잘 안 맞는 것 같아요'라고 했다"},crush:{l:"냉전 중",next:false,e:"😤",d:"며칠째 각방 쓰다가 대화 자체가 점점 줄어들었다"},fail:{l:"조용한 종료",next:false,e:"📋",d:"짐을 나눴다. 생각보다 깔끔하게 끝났는데, 그게 더 씁쓸하다"}}},
   {id:5,title:"프로포즈",   sub:"이제 결정할 때",  icon:"💍",diff:5,bgm:"ending",
-   ends:{great:{l:"YES",next:true,e:"💒",d:"눈물을 참으려던 상대가 결국 울었다. 준모도 울었다"},good:{l:"조건부 YES",next:true,e:"🥹",d:"'부모님한테 먼저 말씀드리고 싶어요'라고 했다. 거절이 아니었다"},friend:{l:"시간이 필요해",next:false,e:"⏳",d:"'갑작스러워서 바로 대답하기 어려워요'라는 말을 듣고 왔다"},crush:{l:"NO",next:false,e:"💔",d:"반지를 돌려받았다. 상대는 미안하다고 했다"},fail:{l:"자리를 피했다",next:false,e:"🏃",d:"상대가 화장실을 간다고 했다. 10분이 지났다. 20분이 지났다"}}},
+   ends:{great:{l:"YES",next:true,e:"💒",d:"눈물 참으려던 상대가 결국 울었다. 준모도 같이 울었다"},good:{l:"조건부 YES",next:true,e:"🥹",d:"'부모님한테 먼저 말씀드리고 싶어요'라고 했다. 거절이 아니었다"},friend:{l:"시간이 필요해요",next:false,e:"⏳",d:"'너무 갑작스러워서 바로 대답하기 어려워요'라는 말을 듣고 집에 왔다"},crush:{l:"NO",next:false,e:"💔",d:"반지를 돌려받았다. 상대는 몇 번이나 미안하다고 했다"},fail:{l:"화장실 잠수",next:false,e:"🏃",d:"상대가 화장실 다녀오겠다고 했다. 10분이 지났다. 20분이 지났다"}}},
 ];
 
 const BACKSTORY = [
   {yr:"중학교 · 2008",icon:"🏫",t:"남중 3년",
-   d:"입학 첫날, 운동장에 남자애들만 300명이 모여 있었다. 그게 앞으로 3년이 될 줄은 몰랐다.",
-   q:"같은 동네 여자애 몇 명이랑 초등학교 때까지는 잘 놀았는데, 중학교 올라가고 나서 연락이 자연스럽게 끊겼다. 딱히 이상하다고 생각하지 않았다."},
+   d:"입학 첫날, 운동장에 남자애들만 300명이 모여 있었다. 이게 3년이나 계속될 줄은 그때 몰랐다.",
+   q:"초등학교 때 같은 동네 여자애들이랑 그냥 뛰어놀았는데, 중학교 올라오고 나서는 자연히 연락이 끊겼다. 그게 문제인지도 몰랐다."},
   {yr:"고등학교 · 2011",icon:"📚",t:"이과 남고",
-   d:"이과를 선택한 순간 남고 배정은 사실상 확정이었다. 같은 반 38명 전원 남자.",
-   q:"2학년 때 연합 수련회에서 옆 여고 학생이 '혹시 몇 반이에요?'라고 물어봤는데, '아 저는…' 하다가 말을 잊어버렸다. 어색한 침묵 후 그 애가 그냥 걸어갔다."},
+   d:"이과 선택 → 남고 배정. 이건 그냥 공식이었다. 같은 반 38명, 전부 남자.",
+   q:"2학년 연합 수련회에서 옆 여고 애가 '몇 반이에요?' 하고 물었다. '아, 저는...' 하다가 말이 막혔다. 그냥 어색한 침묵 뒤에 걔가 먼저 가버렸다."},
   {yr:"대학교 · 2014",icon:"🔧",t:"기계공학과 입학",
-   d:"수강신청 첫 화면에 성비가 떴다. 남 89%, 여 11%. 현실이었다.",
-   q:"1학년 전공 수업에 여학생이 딱 셋 있었다. 조별 과제에서 같은 조가 됐을 때 첫 마디를 뭐라고 해야 할지 3일 동안 생각했다. 결국 '자료는 제가 정리할게요'라고 했다."},
+   d:"수강신청 화면에 성비가 딱 떴다. 남 89%, 여 11%. 보자마자 현실이 느껴졌다.",
+   q:"전공 수업에 여학생이 딱 세 명이었다. 조별 과제에서 같은 조가 됐는데, 첫 마디를 뭐라고 할지 3일 동안 진짜로 고민했다. 결국 '자료 제가 정리할게요' 했다."},
   {yr:"군대 · 2017",icon:"🎖️",t:"육군 현역 21개월",
-   d:"입대하고 나서야 깨달았다. 여기선 그 고민조차 할 필요가 없다는 걸.",
-   q:"전역하고 사회 복귀 첫 날, 지하철에서 옆에 여성분이 앉았을 때 괜히 자세를 고쳐 앉았다. 별거 아닌 상황인데 심장이 이상하게 빨리 뛰었다."},
+   d:"입대하고서야 알았다. 여기선 그 고민 자체를 안 해도 된다는 걸.",
+   q:"전역 후 첫날, 지하철에서 옆에 여성분이 앉으니까 나도 모르게 자세를 고쳐 앉았다. 별것도 아닌 상황인데 심장이 이상하게 빠르게 뛰었다."},
   {yr:"직장 · 2019",icon:"💻",t:"IT 스타트업 개발자",
-   d:"30명 규모 회사, 개발팀 12명 중 여성은 디자이너 한 명뿐이다.",
-   q:"작년 송년회 때 타 부서 여직원이 '오빠 코드 짜는 거 어떻게 배웠어요?'라고 물었다. 내가 뭐라고 답했는지 기억이 없다. 소주만 기억난다."},
+   d:"30명짜리 회사, 개발팀 12명 중 여성은 디자이너 딱 한 명이다.",
+   q:"작년 송년회 때 타 부서 여직원이 '오빠 코드 어떻게 배웠어요?' 하고 물었다. 내가 뭐라고 했는지 기억이 안 난다. 소주 세 잔 마신 것만 기억난다."},
   {yr:"오늘 · 2024",icon:"🫠",t:"첫 소개팅",
-   d:"29살. 어머니 친구 딸이 소개팅 자리를 잡아줬다. 오늘이다.",
-   q:"아침에 옷을 세 번 갈아입었다. 결국 처음 입었던 걸 다시 꺼내 입었다. 지금 카페 앞에 서 있는데 문을 못 열고 있다."},
+   d:"29살. 어머니 친구 딸이 소개팅 자리를 잡아줬다. 오늘이 그날이다.",
+   q:"아침에 옷 세 번 갈아입고 결국 처음 입은 걸 다시 꺼냈다. 지금 카페 앞에 서 있는데... 문을 못 열고 있다."},
 ];
 
 const PRESETS = [
-  {n:"공대 기본형 😶", d:"말주변·외모·유머 전부 낮음. 준모의 기본값. 진짜 어렵다.", s:{말주변:18,외모:25,유머:12}},
-  {n:"헬스 3년차 💪",  d:"꾸준히 운동해서 외모는 챙겼지만, 말은 여전히 짧다.", s:{말주변:20,외모:65,유머:15}},
-  {n:"인터넷 고인물 🎮",d:"온라인에서 잔뼈가 굵어 유머 감각은 있는데 외모 관리를 안 했다.", s:{말주변:55,외모:18,유머:72}},
-  {n:"직접 설정 ⚙️",  d:"세 스탯을 직접 배분. 합계 100.", s:{말주변:33,외모:33,유머:34}},
+  {n:"공대 기본형 😶", d:"말주변·외모·유머 다 낮음. 이게 준모의 현실. 하드모드 각오하셔야 해요.", s:{말주변:18,외모:25,유머:12}},
+  {n:"헬스 3년차 💪",  d:"3년 꾸준히 운동해서 외모는 확실히 챙겼는데, 막상 말문이 막힌다.", s:{말주변:20,외모:65,유머:15}},
+  {n:"인터넷 고인물 🎮",d:"온라인에선 밈 장인이라 유머는 넘치는데, 외모 관리는 솔직히 포기한 상태.", s:{말주변:55,외모:18,유머:72}},
+  {n:"직접 설정 ⚙️",  d:"내 준모는 내가 만든다. 세 스탯 합계를 정확히 100으로 맞춰주세요.", s:{말주변:33,외모:33,유머:34}},
 ];
 
 const FAIL_Q = [
-  "29년 동안 쌓인 게 하루아침에 바뀌진 않는다.",
-  "어머니한테 뭐라고 하지. '잘 됐어' 라고 했는데.",
-  "집에 오는 길에 편의점 들러서 캔맥주 하나 샀다.",
-  "내가 뭘 잘못한 건지는 알겠는데, 그게 문제다.",
-  "다시 해볼까. 아니면 그냥... 조금 쉬다가.",
-  "소개팅이 원래 이렇게 어려운 건지, 아니면 나만 어려운 건지.",
-  "퇴근하고 게임이나 켜야겠다.",
+  "29년이 하루아침에 바뀔 리가 없지. 알면서도 왜 기대했을까.",
+  "엄마한테 뭐라고 하지... '잘 됐어'라고 했는데. 선물도 사놨는데.",
+  "집 오는 길에 편의점 들러서 캔맥주 하나 집었다. 혼자.",
+  "뭘 잘못했는지는 알겠어. 그냥 나였다는 게 문제지.",
+  "다시 해볼까. 아니면... 그냥 좀 쉬다가.",
+  "소개팅이 원래 이렇게 어려운 건지, 내가 유독 못하는 건지.",
+  "일단 집 가서 게임이나 켜야겠다. 뭐라도 해야지.",
 ];
 
 /* ═══ 스테이지 고유 이벤트 ═══ */
 const STAGE_EVENTS = {
   1: [ // 첫 만남
-    { id:"e1a", desc:"갑자기 카페 BGM이 두 사람이 좋아할 것 같은 노래로 바뀐다.", choices:[
-      { t:"'이 노래 좋아하세요? 저도 이 가수 팬이에요.'", aff:+8 },
-      { t:"(그냥 모른 척하고 커피만 마신다)", aff:-3 }
+    { id:"e1a", desc:"카페 BGM이 마침 분위기 있는 노래로 바뀐다. 준모 혼자 아는 가수다.", choices:[
+      { t:"'이 노래 혹시 아세요? 저 이 가수 좀 좋아하거든요.'", aff:+8 },
+      { t:"(그냥 커피나 마신다. 괜히 아는 척 하다 망할 수도 있으니까)", aff:-3 }
     ]},
-    { id:"e1b", desc:"옆 테이블 커플이 크게 싸우기 시작한다. 분위기가 어색해졌다.", choices:[
-      { t:"'저 두 사람... 괜찮을까요? 우리는 저렇게 되지 말아요.'", aff:+6 },
-      { t:"'못 본 척하는 게 나을 것 같아요'라며 자연스럽게 화제를 돌린다.", aff:+10 }
+    { id:"e1b", desc:"옆 테이블 커플이 갑자기 언성을 높이기 시작한다. 분위기가 묘해졌다.", choices:[
+      { t:"'저 분들... 괜찮으려나. 우리는 저렇게는 안 싸워요.'", aff:+6 },
+      { t:"못 본 척하며 자연스럽게 다른 얘기로 넘긴다.", aff:+10 }
     ]},
-    { id:"e1c", desc:"준모 핸드폰이 갑자기 울렸다. 어머니 전화다.", choices:[
-      { t:"조용히 무음으로 하고 '죄송해요, 나중에 드릴게요'라고 한다.", aff:+7 },
+    { id:"e1c", desc:"준모 핸드폰이 진동으로 울린다. 화면엔 '엄마'라고 떠 있다.", choices:[
+      { t:"조용히 무음으로 하고 '죄송해요, 나중에 전화드릴게요'라고 말한다.", aff:+7 },
       { t:"당황해서 '잠깐만요' 하고 실수로 받아버린다.", aff:-5 }
     ]},
   ],
   2: [ // 두 번째 만남
-    { id:"e2a", desc:"산책 중 갑자기 비가 내리기 시작한다. 우산이 없다.", choices:[
-      { t:"재킷을 벗어 상대방 머리 위로 가려준다.", aff:+12 },
-      { t:"'빨리 저기 편의점으로 뛰어요!'라며 손을 잡아끈다.", aff:+8 }
+    { id:"e2a", desc:"산책하다가 갑자기 비가 쏟아진다. 당연히 우산은 없다.", choices:[
+      { t:"입고 있던 재킷을 벗어서 머리 위로 가려준다.", aff:+12 },
+      { t:"'저기 편의점 있어요, 빨리 뛰어요!' 하며 손을 잡아끈다.", aff:+8 }
     ]},
-    { id:"e2b", desc:"지나가던 상대방 지인이 우연히 마주쳤다. 어색한 소개 상황이다.", choices:[
-      { t:"먼저 손을 내밀며 '안녕하세요, 준모입니다'라고 자연스럽게 인사한다.", aff:+9 },
-      { t:"뒤로 한 발짝 물러서서 상대방이 알아서 소개해주길 기다린다.", aff:-4 }
+    { id:"e2b", desc:"상대방 지인이 딱 마주쳤다. 둘이 반갑게 인사하는데, 준모는 옆에 서 있다.", choices:[
+      { t:"먼저 손을 내밀며 '안녕하세요, 강준모입니다' 하고 자연스럽게 낀다.", aff:+9 },
+      { t:"한 발짝 물러서서 자기들끼리 알아서 소개해주길 기다린다.", aff:-4 }
     ]},
   ],
   3: [ // 연애 중
-    { id:"e3a", desc:"두 사람이 처음으로 크게 다퉜다. 상대방이 먼저 연락을 끊었다.", choices:[
-      { t:"다음날 아침 '어젯밤 내가 너무 했어. 미안해'라고 먼저 문자를 보낸다.", aff:+11 },
-      { t:"'쿨하게' 기다리기로 한다. 먼저 연락하면 지는 거니까.", aff:-8 }
+    { id:"e3a", desc:"처음으로 제대로 싸웠다. 상대방이 그냥 읽씹하고 있다.", choices:[
+      { t:"다음날 아침에 '어제 내가 좀 심했어. 미안해' 하고 먼저 문자 보낸다.", aff:+11 },
+      { t:"'쿨하게' 기다리기로 한다. 내가 먼저 연락하면 지는 느낌이잖아.", aff:-8 }
     ]},
-    { id:"e3b", desc:"상대방이 힘든 일이 있다고 했다. 자세한 말은 하지 않았다.", choices:[
-      { t:"'말하기 싫으면 안 해도 돼. 그냥 옆에 있어줄게.'라고 한다.", aff:+10 },
-      { t:"'무슨 일이야? 나한테도 말 못 해?'라며 답답함을 내비친다.", aff:-7 }
+    { id:"e3b", desc:"상대방이 힘든 일이 있다고 했다. 더 이상 말은 하지 않는다.", choices:[
+      { t:"'억지로 말 안 해도 돼. 그냥 같이 있어줄게.'라고 한다.", aff:+10 },
+      { t:"'무슨 일인데? 나한테도 말을 못 해?'라며 답답함을 내비친다.", aff:-7 }
     ]},
   ],
   4: [ // 동거
-    { id:"e4a", desc:"함께 고른 가구가 배송됐는데 조립 설명서가 완전히 엉터리다.", choices:[
-      { t:"유튜브 켜고 직접 해결한다. 2시간 후 완성. '됐다!'", aff:+8 },
-      { t:"포기하고 조립 기사를 부른다. 비용은 준모가 낸다.", aff:+5 }
+    { id:"e4a", desc:"주문한 가구가 도착했는데, 조립 설명서가 영어·스웨덴어 뒤섞인 쓰레기다.", choices:[
+      { t:"유튜브 찾아가며 둘이 직접 해본다. 2시간 만에 완성. '됐다!'", aff:+8 },
+      { t:"그냥 조립 기사 부른다. 비용은 준모가 쏜다.", aff:+5 }
     ]},
-    { id:"e4b", desc:"상대방이 준모 허락 없이 준모 물건을 정리해버렸다.", choices:[
-      { t:"'고마워. 근데 다음엔 미리 물어봐줄 수 있어?'라고 부드럽게 말한다.", aff:+7 },
-      { t:"속으로 불편하지만 아무 말도 하지 않는다.", aff:-5 }
+    { id:"e4b", desc:"상대방이 아무 말도 없이 준모 물건을 '효율적으로' 정리해놨다.", choices:[
+      { t:"'고마운데, 다음엔 먼저 얘기해줄 수 있어?'라고 부드럽게 말한다.", aff:+7 },
+      { t:"속으로 불편하지만 그냥 넘긴다. 싸우기 귀찮으니까.", aff:-5 }
     ]},
   ],
   5: [ // 프로포즈
-    { id:"e5a", desc:"반지를 꺼내려는 순간 웨이터가 와인을 엎질렀다. 분위기가 완전히 깨졌다.", choices:[
-      { t:"웃으며 '사실 이런 상황도 우리답잖아요'라고 하며 그대로 반지를 꺼낸다.", aff:+13 },
-      { t:"'오늘은... 다음에 다시 하죠'라며 프로포즈를 미룬다.", aff:-10 }
+    { id:"e5a", desc:"드디어 반지를 꺼내려는 순간, 웨이터가 와인 잔을 쏟아버렸다. 테이블이 난리났다.", choices:[
+      { t:"웃으며 '사실 이런 게 우리 스타일이잖아요' 하고 바로 반지를 꺼낸다.", aff:+13 },
+      { t:"'오늘은... 다음 기회에 하죠'라며 슬쩍 다음으로 미룬다.", aff:-10 }
     ]},
   ],
 };
@@ -336,7 +336,7 @@ const css = `
   }
   .input-area {
     flex-shrink: 0;
-    padding-bottom: env(safe-area-inset-bottom, 8px); /* 아이폰 홈바 대응 */
+    padding-bottom: env(safe-area-inset-bottom, 12px); /* 아이폰 홈바 대응 */
   }
   .choice-btn {
     -webkit-tap-highlight-color: transparent;
@@ -418,7 +418,7 @@ const BackstoryScreen = ({ onDone, muted, onMute }) => {
   };
   const s = BACKSTORY[sc];
   return (
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden",fontFamily:"'Noto Sans KR',sans-serif"}}>
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",position:"relative",overflow:"hidden",fontFamily:"'Noto Sans KR',sans-serif"}}>
       {/* 배경 이미지 */}
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${IMGS.cafe_bg})`,backgroundSize:"cover",backgroundPosition:"center",filter:"brightness(0.35) saturate(0.8)"}}/>
       {/* 따뜻한 오버레이 */}
@@ -473,11 +473,11 @@ const BackstoryScreen = ({ onDone, muted, onMute }) => {
             boxShadow: sc===BACKSTORY.length-1 ? "0 8px 28px rgba(255,107,157,0.35)" : "none"}}
           onMouseEnter={e=>{if(sc<BACKSTORY.length-1){e.currentTarget.style.background="rgba(255,255,255,0.09)";e.currentTarget.style.borderColor="rgba(255,255,255,0.22)";}}}
           onMouseLeave={e=>{if(sc<BACKSTORY.length-1){e.currentTarget.style.background="rgba(255,255,255,0.05)";e.currentTarget.style.borderColor="rgba(255,255,255,0.1)";}}}
-        >{sc===BACKSTORY.length-1 ? "드디어 소개팅 🚀" : "다음 →"}</button>
+        >{sc===BACKSTORY.length-1 ? "소개팅 하러 가기 🚀" : "다음 →"}</button>
 
         {/* 스킵 */}
         {sc < BACKSTORY.length-1 && (
-          <button onClick={onDone} style={{width:"100%",marginTop:8,padding:"8px",background:"transparent",border:"none",color:"rgba(255,255,255,0.18)",fontSize:11,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>건너뛰기</button>
+          <button onClick={onDone} style={{width:"100%",marginTop:8,padding:"8px",background:"transparent",border:"none",color:"rgba(255,255,255,0.18)",fontSize:11,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>건너뛰고 시작하기</button>
         )}
       </div>
     </div>
@@ -497,7 +497,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
   const CP = PARTNERS[ci];
 
   return (
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",fontFamily:"'Noto Sans KR',sans-serif",overflow:"auto",position:"relative"}}>
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",fontFamily:"'Noto Sans KR',sans-serif",overflow:"auto",position:"relative"}}>
       {/* 배경 카페 이미지 */}
       <div style={{position:"fixed",inset:0,backgroundImage:`url(${IMGS.cafe_bg})`,backgroundSize:"cover",backgroundPosition:"center",filter:"brightness(0.28) saturate(0.75)"}}/>
       {/* 따뜻한 오버레이 레이어 */}
@@ -521,7 +521,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
 
         {/* 탭 네비게이션 */}
         <div style={{display:"flex",gap:3,marginBottom:20,background:"rgba(0,0,0,0.4)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)",backdropFilter:"blur(16px)"}}>
-          {[["play","🎮","플레이"],["ach","🏆","도전과제"],["resume","📋","이력서"],["gallery","🔓","갤러리"]].map(([id,icon,label])=>(
+          {[["play","🎮","시작하기"],["ach","🏆","업적"],["resume","📋","이력서"],["gallery","🔓","히든엔딩"]].map(([id,icon,label])=>(
             <button key={id} onClick={()=>setTab(id)} style={{flex:1,padding:"9px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:tab===id?"rgba(255,179,71,0.15)":"transparent",border:tab===id?"1px solid rgba(255,179,71,0.28)":"1px solid transparent",borderRadius:10,color:tab===id?"#ffb347":"rgba(255,255,255,0.38)",fontSize:10,fontWeight:tab===id?700:400,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.2s",boxShadow:tab===id?"0 2px 10px rgba(255,179,71,0.12)":"none"}}>
               <span style={{fontSize:14}}>{icon}</span>
               <span>{label}</span>
@@ -536,7 +536,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
           <div style={{marginBottom:16}}>
             <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
               <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
-              <span style={{fontSize:10,color:"rgba(255,255,255,0.35)",letterSpacing:3,fontFamily:"monospace"}}>상대 선택</span>
+              <span style={{fontSize:10,color:"rgba(255,255,255,0.35)",letterSpacing:3,fontFamily:"monospace"}}>누구랑 만날까요</span>
               <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>
@@ -582,7 +582,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
           <div style={{marginBottom:16}}>
             <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
               <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
-              <span style={{fontSize:10,color:"rgba(255,255,255,0.35)",letterSpacing:3,fontFamily:"monospace"}}>준모 스탯 설정</span>
+              <span style={{fontSize:10,color:"rgba(255,255,255,0.35)",letterSpacing:3,fontFamily:"monospace"}}>준모 능력치 설정</span>
               <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:10}}>
@@ -615,7 +615,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
                       style={{width:"100%",accentColor:color,height:4}}/>
                   </div>
                 ))}
-                <div style={{textAlign:"center",fontSize:11,color:total===100?"#39ff14":"#ff6b6b",fontFamily:"monospace",padding:"6px",background:total===100?"rgba(57,255,20,0.05)":"rgba(255,107,107,0.05)",borderRadius:8,border:`1px solid ${total===100?"rgba(57,255,20,0.15)":"rgba(255,107,107,0.15)"}`}}>합계: {total}/100 {total===100?"✓ 완료":"← 정확히 100으로 맞춰주세요"}</div>
+                <div style={{textAlign:"center",fontSize:11,color:total===100?"#39ff14":"#ff6b6b",fontFamily:"monospace",padding:"6px",background:total===100?"rgba(57,255,20,0.05)":"rgba(255,107,107,0.05)",borderRadius:8,border:`1px solid ${total===100?"rgba(57,255,20,0.15)":"rgba(255,107,107,0.15)"}`}}>합계: {total}/100 {total===100?"✓ 준비됐어요!":"← 딱 100이 되어야 해요"}</div>
               </div>
             )}
 
@@ -645,14 +645,14 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
               fontFamily:"'Noto Sans KR',sans-serif",
               boxShadow:ok?"0 10px 36px rgba(255,107,157,0.35),0 2px 0 rgba(255,255,255,0.1) inset":"none",
               transition:"all 0.2s",letterSpacing:0.5}}>
-            ☕ 소개팅 시작하기
+            ☕ 지금 바로 소개팅 시작
           </button>
 
           {saved && (
             <div style={{marginTop:10,display:"flex",gap:8}}>
               <button onClick={()=>onStart(saved.stats,PARTNERS.find(p=>p.id===saved.partnerId)||PARTNERS[0],saved.si,saved.hist)}
                 style={{flex:1,padding:"11px",background:"rgba(124,158,255,0.09)",border:"1px solid rgba(124,158,255,0.22)",borderRadius:12,color:"#9ab4ff",fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",backdropFilter:"blur(10px)"}}>
-                💾 이어하기 (스테이지 {saved.si+1})
+                💾 이어하기 — 스테이지 {saved.si+1}
               </button>
               <button onClick={onClearSave}
                 style={{padding:"11px 14px",background:"rgba(255,51,51,0.06)",border:"1px solid rgba(255,51,51,0.16)",borderRadius:12,color:"rgba(255,110,110,0.65)",fontSize:11,cursor:"pointer",backdropFilter:"blur(10px)"}}>
@@ -707,9 +707,9 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
         {/* ── 이력서 탭 ── */}
         {tab==="resume" && (
           <div style={{padding:"4px 0"}}>
-            <div style={{fontSize:9,color:"rgba(255,255,255,0.3)",marginBottom:12,letterSpacing:3,fontFamily:"monospace"}}>준모의 소개팅 이력서</div>
+            <div style={{fontSize:9,color:"rgba(255,255,255,0.3)",marginBottom:12,letterSpacing:3,fontFamily:"monospace"}}>강준모의 소개팅 기록부</div>
             {resume.length === 0 ? (
-              <div style={{textAlign:"center",padding:"32px 0",color:"rgba(255,255,255,0.2)",fontSize:12}}>아직 기록이 없어요.<br/>소개팅을 시작해보세요!</div>
+              <div style={{textAlign:"center",padding:"32px 0",color:"rgba(255,255,255,0.2)",fontSize:12}}>아직 기록이 없어요.<br/>첫 소개팅을 시작해봐요!</div>
             ) : resume.map((r, i) => (
               <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:r.ok?"rgba(255,179,71,0.06)":"rgba(255,68,68,0.05)",border:`1px solid ${r.ok?"rgba(255,179,71,0.15)":"rgba(255,68,68,0.1)"}`,borderRadius:12,marginBottom:6}}>
                 <span style={{fontSize:18}}>{r.ok?"✅":"❌"}</span>
@@ -734,7 +734,7 @@ const SetupScreen = ({ onStart, saved, onClearSave, achs, muted, onMute, resume 
                     <span style={{fontSize:24,filter:unlocked?"none":"grayscale(1) brightness(0.3)"}}>{se.e}</span>
                     <div>
                       <div style={{fontSize:13,fontWeight:700,color:unlocked?"#ffd700":"rgba(255,255,255,0.2)",fontFamily:"'Noto Sans KR',sans-serif"}}>{unlocked ? se.t : "???"}</div>
-                      <div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginTop:2}}>{unlocked ? se.d : "아직 해금되지 않은 엔딩"}</div>
+                      <div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginTop:2}}>{unlocked ? se.d : "아직 잠겨 있어요. 계속 도전해봐요!"}</div>
                     </div>
                   </div>
                 );
@@ -891,7 +891,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
 
     // 일일 20회 제한
     if (getDailyCount() >= 20) {
-      setMsgs(m => [...m, { r: "system", c: "⚠️ 오늘 플레이 횟수(20회)를 모두 사용했어요.\n자정이 지나면 다시 플레이할 수 있어요!" }]);
+      setMsgs(m => [...m, { r: "system", c: "⚠️ 오늘 대화 횟수(20회)를 다 쓰셨어요.\n자정 넘으면 다시 할 수 있어요!" }]);
       return;
     }
 
@@ -927,7 +927,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
         generateChoices(aiText, newAff ?? aff);
       }
     } catch (e) {
-      setMsgs(m => [...m, { r: "system", c: `⚠️ API 오류: ${e.message}\n잠시 후 다시 시도해주세요.` }]);
+      setMsgs(m => [...m, { r: "system", c: `⚠️ 연결에 문제가 생겼어요: ${e.message}\n잠깐 기다렸다가 다시 시도해보세요.` }]);
     } finally { setLoading(false); inpRef.current?.focus(); }
   };
 
@@ -968,7 +968,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
         </div>
         {/* 스탯 토글 버튼 */}
         <button onClick={()=>setShowStats(s=>!s)} style={{background:"rgba(0,0,0,0.5)",backdropFilter:"blur(16px)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"8px 14px",color:"rgba(255,255,255,0.6)",fontSize:11,cursor:"pointer",fontFamily:"monospace"}}>
-          {showStats?"숨기기":"스탯 ▸"}
+          {showStats?"접기":"내 스탯 ▸"}
         </button>
       </div>
 
@@ -1024,7 +1024,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
               <div style={{textAlign:"center",padding:"16px 8px"}}>
                 <div style={{fontSize:11,color:"rgba(255,255,255,0.25)",lineHeight:1.8,marginBottom:8}}>{partner.stages[stage.id-1]?.desc}</div>
                 <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"6px 14px",background:`${partner.color}10`,border:`1px dashed ${partner.color}30`,borderRadius:20}}>
-                  <span style={{fontSize:11,color:`${partner.color}99`}}>💬 아래 입력창에 대화를 입력해보세요</span>
+                  <span style={{fontSize:11,color:`${partner.color}99`}}>💬 아래 입력창에 말을 걸어보세요</span>
                 </div>
               </div>
             )}
@@ -1053,14 +1053,14 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
                 </div>
               </div>
             )}
-            {ended && <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.3)",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 판정중...</div>}
+            {ended && <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.3)",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 집계 중...</div>}
           </div>
           {/* 돌발 이벤트 모달 */}
           {event && (
             <div style={{position:"absolute",inset:0,zIndex:50,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(12px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",borderRadius:16,animation:"fadeIn 0.3s ease"}}>
               <div style={{width:"100%",maxWidth:360}}>
                 <div style={{textAlign:"center",marginBottom:16}}>
-                  <span style={{fontSize:11,letterSpacing:3,color:"#ffd93d",fontFamily:"monospace"}}>⚡ 돌발 상황</span>
+                  <span style={{fontSize:11,letterSpacing:3,color:"#ffd93d",fontFamily:"monospace"}}>⚡ 돌발 이벤트</span>
                 </div>
                 <div style={{background:"rgba(255,217,61,0.06)",border:"1px solid rgba(255,217,61,0.2)",borderRadius:14,padding:"16px 18px",marginBottom:14,fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.7,fontFamily:"'Noto Sans KR',sans-serif"}}>
                   {event.desc}
@@ -1093,7 +1093,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
                   {c}
                 </button>
               ))}
-              <div style={{fontSize:9.5,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4}}>선택하거나 직접 입력하세요</div>
+              <div style={{fontSize:9.5,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4}}>골라도 되고, 직접 입력해도 돼요</div>
             </div>
           )}
           {/* 입력 */}
@@ -1110,7 +1110,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
           )}
           <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.05)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(255,30,30,0.05)":"rgba(0,0,0,0.3)",transition:"all 0.5s"}}>
             <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
-              placeholder={ended?"결과 판정중...":turnsLeft<=3?`마지막 ${turnsLeft}턴! 신중하게...`:"무슨 말을 할까요? (Enter로 전송)"}
+              placeholder={ended?"결과 집계중...":turnsLeft<=3?`남은 기회 ${turnsLeft}턴, 신중하게!`:"뭐라고 할까요? (Enter로 보내기)"}
               style={{flex:1,background:"rgba(255,255,255,0.04)",border:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.07)"}`,borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
               onFocus={e=>{e.target.style.border=`1px solid ${partner.color}66`}}
               onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(255,68,68,0.3)":"1px solid rgba(255,255,255,0.07)"}}/>
@@ -1126,7 +1126,7 @@ const GameScreen = ({ stage, partner, stats, onStatChg, hist, onEnd, onSave, mut
           <span>·</span>
           <span>❤ 85점 이상 클리어</span>
           <span>·</span>
-          <span>💡 {partner.name}은 <span style={{color:partner.color+"aa"}}>{partner.fav.split(">")[0].trim()}</span> 중시</span>
+          <span>💡 {partner.name}은 <span style={{color:partner.color+"aa"}}>{partner.fav.split(">")[0].trim()}</span>을 제일 봐요</span>
         </div>
       </div>
     </div>
@@ -1145,7 +1145,7 @@ const EndingScreen = ({ ending, stage, partner, stats, onNext, muted, onMute }) 
   useEffect(() => { bgm.stop(); if (!muted) bgm.play(final ? "ending" : ok ? "success" : "fail"); return () => bgm.stop(); }, []);
 
   return (
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",fontFamily:"'Noto Sans KR',sans-serif",position:"relative",overflow:"hidden",background:"#050308"}}>
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",fontFamily:"'Noto Sans KR',sans-serif",position:"relative",overflow:"hidden",background:"#050308"}}>
       {/* 배경 */}
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${bgImg})`,backgroundSize:"cover",backgroundPosition:"center",filter:ok?"none":"grayscale(0.7) brightness(0.5)"}}/>
       <div style={{position:"absolute",inset:0,background:ok?`linear-gradient(180deg,rgba(5,3,8,0.2) 0%,rgba(5,3,8,0.7) 50%,rgba(5,3,8,0.97) 100%)`:`linear-gradient(180deg,rgba(5,3,8,0.5) 0%,rgba(5,3,8,0.9) 50%,rgba(5,3,8,0.99) 100%)`}}/>
@@ -1171,11 +1171,11 @@ const EndingScreen = ({ ending, stage, partner, stats, onNext, muted, onMute }) 
               <div style={{fontSize:9,letterSpacing:6,color:`${accentColor}88`,fontFamily:"monospace",marginBottom:8}}>TRUE ENDING UNLOCKED</div>
               <div style={{fontSize:32,marginBottom:8}}>💒</div>
               <h2 style={{fontSize:24,fontWeight:900,background:"linear-gradient(135deg,#ff6b9d,#ffd93d,#7c9eff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:10,fontFamily:"'Nanum Myeongjo',serif"}}>모솔 완전 탈출!</h2>
-              <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,lineHeight:1.9,marginBottom:16}}>강준모, 29세. 남중→남고→공대→군대→IT기업<br/>그 끝에 <span style={{color:partner.color,fontWeight:700}}>{partner.name}</span>을(를) 만났다.<br/>🧙 마법사의 저주가 풀렸다.</p>
+              <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,lineHeight:1.9,marginBottom:16}}>강준모, 29세. 남중 → 남고 → 공대 → 군대 → IT 스타트업.<br/>그 긴 여정 끝에 <span style={{color:partner.color,fontWeight:700}}>{partner.name}</span>을(를) 만났다.<br/>🧙 29년 만에 마법사의 저주가 풀렸다.</p>
               <div style={{display:"flex",gap:6,justifyContent:"center",marginBottom:16,flexWrap:"wrap"}}>
                 {Object.entries(stats).map(([k,v])=>(<div key={k} style={{padding:"4px 10px",background:"rgba(255,255,255,0.04)",borderRadius:8,fontSize:10,color:"rgba(255,255,255,0.5)",fontFamily:"monospace"}}>{k} {v}</div>))}
               </div>
-              <button onClick={()=>onNext("reset")} style={{width:"100%",padding:"13px",background:"linear-gradient(135deg,#ff6b9d,#ffd93d,#7c9eff)",border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:15,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:"0 8px 40px rgba(255,107,157,0.4)"}}>처음부터 🔄</button>
+              <button onClick={()=>onNext("reset")} style={{width:"100%",padding:"13px",background:"linear-gradient(135deg,#ff6b9d,#ffd93d,#7c9eff)",border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:15,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:"0 8px 40px rgba(255,107,157,0.4)"}}>다시 처음부터 🔄</button>
             </>
           ) : ok ? (
             <>
@@ -1202,15 +1202,15 @@ const EndingScreen = ({ ending, stage, partner, stats, onNext, muted, onMute }) 
                 <p style={{color:"rgba(255,255,255,0.3)",fontSize:11,fontStyle:"italic",lineHeight:1.7}}>"{failQ}"</p>
               </div>
               <div style={{padding:"10px 14px",background:"rgba(255,68,68,0.04)",border:"1px solid rgba(255,68,68,0.12)",borderRadius:12,marginBottom:14,textAlign:"left"}}>
-                <div style={{fontSize:9,color:"rgba(255,68,68,0.5)",fontFamily:"monospace",marginBottom:6}}>FAILURE ANALYSIS</div>
-                {stats.말주변<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 말주변 {stats.말주변} — 하고 싶은 말이 안 나왔음</div>}
-                {stats.외모<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 외모 {stats.외모} — 첫인상에서 이미 불리했음</div>}
-                {stats.유머<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 유머 {stats.유머} — 분위기 살릴 카드가 없었음</div>}
-                {stats.말주변>=30&&stats.외모>=30&&stats.유머>=30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)"}}>스탯은 충분했지만 선택이 아쉬웠음</div>}
+                <div style={{fontSize:9,color:"rgba(255,68,68,0.5)",fontFamily:"monospace",marginBottom:6}}>패인 분석</div>
+                {stats.말주변<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 말주변 {stats.말주변} — 하고 싶은 말이 끝까지 안 나왔음</div>}
+                {stats.외모<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 외모 {stats.외모} — 첫인상부터 이미 불리한 싸움이었음</div>}
+                {stats.유머<30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginBottom:2}}>• 유머 {stats.유머} — 분위기 살릴 카드가 하나도 없었음</div>}
+                {stats.말주변>=30&&stats.외모>=30&&stats.유머>=30&&<div style={{fontSize:11,color:"rgba(255,255,255,0.3)"}}>스탯은 나쁘지 않았는데, 선택이 아쉬웠음</div>}
               </div>
               <div style={{display:"flex",gap:8}}>
-                <button onClick={()=>onNext("retry")} style={{flex:1,padding:"11px",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:12,color:"rgba(255,255,255,0.5)",fontSize:13,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>재도전</button>
-                <button onClick={()=>onNext("reset")} style={{flex:1,padding:"11px",background:"rgba(255,68,68,0.08)",border:"1px solid rgba(255,68,68,0.2)",borderRadius:12,color:"rgba(255,120,120,0.8)",fontSize:13,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>처음부터 🔄</button>
+                <button onClick={()=>onNext("retry")} style={{flex:1,padding:"11px",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:12,color:"rgba(255,255,255,0.5)",fontSize:13,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>다시 도전</button>
+                <button onClick={()=>onNext("reset")} style={{flex:1,padding:"11px",background:"rgba(255,68,68,0.08)",border:"1px solid rgba(255,68,68,0.2)",borderRadius:12,color:"rgba(255,120,120,0.8)",fontSize:13,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif"}}>처음으로 🔄</button>
               </div>
             </>
           )}
@@ -1223,10 +1223,10 @@ const EndingScreen = ({ ending, stage, partner, stats, onNext, muted, onMute }) 
 
 /* ═══ 숨겨진 엔딩 정의 ═══ */
 const SECRET_ENDINGS = [
-  { id:"se_perfect",  e:"👑", t:"완벽한 준모",    d:"전 스테이지를 최고 엔딩으로 클리어했다. 준모는 더 이상 공대생이 아니다.", cond:"allGreat5" },
-  { id:"se_friend",   e:"🤝", t:"영원한 친구",    d:"3번 연속 '친구로 남기' 엔딩. 준모는 이제 소개팅 친구 전문가다.", cond:"friend3" },
-  { id:"se_speed",    e:"⚡", t:"소개팅 고수",    d:"10턴 이내로 클리어했다. 준모에게 무슨 일이 생긴 건지 아무도 모른다.", cond:"speed" },
-  { id:"se_doom",     e:"💀", t:"전설의 실패왕",  d:"첫 스테이지에서 최악 엔딩. 레전드는 이렇게 탄생한다.", cond:"firstFail" },
+  { id:"se_perfect",  e:"👑", t:"완벽한 준모",    d:"전 스테이지 최고 엔딩 달성. 이제 준모는 공대생이 아니다.", cond:"allGreat5" },
+  { id:"se_friend",   e:"🤝", t:"영원한 친구",    d:"3연속 '친구로 남기' 엔딩. 준모는 소개팅 친구 만들기 장인이 됐다.", cond:"friend3" },
+  { id:"se_speed",    e:"⚡", t:"소개팅 고수",    d:"10턴 이내 클리어. 준모에게 대체 무슨 일이 일어난 건지 아무도 모른다.", cond:"speed" },
+  { id:"se_doom",     e:"💀", t:"전설의 실패왕",  d:"첫 스테이지 최악 엔딩 달성. 레전드는 이렇게 탄생하는 법이다.", cond:"firstFail" },
 ];
 
 /* ═══ 루트 컴포넌트 ═══ */
@@ -1352,7 +1352,7 @@ export default function App() {
   const start  = (s, p, i, h) => { setStats(s); setPartner(p); setSi(i); setHist(h || []); setPhase("game"); };
 
   if (phase === "loading") return (
-    <div style={{minHeight:"100vh",background:"#050308",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16,fontFamily:"'Noto Sans KR',sans-serif"}}>
+    <div style={{minHeight:"100dvh",background:"#050308",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16,fontFamily:"'Noto Sans KR',sans-serif"}}>
       <div style={{fontSize:36,animation:"heartbeat 1.2s ease infinite"}}>🫠</div>
       <div style={{color:"rgba(255,255,255,0.2)",fontFamily:"monospace",fontSize:11,letterSpacing:4}}>LOADING...</div>
     </div>
