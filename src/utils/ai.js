@@ -28,19 +28,21 @@ export const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) =>
 
 export const generateChoices = async (partner, lastAiMsg, currentAff, setChoices) => {
   try {
-    const prompt = `다음은 소개팅 게임에서 AI 상대방의 최근 대사야:
-"${lastAiMsg.slice(0, 300)}"
+    const prompt = `[절대 규칙] 한국어로만 답해. 일본어, 영어 등 다른 언어 절대 사용 금지.
+
+소개팅 게임에서 상대방이 방금 이렇게 말했어:
+"${lastAiMsg.slice(0, 200)}"
 
 현재 호감도: ${currentAff}/100
-상대방: ${partner.name} (${partner.personality.slice(0, 50)})
+상대방 특성: ${partner.name}은 ${partner.fav}을 중시함
 
-준모가 할 수 있는 자연스러운 대화 선택지 3개를 만들어줘.
-- 선택지1: 적극적/공감하는 반응 (호감도 상승 가능성 높음)
-- 선택지2: 무난한/평범한 반응 (중립)
-- 선택지3: 솔직하지만 다소 어색한 반응 (준모다운 공대생 느낌)
+29살 공대생 강준모가 할 수 있는 현실적인 대답 3개를 만들어줘.
+1번: 센스 있고 공감되는 대답 (호감 올라갈 것 같은)
+2번: 무난하고 평범한 대답
+3번: 솔직하지만 약간 어색한 공대생스러운 대답
 
-반드시 아래 JSON 형식으로만 답해. 다른 말 없이:
-{"choices":["선택지1 내용","선택지2 내용","선택지3 내용"]}`;
+반드시 JSON만 출력. 설명 없이:
+{"choices":["1번 대답","2번 대답","3번 대답"]}`;
 
     const res = await fetch(GROQ_URL, {
       method: "POST",
