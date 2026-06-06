@@ -6,21 +6,21 @@
 export const SCENES = {
   S1_CAFE: {
     name: "연남동 카페",
-    bg: "/assets/backgrounds/cafe_yeonnam.png",
+    bg: "/assets/backgrounds/cafe_yeonnam.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_casual.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_casual.png",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.png",
+      yujung_smile: "/assets/characters/yujung_smile_casual.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_casual.webp",
+      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
     },
   },
 
   S2_HANGANG_DAY: {
     name: "한강공원 (낮)",
-    bg: "/assets/backgrounds/hangang_day.png",
+    bg: "/assets/backgrounds/hangang_day.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_denim.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.png",
-      yujung_bored: "/assets/characters/yujung_bored_denim.png",
+      yujung_smile: "/assets/characters/yujung_smile_denim.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_bored: "/assets/characters/yujung_bored_denim.webp",
     },
   },
 
@@ -28,30 +28,30 @@ export const SCENES = {
     name: "한강공원 (밤)",
     bg: "/assets/backgrounds/hangang_night.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_denim.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.png",
-      yujung_bored: "/assets/characters/yujung_bored_denim.png",
+      yujung_smile: "/assets/characters/yujung_smile_denim.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_bored: "/assets/characters/yujung_bored_denim.webp",
     },
   },
 
   S3_MOVIE: {
     name: "영화관 (CGV)",
-    bg: "/assets/backgrounds/cgv_izakaya.png",
+    bg: "/assets/backgrounds/cgv_izakaya.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_dress.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.png",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.png",
+      yujung_smile: "/assets/characters/yujung_smile_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
       yujung_happy: "/assets/characters/yujung_happy_dress.webp",
     },
   },
 
   S3_IZAKAYA: {
     name: "이자카야 (저녁)",
-    bg: "/assets/backgrounds/cgv_izakaya.png",
+    bg: "/assets/backgrounds/cgv_izakaya.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_dress.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.png",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.png",
+      yujung_smile: "/assets/characters/yujung_smile_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
       yujung_bored: "/assets/characters/yujung_bored_dress.webp",
     },
   },
@@ -60,17 +60,17 @@ export const SCENES = {
     name: "유정 아파트 (낮)",
     bg: "/assets/backgrounds/apartment_day.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_ponytail.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_ponytail.png",
-      yujung_cozy: "/assets/characters/yujung_cozy_ponytail.png",
+      yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_cozy: "/assets/characters/yujung_cozy_ponytail.webp",
     },
   },
 
   S4_APARTMENT_NIGHT: {
     name: "유정 아파트 (밤)",
-    bg: "/assets/backgrounds/apartment_night.png",
+    bg: "/assets/backgrounds/apartment_night.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_ponytail.png",
+      yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_thinking: "/assets/characters/yujung_thinking_ponytail.webp",
       yujung_coffee: "/assets/characters/yujung_coffee_ponytail.webp",
     },
@@ -78,10 +78,10 @@ export const SCENES = {
 
   S4_APARTMENT_ENTRANCE: {
     name: "유정 아파트 입구 (밤)",
-    bg: "/assets/backgrounds/apartment_entrance_night.png",
+    bg: "/assets/backgrounds/apartment_entrance_night.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_ponytail.png",
-      yujung_neutral: "/assets/characters/yujung_neutral_ponytail.png",
+      yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
     },
   },
 
@@ -89,8 +89,8 @@ export const SCENES = {
     name: "한남동 루프탑 (식사)",
     bg: "/assets/backgrounds/rooftop_restaurant_dining.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.png",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.png",
+      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
+      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
       yujung_emotional: "/assets/characters/yujung_emotional_shorthair_dress.webp",
     },
   },
@@ -99,8 +99,8 @@ export const SCENES = {
     name: "한남동 루프탑 (바)",
     bg: "/assets/backgrounds/rooftop_bar.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.png",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.png",
+      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
+      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
     },
   },
 
@@ -108,9 +108,9 @@ export const SCENES = {
     name: "한남동 루프탑 테라스 (프로포즈)",
     bg: "/assets/backgrounds/rooftop_terrace.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.png",
+      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
       yujung_emotional: "/assets/characters/yujung_emotional_shorthair_dress.webp",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.png",
+      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
     },
   },
 };

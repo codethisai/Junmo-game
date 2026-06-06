@@ -35,5 +35,8 @@
     "development": [
       "last 1 chrome version"
     ]
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }
