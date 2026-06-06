@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { STAGE_EVENTS } from "../data/stages.js";
+import { SCENES } from "../data/scenes.js";
 import { bgm } from "../utils/audio.js";
 import { callGroq } from "../utils/ai.js";
 import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
@@ -37,8 +38,34 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
   const turnsLeft = MAX_TURNS - turn;
-  const bgImg = bgForStage(stage.id - 1);
-  const pImg  = partnerImg(partner, aff);
+
+  // 씬 선택 로직 (stage + partner 기반)
+  const getSceneKey = () => {
+    const stageId = stage.id;
+    const partnerId = partner.id;
+
+    if (stageId === 1) return "S1_CAFE";
+    if (stageId === 2) return aff >= 50 ? "S2_HANGANG_DAY" : "S2_HANGANG_NIGHT";
+    if (stageId === 3) return aff >= 50 ? "S3_IZAKAYA" : "S3_MOVIE";
+    if (stageId === 4) return aff >= 60 ? "S4_APARTMENT_DAY" : "S4_APARTMENT_NIGHT";
+    if (stageId === 5) return aff >= 70 ? "S5_ROOFTOP_TERRACE" : "S5_ROOFTOP_DINING";
+    return "S1_CAFE";
+  };
+
+  const sceneKey = getSceneKey();
+  const scene = SCENES[sceneKey] || SCENES.S1_CAFE;
+  const bgImg = scene.bg;
+
+  // 호감도에 따라 캐릭터 표정 결정
+  const getCharacterExpression = () => {
+    if (aff >= 70) return "smile";
+    if (aff >= 35) return "neutral";
+    return "bored";
+  };
+
+  const charExpression = getCharacterExpression();
+  const charKey = `yujung_${charExpression}`;
+  const pImg = scene.characters[charKey] || scene.characters.yujung_smile || partnerImg(partner, aff);
   const kImg  = kimoImg(aff);
 
   useEffect(() => { bgm.stop(); if (!muted) bgm.play(stage.bgm); return () => bgm.stop(); }, []);
