@@ -30,21 +30,33 @@ export const callGroq = async (systemPrompt, history, userMsg, retryLeft = 2) =>
 
 export const generateChoices = async (partner, lastAiMsg, currentAff, setChoices) => {
   try {
-    const prompt = `[절대 규칙] 한국어로만 답해. 일본어, 영어 등 다른 언어 절대 사용 금지.
+    const prompt = `한국어로만 답해. 영어, 일본어 절대 금지.
 
-소개팅 게임에서 상대방이 방금 이렇게 말했어:
+[게임 설정]
+"강준모의 소개팅" — 29살 공대 출신 모태솔로 강준모의 연애 도전기.
+준모는 생애 첫 소개팅을 하는 중. 연애 경험 제로. 말이 짧고 긴장하면 어색해짐.
+근데 나쁜 사람은 아님. 배려심 있고 진심인데 표현이 서툴 뿐.
+
+[현재 상황]
+상대방(${partner.name})이 방금 이렇게 말했어:
 "${lastAiMsg.slice(0, 200)}"
 
-현재 호감도: ${currentAff}/100
-상대방 특성: ${partner.name}은 ${partner.fav}을 중시함
+호감도: ${currentAff}/100
+${partner.name}이 중시하는 것: ${partner.fav}
 
-29살 공대생 강준모가 할 수 있는 현실적인 대답 3개를 만들어줘.
-1번: 센스 있고 공감되는 대답 (호감 올라갈 것 같은)
-2번: 무난하고 평범한 대답
-3번: 솔직하지만 약간 어색한 공대생스러운 대답
+[준모 성격 참고]
+- 평소: 말 짧고 단답, 첫 마디 잘 안 나옴
+- 잘 될 때: 진심이 느껴지는 말, 상대 얘기 잘 들어줌
+- 어색할 때: 엉뚱한 말 꺼내거나 과도하게 분석적으로 말함
+- 모태솔로 특유의 "어, 나도 저랬는데" 공감 포인트 살릴 것
 
-반드시 JSON만 출력. 설명 없이:
-{"choices":["1번 대답","2번 대답","3번 대답"]}`;
+[선택지 3개 생성 규칙]
+1번: 준모가 진심을 잘 전달한 대답 — 자연스럽고 호감 올라갈 것 같은
+2번: 무난하고 평범한 대답 — 나쁘지도 좋지도 않음
+3번: 모태솔로 준모 특유의 어색한 대답 — 웃프지만 공감됨
+
+JSON만 출력. 설명 없이:
+{"choices":["1번","2번","3번"]}`;
 
     const res = await fetch(API_ENDPOINT, {
       method: "POST",
