@@ -8,9 +8,9 @@ export const SCENES = {
     name: "연남동 카페",
     bg: "/assets/backgrounds/cafe_yeonnam.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_casual.webp",
-      yujung_neutral: "/assets/characters/yujung_neutral_casual.webp",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
+      yujung_smile: "/assets/characters/yujung_smile_cafe.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_cafe.webp",
+      yujung_bored: "/assets/characters/yujung_bored_cafe.webp",
     },
   },
 
@@ -19,7 +19,7 @@ export const SCENES = {
     bg: "/assets/backgrounds/hangang_day.webp",
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_denim.webp",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_denim.webp",
       yujung_bored: "/assets/characters/yujung_bored_denim.webp",
     },
   },
@@ -29,19 +29,18 @@ export const SCENES = {
     bg: "/assets/backgrounds/hangang_night.webp",
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_denim.webp",
-      yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_denim.webp",
       yujung_bored: "/assets/characters/yujung_bored_denim.webp",
     },
   },
 
   S3_MOVIE: {
     name: "영화관 (CGV)",
-    bg: "/assets/backgrounds/cgv_izakaya.webp",
+    bg: "/assets/backgrounds/rooftop_bar.webp",
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_dress.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
-      yujung_happy: "/assets/characters/yujung_happy_dress.webp",
+      yujung_bored: "/assets/characters/yujung_neutral_dress.webp",
     },
   },
 
@@ -51,7 +50,6 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_dress.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
-      yujung_thinking: "/assets/characters/yujung_thinking_casual.webp",
       yujung_bored: "/assets/characters/yujung_bored_dress.webp",
     },
   },
@@ -62,7 +60,7 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
-      yujung_cozy: "/assets/characters/yujung_cozy_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
     },
   },
 
@@ -71,8 +69,8 @@ export const SCENES = {
     bg: "/assets/backgrounds/apartment_night.webp",
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
-      yujung_thinking: "/assets/characters/yujung_thinking_ponytail.webp",
-      yujung_coffee: "/assets/characters/yujung_coffee_ponytail.webp",
+      yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
     },
   },
 
@@ -82,6 +80,7 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
     },
   },
 

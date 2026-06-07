@@ -12,6 +12,7 @@ import BackstoryScreen from "./screens/BackstoryScreen.jsx";
 import SetupScreen from "./screens/SetupScreen.jsx";
 import GameScreen from "./screens/GameScreen.jsx";
 import EndingScreen from "./screens/EndingScreen.jsx";
+import TestAffBar from "./pages/TestAffBar.jsx";
 
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
@@ -187,6 +188,10 @@ export default function App() {
 
   const onMute = () => setMuted(m => { const n = !m; if (n) bgm.stop(); else { bgm.play("menu"); } return n; });
   const start  = (s, p, i, h) => { setStats(s); setPartner(p); setSi(i); setHist(h || []); setPhase("game"); };
+
+  const isTestMode = new URLSearchParams(window.location.search).get("test") === "affbar";
+
+  if (isTestMode) return <TestAffBar />;
 
   if (phase === "loading") return (
     <div style={{minHeight:"100dvh",background:"#050308",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16,fontFamily:"'Noto Sans KR',sans-serif"}}>

@@ -11,6 +11,7 @@ import { getScript } from "../data/scripts.js";
 import AffBar from "../components/AffBar.jsx";
 import StatChip from "../components/StatChip.jsx";
 import MuteBtn from "../components/MuteBtn.jsx";
+import "./GameScreen.css";
 
 export default function GameScreen({ stage, partner, stats, onStatChg, hist, onEnd, onSave, muted, onMute }) {
   const script = getScript(partner.id, stage.id);

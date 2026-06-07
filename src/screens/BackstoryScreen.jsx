@@ -27,8 +27,7 @@ export default function BackstoryScreen({ onDone, muted, onMute }) {
         {/* 로고 */}
         <div style={{textAlign:"center",marginBottom:28}}>
           <div style={{fontSize:9,letterSpacing:8,color:"rgba(255,200,140,0.45)",fontFamily:"monospace",marginBottom:8}}>PROLOGUE</div>
-          <h1 style={{fontSize:30,fontWeight:900,background:"linear-gradient(135deg,#ffb347,#ff6b9d,#c8a4ff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1.15,fontFamily:"'Nanum Myeongjo',serif",letterSpacing:-0.5}}>강준모의 소개팅</h1>
-          <div style={{fontSize:10,color:"rgba(255,255,255,0.18)",marginTop:5,letterSpacing:3}}>AI INTERACTIVE VISUAL NOVEL</div>
+          <h1 style={{fontSize:30,fontWeight:900,background:"linear-gradient(135deg,#ffb347,#ff6b9d,#c8a4ff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1.15,fontFamily:"'Nanum Myeongjo',serif",letterSpacing:-0.5}}>준모의 소개팅</h1>
         </div>
 
         {/* 스텝 도트 */}
