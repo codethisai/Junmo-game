@@ -5,6 +5,7 @@ import { bgm } from "../utils/audio.js";
 import { callGroq } from "../utils/ai.js";
 import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
 import { getChoiceIcon } from "../components/ChoiceIcons.jsx";
+import { SaveIcon, AlarmIcon } from "../components/GameIcons.jsx";
 import { MAX_TURNS, DAILY_LIMIT, MAX_HISTORY, EVENT_TURN_MIN, EVENT_TURN_MAX } from "../constants.js";
 import { getScript } from "../data/scripts.js";
 import AffBar from "../components/AffBar.jsx";
@@ -387,8 +388,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           {/* 턴 압박 바 */}
           {turnsLeft <= 7 && !ended && (
             <div style={{padding:"4px 14px 2px",display:"flex",alignItems:"center",gap:8}}>
-              <span style={{fontSize:10,color:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",fontFamily:"monospace",fontWeight:700,animation:turnsLeft<=3?"heartbeat 0.8s ease infinite":"none"}}>
-                {turnsLeft<=3?"🚨":"⚠️"} {turnsLeft}턴 남음
+              <span style={{fontSize:10,color:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",fontFamily:"monospace",fontWeight:700,animation:turnsLeft<=3?"heartbeat 0.8s ease infinite":"none",display:"flex",alignItems:"center",gap:4}}>
+                <AlarmIcon color={turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d"} /> {turnsLeft}턴 남음
               </span>
               <div style={{flex:1,height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,overflow:"hidden"}}>
                 <div style={{height:"100%",width:`${(turnsLeft/20)*100}%`,background:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",borderRadius:3,transition:"width 0.5s ease"}}/>
@@ -411,8 +412,10 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           )}
         </div>
         {/* 힌트 */}
-        <div style={{display:"flex",justifyContent:"center",gap:12,fontSize:9,color:"rgba(255,255,255,0.18)",fontFamily:"monospace"}}>
-          <span>💾 자동저장</span>
+        <div style={{display:"flex",justifyContent:"center",gap:12,fontSize:9,color:"rgba(255,255,255,0.18)",fontFamily:"monospace",alignItems:"center"}}>
+          <span style={{display:"flex",alignItems:"center",gap:3}}>
+            <SaveIcon color="rgba(255,255,255,0.3)" /> 자동저장
+          </span>
           <span>·</span>
           <span>❤ 85점 이상 클리어</span>
           <span>·</span>
