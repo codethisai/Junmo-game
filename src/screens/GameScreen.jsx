@@ -4,6 +4,7 @@ import { SCENES } from "../data/scenes.js";
 import { bgm } from "../utils/audio.js";
 import { callGroq } from "../utils/ai.js";
 import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
+import { getChoiceIcon } from "../components/ChoiceIcons.jsx";
 import { MAX_TURNS, DAILY_LIMIT, MAX_HISTORY, EVENT_TURN_MIN, EVENT_TURN_MAX } from "../constants.js";
 import { getScript } from "../data/scripts.js";
 import AffBar from "../components/AffBar.jsx";
@@ -29,6 +30,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const [choices, setChoices] = useState(() => script?.turns[0]?.choices.map(c => c.text) || []);
   const [event, setEvent] = useState(null);
   const [showStageBanner, setShowStageBanner] = useState(true);
+  const [hoveredChoice, setHoveredChoice] = useState(null);
   const eventFiredRef = useRef(false);
 
   useEffect(() => {
@@ -367,11 +369,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
               {choices.map((c, i) => (
                 <button key={i} className="choice-btn"
                   onClick={() => isScripted ? sendScripted(i) : (() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); })()}
-                  style={{textAlign:"left",padding:"8px 12px",background:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
-                    border:`1px solid ${i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:i===0?partner.color:"rgba(255,255,255,0.6)",
+                  onMouseEnter={() => setHoveredChoice(i)}
+                  onMouseLeave={() => setHoveredChoice(null)}
+                  style={{textAlign:"left",padding:"8px 12px",background:hoveredChoice===i?`${partner.color}28`:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
+                    border:`1px solid ${hoveredChoice===i?partner.color+"66":i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:hoveredChoice===i?partner.color:i===0?partner.color:"rgba(255,255,255,0.6)",
                     fontSize:12,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
-                    display:"flex",alignItems:"center",gap:6,width:"100%"}}>
-                  <span style={{fontSize:10,opacity:0.5}}>{["💕","💬","😅"][i]}</span>
+                    display:"flex",alignItems:"center",gap:6,width:"100%",transform:hoveredChoice===i?"scale(1.02)":"scale(1)",boxShadow:hoveredChoice===i?`0 4px 12px ${partner.color}33`:"none"}}>
+                  <span style={{display:"flex",alignItems:"center",opacity:hoveredChoice===i?1:0.6,transition:"opacity 0.15s"}}>
+                    {getChoiceIcon(i, partner.color)}
+                  </span>
                   {c}
                 </button>
               ))}
