@@ -112,6 +112,23 @@ export const SCENES = {
       yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
     },
   },
+
+  // 수아 (이수아) - Stage 4, 5
+  SUA_S4_BURNOUT: {
+    name: "수아 방 (번아웃 밤)",
+    bg: "/assets/backgrounds/sua_s4_burnout_night.webp",
+    characters: {
+      // 캐릭터 이미지 추가 필요
+    },
+  },
+
+  SUA_S5_WINDOW_NIGHT: {
+    name: "남산 야경 (창문)",
+    bg: "/assets/backgrounds/sua_s5_window_night.webp",
+    characters: {
+      // 캐릭터 이미지 추가 필요
+    },
+  },
 };
 
 /**
