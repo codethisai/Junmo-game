@@ -35,8 +35,8 @@ export const SCENES = {
   },
 
   S3_MOVIE: {
-    name: "영화관 (CGV)",
-    bg: "/assets/backgrounds/rooftop_bar.webp",
+    name: "이자카야 (저녁)",
+    bg: "/assets/backgrounds/cgv_izakaya.webp",
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_dress.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_dress.webp",
