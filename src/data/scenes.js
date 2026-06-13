@@ -129,6 +129,14 @@ export const SCENES = {
       // 캐릭터 이미지 추가 필요
     },
   },
+
+  SUA_S5_NAMSAN_FINALE: {
+    name: "남산 케이블카 (파이널 야경)",
+    bg: "/assets/backgrounds/sua_s5_namsan_finale.webp",
+    characters: {
+      // 캐릭터 이미지 추가 필요
+    },
+  },
 };
 
 /**
