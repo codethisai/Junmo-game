@@ -68,8 +68,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   };
 
   const charExpression = getCharacterExpression();
-  const charKey = `yujung_${charExpression}`;
-  const pImg = scene.characters[charKey] || scene.characters.yujung_smile || partnerImg(partner, aff);
+  // partner별 이미지 prefix (yumi는 기존 yujung 에셋명 유지, 나머지는 id 그대로)
+  const charPrefix = partner.id === "yumi" ? "yujung" : partner.id;
+  // 폴백 체인: 해당 파트너 표정 → 해당 파트너 smile → 유정 같은 표정 → 유정 smile → IMGS 기본
+  const pImg =
+    scene.characters[`${charPrefix}_${charExpression}`] ||
+    scene.characters[`${charPrefix}_smile`] ||
+    scene.characters[`yujung_${charExpression}`] ||
+    scene.characters.yujung_smile ||
+    partnerImg(partner, aff);
   const kImg  = kimoImg(aff);
 
   useEffect(() => { bgm.stop(); if (!muted) bgm.play(stage.bgm); return () => bgm.stop(); }, []);
