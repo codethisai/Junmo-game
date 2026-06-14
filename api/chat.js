@@ -9,7 +9,7 @@ const CORS_HEADERS = (origin) => ({
 
 export default async function handler(req) {
   const origin = req.headers.get("origin") || "";
-  const allowed = ["https://junmo-game.vercel.app", "http://localhost:3000"];
+  const allowed = ["https://junmo-game-gm9k.vercel.app", "https://junmo-game.vercel.app", "http://localhost:3000"];
   const isAllowed = allowed.some(o => origin.startsWith(o));
 
   // CORS preflight
