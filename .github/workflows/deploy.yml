@@ -5,26 +5,21 @@ on:
     branches:
       - main
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 코드 가져오기
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Node.js 설치
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install Vercel
+        run: npm install -g vercel
 
-      - name: 패키지 설치
-        run: npm install
-
-      - name: 빌드 테스트
-        run: npm run build
-
-      - name: Vercel 배포
-        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
+      - name: Deploy to Vercel
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          REACT_APP_GROQ_KEY: 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
+        run: vercel deploy --prod --token=$VERCEL_TOKEN --build-env REACT_APP_GROQ_KEY=$REACT_APP_GROQ_KEY
