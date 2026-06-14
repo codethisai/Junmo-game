@@ -9,8 +9,11 @@ const CORS_HEADERS = (origin) => ({
 
 export default async function handler(req) {
   const origin = req.headers.get("origin") || "";
-  const allowed = ["https://junmo-game-gm9k.vercel.app", "https://junmo-game.vercel.app", "http://localhost:3000"];
-  const isAllowed = allowed.some(o => origin.startsWith(o));
+  // 모든 vercel.app 배포 도메인 + 로컬 개발 허용
+  // (production alias, deployment URL, preview URL 전부 포함)
+  const isAllowed =
+    origin.endsWith(".vercel.app") ||
+    origin.startsWith("http://localhost:3000");
 
   // CORS preflight
   if (req.method === "OPTIONS") {
