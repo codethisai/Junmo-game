@@ -60,7 +60,7 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
-      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_sad_ponytail.webp",
     },
   },
 
@@ -70,7 +70,7 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
-      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_sad_ponytail.webp",
     },
   },
 
@@ -80,7 +80,7 @@ export const SCENES = {
     characters: {
       yujung_smile: "/assets/characters/yujung_smile_ponytail.webp",
       yujung_neutral: "/assets/characters/yujung_neutral_ponytail.webp",
-      yujung_bored: "/assets/characters/yujung_neutral_ponytail.webp",
+      yujung_bored: "/assets/characters/yujung_sad_ponytail.webp",
     },
   },
 
