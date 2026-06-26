@@ -113,12 +113,48 @@ export const SCENES = {
     },
   },
 
-  // 수아 (이수아) - Stage 4, 5
+  // 수아 (이수아) - Stage 1~5
+  SUA_S1_CAFE: {
+    name: "연남동 카페 (as usual)",
+    bg: "/assets/backgrounds/sua_s1_cafe.webp",
+    characters: {
+      // 고양이 머리띠+블론드: 첫 만남 수아 (표정 2종은 추후 도입, 현재 1장 공용)
+      sua_smile:   "/assets/characters/sua_smile_cafe.webp",
+      sua_neutral: "/assets/characters/sua_smile_cafe.webp",
+      sua_bored:   "/assets/characters/sua_smile_cafe.webp",
+    },
+  },
+
+  SUA_S2_STUDIO: {
+    name: "촬영 스튜디오 (오후)",
+    bg: "/assets/backgrounds/sua_s2_studio.webp",
+    characters: {
+      // 가죽자켓+고양이귀+올림머리: 자기 영역(스튜디오)의 자신감 있는 수아
+      sua_smile:   "/assets/characters/sua_smile_studio.webp",
+      sua_neutral: "/assets/characters/sua_smile_studio.webp",
+      sua_bored:   "/assets/characters/sua_smile_studio.webp",
+    },
+  },
+
+  SUA_S3_HOME: {
+    name: "이수아의 집 (밤)",
+    bg: "/assets/backgrounds/sua_s3_home_night.webp",
+    characters: {
+      // 회색 후디: 가면 벗은 사적인 수아 (호감도별 표정 3종)
+      sua_smile:   "/assets/characters/sua_smile_home.webp",
+      sua_neutral: "/assets/characters/sua_neutral_home.webp",
+      sua_bored:   "/assets/characters/sua_bored_home.webp",
+    },
+  },
+
   SUA_S4_BURNOUT: {
     name: "수아 방 (번아웃 밤)",
     bg: "/assets/backgrounds/sua_s4_burnout_night.webp",
     characters: {
-      // 캐릭터 이미지 추가 필요
+      // 후디+고양이 머리띠: 가면 벗은 '그냥 이수아' (편안한 표정)
+      sua_smile:   "/assets/characters/sua_smile_hoodie.webp",
+      sua_neutral: "/assets/characters/sua_smile_hoodie.webp",
+      sua_bored:   "/assets/characters/sua_smile_hoodie.webp",
     },
   },
 
@@ -126,7 +162,10 @@ export const SCENES = {
     name: "남산 야경 (창문)",
     bg: "/assets/backgrounds/sua_s5_window_night.webp",
     characters: {
-      // 캐릭터 이미지 추가 필요
+      // 긴 머리+캐미솔: 진솔하고 취약한 모습
+      sua_smile:   "/assets/characters/sua_neutral_finale.webp",
+      sua_neutral: "/assets/characters/sua_neutral_finale.webp",
+      sua_bored:   "/assets/characters/sua_neutral_finale.webp",
     },
   },
 
@@ -134,7 +173,9 @@ export const SCENES = {
     name: "남산 케이블카 (파이널 야경)",
     bg: "/assets/backgrounds/sua_s5_namsan_finale.webp",
     characters: {
-      // 캐릭터 이미지 추가 필요
+      sua_smile:   "/assets/characters/sua_neutral_finale.webp",
+      sua_neutral: "/assets/characters/sua_neutral_finale.webp",
+      sua_bored:   "/assets/characters/sua_neutral_finale.webp",
     },
   },
 };

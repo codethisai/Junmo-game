@@ -48,6 +48,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     const stageId = stage.id;
     const partnerId = partner.id;
 
+    // 수아 전용 씬 (전용 배경+캐릭터 이미지가 있는 스테이지)
+    if (partnerId === "sua") {
+      if (stageId === 1) return "SUA_S1_CAFE";
+      if (stageId === 2) return "SUA_S2_STUDIO";
+      if (stageId === 3) return "SUA_S3_HOME";
+      if (stageId === 4) return "SUA_S4_BURNOUT";
+      if (stageId === 5) return aff >= 60 ? "SUA_S5_NAMSAN_FINALE" : "SUA_S5_WINDOW_NIGHT";
+    }
+
     if (stageId === 1) return "S1_CAFE";
     if (stageId === 2) return aff >= 50 ? "S2_HANGANG_DAY" : "S2_HANGANG_NIGHT";
     if (stageId === 3) return aff >= 50 ? "S3_IZAKAYA" : "S3_MOVIE";
@@ -70,13 +79,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const charExpression = getCharacterExpression();
   // partner별 이미지 prefix (yumi는 기존 yujung 에셋명 유지, 나머지는 id 그대로)
   const charPrefix = partner.id === "yumi" ? "yujung" : partner.id;
-  // 폴백 체인: 해당 파트너 표정 → 해당 파트너 smile → 유정 같은 표정 → 유정 smile → IMGS 기본
+  // 항상 존재가 보장된 안전 폴백 (씬에 등록된 파일이 404일 때 <img>의 onError가 이걸로 교체)
+  const pImgFallback = partnerImg(partner, aff);
+  // 폴백 체인(키 기준): 해당 파트너 표정 → 해당 파트너 smile → 유정 같은 표정 → 유정 smile → 안전 폴백
   const pImg =
     scene.characters[`${charPrefix}_${charExpression}`] ||
     scene.characters[`${charPrefix}_smile`] ||
     scene.characters[`yujung_${charExpression}`] ||
     scene.characters.yujung_smile ||
-    partnerImg(partner, aff);
+    pImgFallback;
   const kImg  = kimoImg(aff);
 
   useEffect(() => { bgm.stop(); if (!muted) bgm.play(stage.bgm); return () => bgm.stop(); }, []);
@@ -283,7 +294,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       <div style={{flex:1,display:"flex",alignItems:"flex-end",justifyContent:"center",position:"relative",paddingBottom:0,minHeight:0}}>
         {/* 상대방 캐릭터 (중앙-우측) */}
         <div className="char-img" style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-10%)",height:"78vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.8s cubic-bezier(.34,1.4,.64,1)"}}>
-          <img src={pImg} alt={partner.name} style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 40px rgba(0,0,0,0.8))"}}/>
+          <img src={pImg} alt={partner.name} onError={(e)=>{ if(e.currentTarget.dataset.fb) return; e.currentTarget.dataset.fb="1"; e.currentTarget.src=pImgFallback; }} style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 40px rgba(0,0,0,0.8))"}}/>
         </div>
         {/* 준모 (좌측) */}
         <div className="char-img-sub" style={{position:"absolute",bottom:0,left:"0%",height:"62vh",display:"flex",alignItems:"flex-end",opacity:0.85,animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)",filter:"brightness(0.8) contrast(0.9)"}}>
