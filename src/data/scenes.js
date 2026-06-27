@@ -148,13 +148,13 @@ export const SCENES = {
   },
 
   SUA_S4_BURNOUT: {
-    name: "수아 방 (번아웃 밤)",
-    bg: "/assets/backgrounds/sua_s4_burnout_night.webp",
+    name: "준모의 할머니 집 (오후)",
+    bg: "/assets/backgrounds/sua_s4_grandma_hanok.webp",
     characters: {
-      // 후디+고양이 머리띠: 가면 벗은 '그냥 이수아' (편안한 표정)
-      sua_smile:   "/assets/characters/sua_smile_hoodie.webp",
-      sua_neutral: "/assets/characters/sua_smile_hoodie.webp",
-      sua_bored:   "/assets/characters/sua_smile_hoodie.webp",
+      // 할머니 집 인사: 보라 머리띠+아가일 베스트 (호감도별 표정 3종)
+      sua_smile:   "/assets/characters/sua_smile_grandma.webp",
+      sua_neutral: "/assets/characters/sua_neutral_grandma.webp",
+      sua_bored:   "/assets/characters/sua_bored_grandma.webp",
     },
   },
 
@@ -162,7 +162,7 @@ export const SCENES = {
     name: "남산 야경 (창문)",
     bg: "/assets/backgrounds/sua_s5_window_night.webp",
     characters: {
-      // 긴 머리+캐미솔: 진솔하고 취약한 모습
+      // 올림머리+흰 셔츠: 진솔한 미소 (단일 이미지 3표정 공용)
       sua_smile:   "/assets/characters/sua_neutral_finale.webp",
       sua_neutral: "/assets/characters/sua_neutral_finale.webp",
       sua_bored:   "/assets/characters/sua_neutral_finale.webp",
@@ -171,11 +171,69 @@ export const SCENES = {
 
   SUA_S5_NAMSAN_FINALE: {
     name: "남산 케이블카 (파이널 야경)",
-    bg: "/assets/backgrounds/sua_s5_namsan_finale.webp",
+    bg: "/assets/backgrounds/sua_s5_cablecar_finale.webp",
     characters: {
-      sua_smile:   "/assets/characters/sua_neutral_finale.webp",
-      sua_neutral: "/assets/characters/sua_neutral_finale.webp",
-      sua_bored:   "/assets/characters/sua_neutral_finale.webp",
+      // 케이블카 야경: 올림머리+흰 셔츠 (단일 이미지 3표정 공용)
+      sua_smile:   "/assets/characters/sua_smile_cablecar.webp",
+      sua_neutral: "/assets/characters/sua_smile_cablecar.webp",
+      sua_bored:   "/assets/characters/sua_smile_cablecar.webp",
+    },
+  },
+
+  // ===== 박지은 루트 (전용 배경+캐릭터) =====
+  JIEUN_S1_BOOKCAFE: {
+    name: "연희동 북카페 (오후)",
+    bg: "/assets/backgrounds/jieun_s1_bookcafe.webp",
+    characters: {
+      // 긴 흑발+네이비 골지 니트: 차분한 문학소녀 (호감도별 표정 3종, smile2 예비)
+      jieun_smile:   "/assets/characters/jieun_smile_s1.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s1.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s1.webp",
+    },
+  },
+
+  JIEUN_S2_FOREST: {
+    name: "경의선숲길 (늦가을 오후)",
+    bg: "/assets/backgrounds/jieun_s2_forest_path.webp",
+    characters: {
+      // 베이지 가디건+화이트 셔츠: 풀린·사려깊은 (호감도별 표정 3종)
+      jieun_smile:   "/assets/characters/jieun_smile_s2.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s2.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s2.webp",
+    },
+  },
+
+  JIEUN_S3_LIBRARY: {
+    name: "연세대 중앙도서관 (홈그라운드)",
+    bg: "/assets/backgrounds/jieun_s3_library.webp",
+    characters: {
+      // 다크코트+네이비 터틀넥: 홈그라운드에서 생기 도는 (호감도별 표정 3종, smile=몰입)
+      jieun_smile:   "/assets/characters/jieun_smile_s3.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s3.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s3.webp",
+    },
+  },
+
+  JIEUN_S4_JEONGDOK: {
+    name: "정독도서관 (비 오는 오후)",
+    bg: "/assets/backgrounds/jieun_s4_jeongdok.webp",
+    characters: {
+      // 슬릭 로우번+차콜 터틀넥: 흔들림·읽히는 자의 공포 (호감도별 표정 3종)
+      // 간파/무너짐 CG는 jieun_s4_caught_cg / caught2_cg (씬엔 미연결, 이벤트 연출용 보관)
+      jieun_smile:   "/assets/characters/jieun_smile_s4.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s4.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s4.webp",
+    },
+  },
+
+  JIEUN_S5_SEOKCHON: {
+    name: "석촌호수 벚꽃 (골든아워)",
+    bg: "/assets/backgrounds/jieun_s5_seokchon_cherry.webp",
+    characters: {
+      // 반묶음+벚꽃잎+연핑크 플로럴 원피스: 수줍은 설렘 (현재 단일 이미지 3표정 공용, 추후 추가 예정)
+      jieun_smile:   "/assets/characters/jieun_smile_s5.webp",
+      jieun_neutral: "/assets/characters/jieun_smile_s5.webp",
+      jieun_bored:   "/assets/characters/jieun_smile_s5.webp",
     },
   },
 };

@@ -57,6 +57,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       if (stageId === 5) return aff >= 60 ? "SUA_S5_NAMSAN_FINALE" : "SUA_S5_WINDOW_NIGHT";
     }
 
+    // 지은 전용 씬 (스테별 전용 배경+캐릭터가 준비된 것만 분기, 없으면 공용 폴백)
+    if (partnerId === "jieun") {
+      if (stageId === 1) return "JIEUN_S1_BOOKCAFE";
+      if (stageId === 2) return "JIEUN_S2_FOREST";
+      if (stageId === 3) return "JIEUN_S3_LIBRARY";
+      if (stageId === 4) return "JIEUN_S4_JEONGDOK";
+      if (stageId === 5) return "JIEUN_S5_SEOKCHON";
+    }
+
     if (stageId === 1) return "S1_CAFE";
     if (stageId === 2) return aff >= 50 ? "S2_HANGANG_DAY" : "S2_HANGANG_NIGHT";
     if (stageId === 3) return aff >= 50 ? "S3_IZAKAYA" : "S3_MOVIE";

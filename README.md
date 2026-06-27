@@ -128,13 +128,78 @@ v1.0
 ```
 Junmo-game/
 ├── public/
-│   └── index.html
+│   ├── index.html
+│   └── assets/
+│       ├── backgrounds/   ← 스테이지별 배경 webp
+│       └── characters/    ← 누끼(배경제거) 캐릭터 webp (알파)
 ├── src/
-│   ├── App.jsx       ← 게임 전체 코드 (단일 파일)
-│   └── index.js
+│   ├── App.jsx            ← 메인 진입점
+│   ├── index.js
+│   ├── components/        ← SceneRenderer, AffBar 등 UI
+│   ├── screens/           ← GameScreen 등 화면 (getSceneKey 분기)
+│   ├── data/
+│   │   ├── partners.js    ← 히로인 프로필(유정/지은/수아)
+│   │   ├── scenes.js      ← 씬별 배경+캐릭터 매핑
+│   │   ├── script_*_s{1..5}.js ← 히로인×스테이지 대사
+│   │   └── achievements.js, content.js
+│   └── utils/
+├── jieun_s4_expressions.md ← 지은 S4 표정·에티튜드 작업 시트
 ├── package.json
-└── README.md         ← 이 파일
+└── README.md              ← 이 파일
 ```
+
+---
+
+## 🎨 작업 로그 — 캐릭터/배경 이미지 파이프라인 (2026-06)
+> `0.2-4 지은·수아 전용 캐릭터 이미지` 작업. 학습용으로 과정·규칙·현황을 모두 기록.
+
+### 1) 표시 로직 (핵심)
+- 캐릭터 표정은 **호감도(affinity)로 자동 선택**: `aff≥70 → smile`, `35~69 → neutral`, `<35 → bored` (`src/screens/GameScreen.jsx` `getCharacterExpression`).
+- 씬은 `src/data/scenes.js`의 `SCENES` 객체에 `{ name, bg, characters:{ <prefix>_smile/neutral/bored } }` 형태로 정의.
+- 히로인별 prefix: **유정=`yujung`**(파트너 id는 `yumi`, 이미지명만 yujung), **수아=`sua`**, **지은=`jieun`**.
+- `getSceneKey()`가 `partnerId`+`stageId`(+호감도)로 씬 키를 고름. 전용 씬이 없으면 공용 `S1_CAFE…`(유정 이미지)로 **폴백**.
+- 이미지 404 시 `<img>` onError로 안전 폴백 → 깨지지 않음.
+
+### 2) 누끼(배경제거) 레시피 — 서버 1GB RAM 주의
+- **rembg `isnet-anime`** 모델을 Python API로 호출 (CLI는 `filetype` 모듈 이슈로 실패).
+  `new_session("isnet-anime")` 후 `remove(img, session=...)`. 모델은 `~/.u2net/` 캐시.
+- 검은 배경/흰 배경/합성 배경 모두 분리 가능. 합성본은 `opaque_ratio`로 잔여배경 검증.
+- 메모리 보호: `OMP_NUM_THREADS=2` + `timeout`, **한 번에 한 프로세스**(여러 장은 세션 1회 로드 후 순차). available <500Mi면 사전 경고(swap 4GB로 동작).
+- webp 변환: 캐릭터 `cwebp -q 90`(알파 유지), 배경 `cwebp -q 80`.
+
+### 3) 파일명 규칙
+- 배경: `<heroine>_s<n>_<place>.webp` (예: `jieun_s4_jeongdok.webp`)
+- 캐릭터: `<heroine>_<smile|neutral|bored>_s<n>.webp` (수아는 `<expr>_<룩>` 혼용)
+- 이벤트 컷(CG): `<heroine>_s<n>_<name>_cg.webp` (씬엔 미연결, 연출용 보관)
+
+### 4) 히로인별 전용 이미지 현황
+| 스테 | 유정(공용 씬) | 수아 | 지은 |
+|---|---|---|---|
+| S1 | 연남동 카페 ✅3 | 카페 ✅(1·임시) | 북카페 ✅3 |
+| S2 | 한강 낮/밤 ✅3 | 스튜디오 ✅(1) | 경의선숲길 ✅3 |
+| S3 | 이자카야 ✅3 / 영화 ✅2 | 집(밤) ✅3 | 연세대도서관 ✅3 |
+| S4 | 아파트 낮/밤/입구 ✅3 | 할머니집(오후) ✅3 | 정독도서관(비) ✅3 +간파CG2 |
+| S5 | 루프탑 식사/바/테라스 ⚠️ | 남산 창문/케이블카 ✅(각1) | 석촌호수 벚꽃 ✅(1) |
+
+### 5) ⚠️ 표정 3종 미만 씬 (보강 필요 목록)
+호감도 슬롯(smile/neutral/bored) 중 **서로 다른 이미지가 3개 미만**인 곳:
+| 씬 | 현재 distinct | 메모 |
+|---|---|---|
+| `S3_MOVIE` (유정 저호감 S3) | 2 | bored=neutral 재사용 |
+| `S5_ROOFTOP_DINING/BAR/TERRACE` (유정 S5) | 1 | smile만 슬롯 정의, `surprised/emotional` 키는 호감도 로직이 조회 안 함 → neutral/bored가 smile로 폴백 |
+| `SUA_S1_CAFE` | 1 | rembg 임시판, 정식 누끼·표정 추가 예정 |
+| `SUA_S2_STUDIO` | 1 | 표정 2종 추가 예정 |
+| `SUA_S5_WINDOW_NIGHT` / `SUA_S5_NAMSAN_FINALE` | 1 | 피날레, 단일 이미지 공용 |
+| `JIEUN_S5_SEOKCHON` | 1 | 단일 이미지 공용, 표정 추가 예정 |
+
+### 6) 산출물(스토리/아트)
+- `src/data/script_jieun_s4_draft.js` — 지은 S4 「흔들림·읽히는 자의 공포」 11턴 드래프트 (게임 **미연결**, 검토 후 승격 예정).
+- `jieun_s4_expressions.md` — 지은 S4 표정·에티튜드 시트 + 마누스 생성 프롬프트.
+
+### 7) 알려진 불일치(추후 정리)
+- **씬 객체명 `SUA_S4_BURNOUT`** 의 내용은 실제로 "준모의 할머니 집(오후)" — 이름만 옛 번아웃 잔재.
+- **지은 스크립트 장소 ≠ 이미지 컨셉**: 현재 `script_jieun_s*.js`는 미술관/뮤지컬/지은집/준모집, 이미지는 북카페/숲길/도서관/정독/석촌. → 스크립트 재작성으로 정합 예정.
+- `partners.js`의 `stages` 메타데이터도 실제 스크립트/이미지와 불일치(옛 기획 흔적).
 
 ---
 
@@ -147,5 +212,5 @@ Junmo-game/
 
 ---
 
-*마지막 업데이트: 2024년 · AI 협업 개발 프로젝트*
+*마지막 업데이트: 2026-06-27 · 캐릭터/배경 이미지 파이프라인(유정·수아·지은) 작업 로그 추가*
 테스트26.05.31vercel자동화파이프라인1
