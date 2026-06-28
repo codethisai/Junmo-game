@@ -173,10 +173,10 @@ export const SCENES = {
     name: "남산 케이블카 (파이널 야경)",
     bg: "/assets/backgrounds/sua_s5_cablecar_finale.webp",
     characters: {
-      // 케이블카 야경: 올림머리+흰 셔츠 (단일 이미지 3표정 공용)
-      sua_smile:   "/assets/characters/sua_smile_cablecar.webp",
-      sua_neutral: "/assets/characters/sua_smile_cablecar.webp",
-      sua_bored:   "/assets/characters/sua_smile_cablecar.webp",
+      // 케이블카 야경: 올림머리+흰 셔츠, 호감도별 표정 3종 (2026-06-28 누끼 적용)
+      sua_smile:   "/assets/characters/sua_smile_finale.webp",
+      sua_neutral: "/assets/characters/sua_shy_finale.webp",
+      sua_bored:   "/assets/characters/sua_teary_finale.webp",
     },
   },
 
