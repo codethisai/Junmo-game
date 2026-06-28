@@ -129,10 +129,10 @@ export const SCENES = {
     name: "촬영 스튜디오 (오후)",
     bg: "/assets/backgrounds/sua_s2_studio.webp",
     characters: {
-      // 가죽자켓+고양이귀+올림머리: 자기 영역(스튜디오)의 자신감 있는 수아
+      // 가죽자켓+고양이귀+올림머리: 자기 영역(스튜디오)의 자신감, 표정 3종 (2026-06-28 누끼 적용)
       sua_smile:   "/assets/characters/sua_smile_studio.webp",
-      sua_neutral: "/assets/characters/sua_smile_studio.webp",
-      sua_bored:   "/assets/characters/sua_smile_studio.webp",
+      sua_neutral: "/assets/characters/sua_neutral_studio.webp",
+      sua_bored:   "/assets/characters/sua_bored_studio.webp",
     },
   },
 
