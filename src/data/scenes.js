@@ -230,10 +230,10 @@ export const SCENES = {
     name: "석촌호수 벚꽃 (골든아워)",
     bg: "/assets/backgrounds/jieun_s5_seokchon_cherry.webp",
     characters: {
-      // 반묶음+벚꽃잎+연핑크 플로럴 원피스: 수줍은 설렘 (현재 단일 이미지 3표정 공용, 추후 추가 예정)
+      // 반묶음+벚꽃잎+연핑크 플로럴 원피스: 수줍은 설렘, 호감도별 표정 3종 (2026-06-28 누끼 적용)
       jieun_smile:   "/assets/characters/jieun_smile_s5.webp",
-      jieun_neutral: "/assets/characters/jieun_smile_s5.webp",
-      jieun_bored:   "/assets/characters/jieun_smile_s5.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s5.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s5.webp",
     },
   },
 };
