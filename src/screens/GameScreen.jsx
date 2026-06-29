@@ -54,7 +54,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       if (stageId === 2) return "SUA_S2_STUDIO";
       if (stageId === 3) return "SUA_S3_HOME";
       if (stageId === 4) return "SUA_S4_BURNOUT";
-      if (stageId === 5) return aff >= 60 ? "SUA_S5_NAMSAN_FINALE" : "SUA_S5_WINDOW_NIGHT";
+      if (stageId === 5) return "SUA_S5_NAMSAN_FINALE"; // 저호감 분기(WINDOW_NIGHT) 제거 — 항상 해피 피날레
     }
 
     // 지은 전용 씬 (스테별 전용 배경+캐릭터가 준비된 것만 분기, 없으면 공용 폴백)
