@@ -88,9 +88,10 @@ export const SCENES = {
     name: "한남동 루프탑 (식사)",
     bg: "/assets/backgrounds/rooftop_restaurant_dining.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
-      yujung_emotional: "/assets/characters/yujung_emotional_shorthair_dress.webp",
+      // 호감도 슬롯 정합: smile/neutral/bored (2026-06-30 유정 S5 키 교정)
+      yujung_smile:   "/assets/characters/yujung_smile_shorthair_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_surprised_shorthair_dress.webp",
+      yujung_bored:   "/assets/characters/yujung_emotional_shorthair_dress.webp",
     },
   },
 
@@ -98,8 +99,10 @@ export const SCENES = {
     name: "한남동 루프탑 (바)",
     bg: "/assets/backgrounds/rooftop_bar.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
+      // 호감도 슬롯 정합: smile/neutral/bored (2026-06-30 유정 S5 키 교정)
+      yujung_smile:   "/assets/characters/yujung_smile_shorthair_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_surprised_shorthair_dress.webp",
+      yujung_bored:   "/assets/characters/yujung_emotional_shorthair_dress.webp",
     },
   },
 
@@ -107,9 +110,10 @@ export const SCENES = {
     name: "한남동 루프탑 테라스 (프로포즈)",
     bg: "/assets/backgrounds/rooftop_terrace.webp",
     characters: {
-      yujung_smile: "/assets/characters/yujung_smile_shorthair_dress.webp",
-      yujung_emotional: "/assets/characters/yujung_emotional_shorthair_dress.webp",
-      yujung_surprised: "/assets/characters/yujung_surprised_shorthair_dress.webp",
+      // 호감도 슬롯 정합: smile/neutral/bored (2026-06-30 유정 S5 키 교정)
+      yujung_smile:   "/assets/characters/yujung_smile_shorthair_dress.webp",
+      yujung_neutral: "/assets/characters/yujung_surprised_shorthair_dress.webp",
+      yujung_bored:   "/assets/characters/yujung_emotional_shorthair_dress.webp",
     },
   },
 
