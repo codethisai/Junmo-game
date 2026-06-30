@@ -147,7 +147,7 @@ export const SCENES = {
     },
   },
 
-  SUA_S4_BURNOUT: {
+  SUA_S4_GRANDMA: {
     name: "준모의 할머니 집 (오후)",
     bg: "/assets/backgrounds/sua_s4_grandma_hanok.webp",
     characters: {
@@ -155,17 +155,6 @@ export const SCENES = {
       sua_smile:   "/assets/characters/sua_smile_grandma.webp",
       sua_neutral: "/assets/characters/sua_neutral_grandma.webp",
       sua_bored:   "/assets/characters/sua_bored_grandma.webp",
-    },
-  },
-
-  SUA_S5_WINDOW_NIGHT: {
-    name: "남산 야경 (창문)",
-    bg: "/assets/backgrounds/sua_s5_window_night.webp",
-    characters: {
-      // 올림머리+흰 셔츠: 진솔한 미소 (단일 이미지 3표정 공용)
-      sua_smile:   "/assets/characters/sua_neutral_finale.webp",
-      sua_neutral: "/assets/characters/sua_neutral_finale.webp",
-      sua_bored:   "/assets/characters/sua_neutral_finale.webp",
     },
   },
 
