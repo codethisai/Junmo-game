@@ -171,7 +171,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       setMsgs(m => [...m, { r: "ai", c: chosen.response }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff });
 
-      if (newTurn >= MAX_TURNS || newAff <= 0) {
+      // 스크립트 소진(다음 턴 없음) / 턴 한도 / 호감도 0 → 스테이지 종료
+      if (!script.turns[newTurn] || newTurn >= MAX_TURNS || newAff <= 0) {
         setEnded(true);
       } else {
         // 다음 턴 선택지 세팅
