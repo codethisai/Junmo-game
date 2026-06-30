@@ -9,7 +9,9 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
   const ok = ending.next, final = stage.id === 5 && ok;
   const failQ = FAIL_Q[Math.floor(Math.random() * FAIL_Q.length)];
   const accentColor = final ? "#ffd93d" : ok ? partner.color : "#ff4444";
-  const pImg = ok ? (IMGS[partner.imgs.smile2] || IMGS[partner.imgs.smile]) : IMGS[partner.imgs.cold];
+  const pImg = partner.endImg
+    ? (ok ? partner.endImg.ok : partner.endImg.fail)
+    : (ok ? (IMGS[partner.imgs.smile2] || IMGS[partner.imgs.smile]) : IMGS[partner.imgs.cold]);
   const kImg = ok ? IMGS.junmo_happy : IMGS.junmo_shocked;
   const bgImg = bgForStage(stage.id - 1);
   useEffect(() => { bgm.stop(); if (!muted) bgm.play(final ? "ending" : ok ? "success" : "fail"); return () => bgm.stop(); }, []);
