@@ -71,7 +71,10 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
                     transform:ci===i?"translateY(-3px) scale(1.02)":"translateY(0) scale(1)",
                     boxShadow:ci===i?`0 10px 28px ${p.color}1e,0 0 0 1px ${p.color}22 inset`:"none",
                     backdropFilter:"blur(16px)"}}>
-                  <div style={{fontSize:26,marginBottom:6,filter:ci===i?"none":"grayscale(0.3)"}}>{p.emoji}</div>
+                  <div style={{width:66,height:66,margin:"0 auto 9px",borderRadius:"50%",overflow:"hidden",position:"relative",border:`2px solid ${ci===i?p.color:"rgba(255,255,255,0.12)"}`,boxShadow:ci===i?`0 0 18px ${p.color}66`:"none",transition:"all 0.25s"}}>
+                    <img src={p.selImg} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"top center",filter:ci===i?"none":"grayscale(0.55) brightness(0.62)",transition:"all 0.25s"}}/>
+                    <span style={{position:"absolute",bottom:-1,right:-1,fontSize:13,filter:"drop-shadow(0 1px 2px rgba(0,0,0,0.8))"}}>{p.emoji}</span>
+                  </div>
                   <div style={{fontSize:13,fontWeight:800,color:ci===i?p.color:"rgba(255,255,255,0.7)",fontFamily:"'Noto Sans KR',sans-serif",marginBottom:3}}>{p.name}</div>
                   <div style={{fontSize:9,color:ci===i?`${p.color}88`:"rgba(255,255,255,0.28)",marginBottom:5}}>{p.mbti}</div>
                   <div style={{fontSize:9,padding:"3px 8px",background:ci===i?`${p.color}18`:"rgba(255,255,255,0.05)",borderRadius:20,color:ci===i?`${p.color}cc`:"rgba(255,255,255,0.28)",display:"inline-block",border:`1px solid ${ci===i?p.color+"22":"rgba(255,255,255,0.06)"}`}}>{p.job}</div>
@@ -83,7 +86,9 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
             <div style={{marginTop:10,padding:"14px 16px",background:`rgba(0,0,0,0.4)`,border:`1px solid ${CP.color}1e`,borderRadius:14,position:"relative",overflow:"hidden",backdropFilter:"blur(20px)",transition:"border-color 0.3s"}}>
               <div style={{position:"absolute",top:0,left:"10%",right:"10%",height:1,background:`linear-gradient(90deg,transparent,${CP.color}44,transparent)`}}/>
               <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
-                <div style={{width:36,height:36,borderRadius:10,background:`${CP.color}14`,border:`1px solid ${CP.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{CP.emoji}</div>
+                <div style={{width:60,height:78,borderRadius:12,overflow:"hidden",flexShrink:0,border:`1px solid ${CP.color}33`,background:`${CP.color}0a`,boxShadow:`0 4px 14px ${CP.color}1a`}}>
+                  <img src={CP.selImg} alt={CP.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"top center"}}/>
+                </div>
                 <div style={{flex:1}}>
                   <div style={{fontSize:8,color:`${CP.color}77`,letterSpacing:3,fontFamily:"monospace",marginBottom:4}}>ABOUT {CP.name.toUpperCase()}</div>
                   <p style={{fontSize:12,color:"rgba(255,255,255,0.55)",lineHeight:1.75,marginBottom:8}}>{CP.intro}</p>

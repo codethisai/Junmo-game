@@ -13,7 +13,8 @@ export const PARTNERS = [
       {loc:"한남동 루프탑 레스토랑", desc:"사귄 지 2년 반. 오늘 예약하는 데 3주 걸렸다. 반지는 재킷 안주머니에 있다.", mood:"진지하고 벅참. 미래를 그리는 톤, 감정이 깊다."},
     ],
     imgs: { smile: "yujeong_smile1", smile2: "yujeong_smile2", cold: "yujeong_cold" },
-    endImg: { ok: "/assets/characters/yujung_smile_shorthair_dress.webp", fail: "/assets/characters/yujung_bored_cafe.webp" }
+    endImg: { ok: "/assets/characters/yujung_smile_shorthair_dress.webp", fail: "/assets/characters/yujung_bored_cafe.webp" },
+    selImg: "/assets/characters/yujung_smile_cafe.webp"
   },
   { id:"jieun", name:"박지은", age:26, job:"국문학 석사 과정", mbti:"INFJ", emoji:"📚", color:"#7c9eff",
     personality:"조용하지만 관찰력이 날카롭다. 상대방 말을 끝까지 잘 듣고 핵심을 짚는 편. 처음엔 말수가 적지만 마음 열면 생각보다 할 말이 많다",
@@ -29,7 +30,8 @@ export const PARTNERS = [
       {loc:"석촌호수 벚꽃길", desc:"벚꽃 만개한 호숫가, 골든아워. 꽃잎이 흩날린다.", mood:"무장해제된 수줍은 설렘. 처음으로 솔직해지기로 마음먹는다."},
     ],
     imgs: { smile: "yujeong_smile1", smile2: "yujeong_smile2", cold: "yujeong_cold" },
-    endImg: { ok: "/assets/characters/jieun_smile_s5.webp", fail: "/assets/characters/jieun_bored_s4.webp" }
+    endImg: { ok: "/assets/characters/jieun_smile_s5.webp", fail: "/assets/characters/jieun_bored_s4.webp" },
+    selImg: "/assets/characters/jieun_smile_s2.webp"
   },
   { id:"sua", name:"이수아", age:25, job:"라이프스타일 인플루언서", mbti:"ESFP", emoji:"🎤", color:"#ffd93d",
     personality:"에너지가 넘치고 즉흥적. 팔로워 28만 명. 매 순간 콘텐츠가 될 것 같은 장면을 본능적으로 찾음. 지루한 건 못 참지만 재미있으면 엄청 몰입함",
@@ -45,6 +47,7 @@ export const PARTNERS = [
       {loc:"남산 (야경)", desc:"남산 전망. 텐션을 완전히 내려놓고 진솔해지는 피날레.", mood:"가면을 완전히 벗고 조용·진솔하게. '사실 혼자였다'를 고백하는 톤."},
     ],
     imgs: { smile: "yujeong_smile1", smile2: "yujeong_smile2", cold: "yujeong_cold" },
-    endImg: { ok: "/assets/characters/sua_smile_finale.webp", fail: "/assets/characters/sua_bored_home.webp" }
+    endImg: { ok: "/assets/characters/sua_smile_finale.webp", fail: "/assets/characters/sua_bored_home.webp" },
+    selImg: "/assets/characters/sua_smile_home.webp"
   },
 ];
