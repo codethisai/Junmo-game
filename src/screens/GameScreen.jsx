@@ -41,7 +41,9 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   }, []);
   const chatRef = useRef(null);
   const inpRef  = useRef(null);
-  const turnsLeft = MAX_TURNS - turn;
+  // 스테별 실제 턴 수: 스크립트 스테는 대본 길이(11), AI 스테는 MAX_TURNS(20)
+  const stageMaxTurns = isScripted ? Math.min(script?.turns?.length || MAX_TURNS, MAX_TURNS) : MAX_TURNS;
+  const turnsLeft = stageMaxTurns - turn;
 
   // 씬 선택 로직 (stage + partner 기반)
   const getSceneKey = () => {
@@ -294,7 +296,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
             <StatChip icon="😂" label="유머" value={stats.유머} color="#ffd93d" delta={deltas.유머||0}/>
           </div>
           <div style={{marginTop:10,display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.3)",fontFamily:"monospace"}}>
-            <span>TURN {turn}/{MAX_TURNS}</span>
+            <span>TURN {turn}/{stageMaxTurns}</span>
             <span style={{color:turnsLeft<=5?"#ff4444":"inherit"}}>{turnsLeft<=5?`⚠ ${turnsLeft}남음`:`${turnsLeft}턴 남음`}</span>
           </div>
         </div>
@@ -324,7 +326,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           <div style={{padding:"8px 14px",borderBottom:"1px solid rgba(255,255,255,0.05)",display:"flex",alignItems:"center",gap:8,background:"rgba(255,255,255,0.015)"}}>
             <div style={{width:7,height:7,borderRadius:"50%",background:partner.color,boxShadow:`0 0 8px ${partner.color}`}}/>
             <span style={{fontSize:11,color:"rgba(255,255,255,0.5)",fontFamily:"'Noto Sans KR',sans-serif"}}>{partner.emoji} {partner.name}</span>
-            <span style={{marginLeft:"auto",fontSize:9,color:"rgba(255,255,255,0.25)",fontFamily:"monospace"}}>T{turn}/20</span>
+            <span style={{marginLeft:"auto",fontSize:9,color:"rgba(255,255,255,0.25)",fontFamily:"monospace"}}>T{turn}/{stageMaxTurns}</span>
           </div>
           {/* 메시지 */}
           <div ref={chatRef} className="chat-area" style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:60,maxHeight:160}}>
@@ -421,7 +423,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
                 <AlarmIcon color={turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d"} /> {turnsLeft}턴 남음
               </span>
               <div style={{flex:1,height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,overflow:"hidden"}}>
-                <div style={{height:"100%",width:`${(turnsLeft/20)*100}%`,background:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",borderRadius:3,transition:"width 0.5s ease"}}/>
+                <div style={{height:"100%",width:`${(turnsLeft/stageMaxTurns)*100}%`,background:turnsLeft<=3?"#ff4444":turnsLeft<=5?"#ff9944":"#ffd93d",borderRadius:3,transition:"width 0.5s ease"}}/>
               </div>
             </div>
           )}
