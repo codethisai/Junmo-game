@@ -12,7 +12,7 @@
 <table>
   <tr>
     <td align="center"><img src="public/assets/characters/yujung_smile2_dress.webp" width="200"><br><b>🌸 김유정</b><br>ENFP · 브랜드 마케터</td>
-    <td align="center"><img src="public/assets/characters/jieun_smile_s5.webp" width="200"><br><b>📚 박지은</b><br>INFJ · 국문학 석사</td>
+    <td align="center"><img src="public/assets/characters/jieun_smile_s2.webp" width="200"><br><b>📚 박지은</b><br>INFJ · 국문학 석사</td>
     <td align="center"><img src="public/assets/characters/sua_smile_finale.webp" width="200"><br><b>🎤 이수아</b><br>ESFP · 인플루언서</td>
   </tr>
 </table>
