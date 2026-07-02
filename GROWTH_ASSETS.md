@@ -1,7 +1,8 @@
 # 🧰 성장 실행 자산 팩 — 강준모의 소개팅
 
 > [`GROWTH.md`](GROWTH.md)가 전략이면, 이 문서는 **바로 복붙·변주해 쓰는 실탄.** 커뮤니티 규칙 확인 후 사용.
-> 플레이: https://junmo-game.vercel.app · 저장소: https://github.com/codethisai/Junmo-game
+> 방향: **전문성·장르 지식으로 오덕·전문가 저격.** 밈/자학("AI한테 차인 썰")은 **보류**(2차 확산용, 나중).
+> 원천 아티클: [`DEVLOG.md`](DEVLOG.md) · 플레이: https://junmo-game.vercel.app · 저장소: https://github.com/codethisai/Junmo-game
 
 ---
 
@@ -10,155 +11,120 @@
 게시할 때 채널별 UTM 붙이기 → Vercel Analytics에서 유입 소스 구분:
 ```
 아카라이브 : https://junmo-game.vercel.app/?utm_source=arca
-디씨       : https://junmo-game.vercel.app/?utm_source=dc
 레딧       : https://junmo-game.vercel.app/?utm_source=reddit
 개발기     : https://junmo-game.vercel.app/?utm_source=blog
-트위터     : https://junmo-game.vercel.app/?utm_source=x
+디씨(보류) : https://junmo-game.vercel.app/?utm_source=dc
 ```
-> (UTM 파라미터 무시돼도 게임은 정상 작동. 나중에 Analytics에서 소스별 분리 보려는 용도.)
+> (UTM 파라미터 무시돼도 게임은 정상 작동. Analytics에서 소스별 분리 보려는 용도.)
 
 ---
 
-## 🐙 GitHub 저장소 메타 (복붙용)
+## 🐙 GitHub 저장소 메타 (설정 완료 ✅)
 
 **Description**
 ```
 AI 기반 한국어 소개팅 시뮬레이션 비주얼노벨 · 3인 히로인 · 무료 웹 플레이 (React + Groq LLM, Claude Code로 제작)
 ```
-**Topics (태그)**
-```
-visual-novel  dating-sim  korean  ai  llm  groq  react  web-game  claude  vibe-coding  interactive-fiction
-```
-> 설정 위치: GitHub 저장소 → About(우측 톱니) → Description·Website(플레이 링크)·Topics.
+**Topics**: `visual-novel dating-sim korean ai llm react web-game claude`
 
 ---
 
-## 🪝 훅 뱅크 (재사용 문장)
+## 🪝 훅 뱅크 (전문성 버전 — 밈 배제)
 
-- "1인이 **Claude Code로 바이브코딩**해 만든 한국어 AI 소개팅 게임"
-- "AI한테 소개팅 신청했다가 **3턴 만에 차임** ㅋㅋ"
-- "**말 한마디에 호감도가 실시간으로** 오르내리는 소개팅 시뮬"
-- "3명의 히로인, 각자 성격·지뢰가 달라서 **공략법이 다 다름**"
-- "회원가입 없이 **웹에서 바로**, 무료"
-- "캐릭터 **심리 설계부터** 해서 대사를 뽑았음(설계 볼트 공개)"
+- "순수 LLM 자유대화는 3턴이면 캐릭터가 붕괴한다. 그래서 **설계된 대본 + LLM 변주 하이브리드**로 만들었다."
+- "대사를 먼저 쓰지 않았다. **욕망·두려움·방어기제부터 설계**하고 대사를 연역했다."
+- "수아(보여지고 싶은데 외로운) ↔ 지은(안 보여지고 싶은데 읽히는) — **정반대 축**으로 세운 3인."
+- "AI로 만들었지만 승부처는 프롬프트가 아니라 **설계와 검수**였다."
+- "1GB 서버에서 rembg로 누끼 뜬 이야기 (isnet-anime · 그린 디스필 · webp)."
 
 ---
 
-## 📝 게시글 초안
+## 📝 게시글 초안 (전문판)
 
-### ① 아카라이브 — 1차 시딩 (자작 톤 + AI 훅) 🔴
-> 채널: 창작/인디게임/미연시·비주얼노벨/AI 관련 중 규칙상 자작 소개 허용되는 곳. **자작 인증** 챙기기.
-
-**제목**
-```
-혼자서 AI 소개팅 시뮬 게임 하나 만들어봤음 (한국어, 웹에서 바로 플레이)
-```
-**본문**
-```
-심심해서 만들기 시작했다가 생각보다 커진 자작 게임입니다.
-
-'강준모의 소개팅' — AI 소개팅 시뮬레이션 비주얼노벨이에요.
-
-▶ 뭐냐면
-- 29살 모솔 강준모가 되어 3명의 히로인이랑 소개팅
-- 유정(ENFP 마케터) / 지은(INFJ 국문학 석사) / 수아(ESFP 인플루언서)
-  → 셋 다 성격·좋아하는 것·지뢰가 완전 달라서 공략법이 다름
-- 선택지 고르거나 직접 입력하면 AI가 실시간 반응
-- 말 한마디에 호감도 오르내리고, 그거 따라 표정·배경·엔딩이 바뀜
-- 5스테이지 (첫 만남 → ... → 피날레), 회원가입 없이 무료 웹
-
-▶ 어떻게 만들었냐
-- 1인 개발. Claude Code(AI)로 바이브코딩.
-- 근데 대사는 그냥 뽑은 게 아니라, 캐릭터 심리(욕망/두려움/방어기제)부터
-  설계해서 스테이지별로 대본을 짰음. (설계 문서도 깃허브에 공개)
-
-▶ 플레이 (모바일 추천)
-https://junmo-game.vercel.app/?utm_source=arca
-▶ 코드/설계
-https://github.com/codethisai/Junmo-game
-
-아직 다듬는 중이라 피드백 주시면 반영합니다. 어떤 히로인이 제일 취향인지도 궁금하네요.
-```
-
-### ② 디씨 — 2차 (밈·자학 톤, 홍보 티 X)
-> 미연시갤·인디게임갤·프로그래밍갤 등. **재미 먼저, 링크는 슬쩍.**
+### ① 아카라이브 — 1차 시딩 (자작·전문 톤) 🔴
+> 채널: 창작/인디게임/미연시·비주얼노벨/AI 관련 중 **자작 소개 허용**되는 곳. 자작 인증 챙기기.
+> 상단에 **시작화면 스샷**(캐릭터 3인 일러스트), 중간에 대화·엔딩 스샷.
 
 **제목**
 ```
-AI한테 소개팅 신청했다가 3턴만에 차인 썰.jpg
+AI 소개팅 게임 만들면서 캐릭터를 '대사'가 아니라 '심리'부터 설계한 이야기 (자작, 웹 플레이)
 ```
 **본문**
 ```
-[스샷: 준모 굳은 표정 + 호감도 바닥 엔딩]
+자작 비주얼노벨입니다. '강준모의 소개팅' — 한국어 AI 소개팅 시뮬.
 
-분명 잘 되던 흐름이었는데 폰 한번 봤다고 정색함 ㅋㅋㅋ
-내가 만든 게임인데 내가 못 깸
+LLM한테 "소개팅 상대 해봐"만 시키면 3턴 만에 캐릭터가 붕괴하더라고요.
+츤데레였다 헤퍼지고, 아까 한 말 까먹고, 뭘 해도 받아줘서 게임성이 사라짐.
 
-- 3명 있는데 다 성격 달라서 하나 공략법이 딴 애한텐 지뢰임
-- 직접 말 입력해도 AI가 알아서 받아침
+그래서 반대로 갔습니다:
+▶ 대화 본진 = 손으로 짠 11턴 대본(스테이지별), LLM은 자유입력 때만 변주하는 보조 레이어.
 
-심심하면 해보셈 (무료, 웹)
-https://junmo-game.vercel.app/?utm_source=dc
+▶ 캐릭터는 대사가 아니라 심리부터 설계
+ - 유정(ENFP): 밝지만 '진짜 들어주는' 사람을 원함 / 지뢰 = 폰·건성
+ - 지은(INFJ): 안 읽히려는 관찰자 / 지뢰 = 아는 척·진부한 질문
+ - 수아(ESFP): 화려한 가면 뒤 외로움 / 지뢰 = 순간을 콘텐츠로 만들기
+ → 수아(보여지고 싶은데 외로운) ↔ 지은(안 보여지고 싶은데 읽히는), 정반대 축으로 안 겹치게.
+
+▶ 시스템: 호감도 따라 표정·배경·엔딩 분기. 지뢰 밟으면 감점. 5스테 관계 아크(첫만남→피날레).
+
+▶ 만든 방식: 1인, Claude Code. 근데 재미의 8할은 AI가 아니라 캐릭터 설계에서 나왔어요.
+ 설계 문서(캐릭터 시트·대사 생성 템플릿·검수 루브릭)도 깃허브에 공개했습니다.
+
+플레이(모바일 추천): https://junmo-game.vercel.app/?utm_source=arca
+설계·개발기 전문: (velog 링크) / 코드·설계: https://github.com/codethisai/Junmo-game
+
+아직 다듬는 중이라 피드백 환영합니다. 어색한 대사 보이면 알려주세요.
 ```
 
-### ③ 레딧 (EN) — r/SideProject · r/webgames · r/visualnovels
+### ② 레딧 (EN) — r/visualnovels · r/gamedev · r/SideProject
 **Title**
 ```
-I built a Korean AI dating sim with Claude Code — playable in browser, free
+I built a Korean AI dating sim — and the hard part wasn't the AI, it was designing the characters
 ```
 **Body**
 ```
-Solo project. "Kang Junmo's Blind Date" — an AI-powered Korean dating-sim visual novel.
+Solo project, playable free in-browser. "Kang Junmo's Blind Date" — a Korean AI dating-sim VN.
 
-- 3 heroines, each with distinct personality / likes / dealbreakers (so strategies differ)
-- Pick choices OR type freely — an LLM (Groq llama-3.3) reacts in real time
-- Affinity shifts each turn → changes expressions, backgrounds, and endings
-- 5 stages, no signup, free on web
+If you just tell an LLM "be my date," the character collapses in ~3 turns: personality drifts,
+context evaporates, and there's no challenge because it accepts everything.
 
-Built solo, vibe-coded with Claude Code — but dialogue is hand-designed from each
-character's psychology (design docs are in the repo).
+So I inverted it:
+- Dialogue backbone = hand-authored 11-turn scripts per stage. The LLM only improvises on free input.
+- Characters designed from psychology first (desire / fear / defense mechanism), then dialogue derived.
+  Three heroines on opposite axes: "wants to be seen but lonely" vs "doesn't want to be read but is."
+- Affinity drives expressions, backgrounds, and endings. "Dealbreaker" choices cost points.
+
+Made solo with Claude Code — but the fun came from character design, not prompting.
+Design docs (character sheets, a dialogue-generation template, a review rubric) are in the repo.
 
 Play: https://junmo-game.vercel.app/?utm_source=reddit
-Code: https://github.com/codethisai/Junmo-game
-
-Feedback welcome — it's still being polished.
+Code + design vault: https://github.com/codethisai/Junmo-game
 ```
 
-### ④ 개발기 블로그 (velog/브런치) — 검색 유입 자산 + 포트폴리오
-**제목(안)**: "Claude Code로 AI 소개팅 게임을 만들었다 — 설계부터 배포까지"
-**아웃라인**
-```
-1. 왜 만들었나 (모솔 + AI + 소개팅이라는 농담에서 출발)
-2. 스택 (React CRA / Groq LLM / Vercel / rembg 누끼)
-3. Claude Code 바이브코딩 경험 — 어디까지 맡기고 어디서 사람이 개입했나
-4. 캐릭터를 '설계'했다 — 욕망·두려움·방어기제 → 대사 생성 템플릿 → 검수 루브릭
-5. 삽질/버그 (스테이지 진행 멈춤, 엔딩 이미지, 호감도 페이싱 슬로우번)
-6. 배포·성장 계획 (이 프로젝트를 게임+성장 두 기둥으로)
-7. 회고 + 지표
-```
+### ③ 개발기 블로그 (velog/브런치) — 검색 유입 + 포트폴리오
+> **완성본 = [`DEVLOG.md`](DEVLOG.md)** (그대로 velog에 붙이거나 축약). 제목안:
+> "AI로 소개팅 게임을 만들었다 — 캐릭터를 '대사'가 아니라 '심리'부터 설계한 기록"
+
+### ④ 디씨 — 🅱️ 보류 (밈/자학, 2차 확산용)
+> 지금은 전문성 트랙 집중. 화제성 검증 후, 밈 톤은 나중에. (초안은 필요 시 재작성)
 
 ---
 
 ## 🗓️ 시딩 체크리스트 (게시 전)
+- [ ] 채널/서브레딧 **규칙 확인**(자작·자기홍보 허용)
+- [ ] **UTM 링크** 붙였나 / **스샷** 첨부(시작화면·대화·엔딩)
+- [ ] 톤 = **전문·자작** (밈 X)
+- [ ] 게시 후 **첫 1시간 댓글 대응**
+- [ ] Analytics 소스별 유입 확인 → 잘 먹힌 채널 집중
 
-- [ ] 해당 채널/갤/서브레딧 **규칙 확인**(자기홍보·자작 허용 여부)
-- [ ] **UTM 링크** 붙였나
-- [ ] **스샷 첨부**(엔딩·표정·선택지 중 임팩트 있는 1~2장)
-- [ ] 톤 맞췄나(아카=자작 / 디씨=밈 / 레딧=EN)
-- [ ] 게시 후 **첫 1시간 댓글 대응**(반응이 확산 좌우)
-- [ ] Analytics에서 소스별 유입 확인 → 잘 먹힌 채널에 집중
-
----
-
-## 📸 필요 스샷 세트 (아직 준비 안 됨 → 준비할 것)
-
-- 시작 화면(캐릭터 3인 선택) — "게임처럼 보임" 첫인상
-- 대화+호감도 바(잘 되는 순간 / 차이는 순간 대비)
-- 엔딩 화면(great / fail 둘 다 — 밈용)
-- (선택) 짧은 GIF: 선택→반응→호감도 변화 3초
-
-> **OG 이미지**(링크 썸네일)는 개발 필요 항목 — 게임 재개 시 `public/` + 메타태그로.
+## 📸 스샷 세트 (확보됨 ✅ / 배치)
+- 시작화면(캐릭터 3인 일러스트) → **아카 상단 대표컷**
+- 완전설렘 대화(호감도 92) → "잘 되는 순간"
+- 돌발 이벤트 → "깊이" 증명
+- 프로포즈 벚꽃(석촌호수) → 비주얼 대표컷 / 레딧
+- STAGE CLEAR·GAME OVER(패인 분석) → 시스템 설명용 (밈 아님, 시스템 예시로만)
+- 🔲 OG 이미지(링크 썸네일) = 개발 필요
 
 ---
 
-*최초 작성: 2026-07-02 · 커뮤니티 시딩 실탄. 게시 전 규칙 확인·톤 조절 필수.*
+*갱신: 2026-07-02 · 전문성 트랙으로 전환(밈 보류). 원천 = DEVLOG.md.*

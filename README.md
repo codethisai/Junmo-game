@@ -144,6 +144,7 @@ npm start          # localhost:3000
 **v0.2 게임 완성도** — 3인 히로인(유정·지은·수아) 대사 전면 재작성 + 표정·UI 고도화 완료.
 다음: 백엔드 구축(API 키 서버사이드 보호·Supabase 세이브) → 정식 출시.
 
+- 📝 **설계·개발기**(캐릭터를 '심리'부터 설계한 이야기): [`DEVLOG.md`](DEVLOG.md)
 - 🛠 개발 로드맵(버전 파이프라인): [`ROADMAP.md`](ROADMAP.md) · [`TODO.md`](TODO.md)
 - 📈 **성장·배포 전략**(커뮤니티 확산·퍼널·마인드맵): [`GROWTH.md`](GROWTH.md)
 
