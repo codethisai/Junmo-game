@@ -147,6 +147,7 @@ npm start          # localhost:3000
 - 📝 **설계·개발기**(캐릭터를 '심리'부터 설계한 이야기): [`DEVLOG.md`](DEVLOG.md)
 - 🛠 개발 로드맵(버전 파이프라인): [`ROADMAP.md`](ROADMAP.md) · [`TODO.md`](TODO.md)
 - 📈 **성장·배포 전략**(커뮤니티 확산·퍼널·마인드맵): [`GROWTH.md`](GROWTH.md)
+- 📡 **배급 컨트롤타워**(채널별 유입·반응 추적): 배포 URL `/?dash` · 설계 [`design-vault/06_개발·배포/배급-트래커.md`](design-vault/06_개발·배포/배급-트래커.md)
 
 ---
 
