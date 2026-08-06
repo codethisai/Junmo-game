@@ -1,7 +1,21 @@
 import { IMGS } from "../data/content.js";
 
-export const judge = (aff, st) => {
-  const e = st.ends;
+// 파트너별 스테이지 엔딩 오버라이드 (없으면 공용 st.ends 사용 → 유정·수아 무영향)
+// 지은 S5 = 잠실 벚꽃 고백 「나는 법」 (남산 프로포즈 프레임 대체)
+const ENDS_OVERRIDE = {
+  jieun: {
+    5: {
+      great: { l:"봄, 다시", next:true, e:"🌸", d:"그날 흩날리던 벚꽃이 다 지고, 다시 봄이 올 만큼의 시간이 흘렀다. 평생 남의 문장만 읽어오던 사람이, 이제 자기 이야기를 쓴다. 서툴고, 느리고, 가끔 멈칫하지만 — 더 이상, 혼자 쓰지 않는다" },
+      good:  { l:"봄, 다음 봄", next:true, e:"🌷", d:"그날 이후 지은은 준모의 연락에 조금 더 빨리 답했다. 여전히 다 보여주진 못했지만, 서랍에 넣어둔 이야기 하나를 언젠가 꺼낼 생각을 한다. …아직은, 언젠가. 두 사람의 봄은 조금 느리게 오는 중이다" },
+      friend:{ l:"좋은 사람", next:false, e:"🍃", d:"지은은 그날의 벚꽃을 오래 기억했다. 준모는 좋은 사람이었다. 다만 지은은, 끝내 제 껍데기 문을 열어 보이진 못했다. 가끔 봄이 오면 그날의 온도가 문득 떠오를 뿐" },
+      crush: { l:"닫힌 문", next:false, e:"🚪", d:"지은은 끝내 한 발을 물리지 못했다. 좋은 마음일수록 잃기 전에 먼저 접는 버릇. 준모의 연락은 점점 뜸해졌고, 지은은 그게 차라리 편하다고 스스로를 속였다" },
+      fail:  { l:"흩날리는", next:false, e:"🥀", d:"벚꽃은 그해도 어김없이 피고 졌다. 두 사람은 끝내 서로의 계절이 되지 못했다. 지은은 여전히 남의 문장만 읽고, 자기 이야기는 한 줄도 쓰지 못한 채. 그렇게 또 한 번의 봄이 아무 일 없이 흩날렸다" },
+    },
+  },
+};
+
+export const judge = (aff, st, partnerId) => {
+  const e = (ENDS_OVERRIDE[partnerId] && ENDS_OVERRIDE[partnerId][st.id]) || st.ends;
   if (aff >= 85) return e.great;
   if (aff >= 70) return e.good;
   if (aff >= 45) return e.friend;

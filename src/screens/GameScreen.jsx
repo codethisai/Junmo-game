@@ -106,7 +106,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
 
   useEffect(() => {
     if (ended && msgs.length > 0) {
-      const end = judge(aff, stage);
+      const end = judge(aff, stage, partner.id);
       setTimeout(() => onEnd(end, turn, minAff), 900);
     }
   }, [ended]);
