@@ -229,6 +229,35 @@ export const SCENES = {
       jieun_bored:   "/assets/characters/jieun_bored_s5.webp",
     },
   },
+
+  // === 재작성 루트 신규 자리 (2026-08-06) — 그림 첨부 대기 ===
+  // 그림 없을 동안은 아래 placeholder(기존 지은 이미지)로 폴백 → 안 깨짐.
+  // 실제 그림 오면 이 경로에 파일만 떨어뜨리면 자동 반영.
+  JIEUN_S4_HOME: {
+    name: "지은 자취방 (첫눈, 원정 간병)",
+    // ⬇️ 그림 오면 이 경로만 jieun_s4_home.webp 로 바꾸면 됨. (지금은 빈화면 방지용 기존 배경)
+    bg: "/assets/backgrounds/jieun_s4_jeongdok.webp",
+    characters: {
+      // TODO 첨부: 헝클어진 머리·맨투맨 환자 몰골 지은 (smile=열내린안도 / neutral=앓는중 / bored=차단)
+      // placeholder = 기존 S4 지은(차콜 터틀넥) — 그림 오기 전까지 안 깨지게
+      jieun_smile:   "/assets/characters/jieun_smile_s4.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s4.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s4.webp",
+    },
+  },
+
+  JIEUN_S5_LOTTE: {
+    name: "잠실 롯데월드 (교복 데이트)",
+    // ⬇️ 그림 오면 이 경로만 jieun_s5_lotteworld.webp 로 바꾸면 됨. (지금은 빈화면 방지용 벚꽃 배경)
+    bg: "/assets/backgrounds/jieun_s5_seokchon_cherry.webp",
+    characters: {
+      // TODO 첨부: 교복 입은 지은 (smile/neutral/bored)
+      // placeholder = 기존 S5 지은(원피스) — 교복 그림 오기 전까지 안 깨지게
+      jieun_smile:   "/assets/characters/jieun_smile_s5.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_s5.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_s5.webp",
+    },
+  },
 };
 
 /**

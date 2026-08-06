@@ -64,8 +64,13 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       if (stageId === 1) return "JIEUN_S1_BOOKCAFE";
       if (stageId === 2) return "JIEUN_S2_FOREST";
       if (stageId === 3) return "JIEUN_S3_LIBRARY";
-      if (stageId === 4) return "JIEUN_S4_JEONGDOK";
-      if (stageId === 5) return "JIEUN_S5_SEOKCHON";
+      if (stageId === 4) return "JIEUN_S4_HOME"; // 자취방 간병(재작성)
+      if (stageId === 5) {
+        // 잠실: 재회·공백회복·고백=석촌호수 벚꽃 / 롯데월드 교복데이트=별도 배경.
+        // turn 상태는 0-index(turns[turn]) → 스크립트 T3~T14(롯데월드)=turn 2~13.
+        if (turn >= 2 && turn <= 13) return "JIEUN_S5_LOTTE";
+        return "JIEUN_S5_SEOKCHON";
+      }
     }
 
     if (stageId === 1) return "S1_CAFE";
