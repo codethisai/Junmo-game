@@ -33,7 +33,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const [event, setEvent] = useState(null);
   const [showStageBanner, setShowStageBanner] = useState(true);
   const [hoveredChoice, setHoveredChoice] = useState(null);
+  const [affPop, setAffPop] = useState(null); // 호감도 변화 팝업 {delta, id}
   const eventFiredRef = useRef(false);
+
+  // 호감도 변화 팝업 트리거 (+N ❤ / −N 💔) — 누르는 손맛
+  const popAff = (delta) => {
+    if (!delta) return;
+    setAffPop({ delta, id: Date.now() });
+    setTimeout(() => setAffPop(null), 1100);
+  };
 
   useEffect(() => {
     const t = setTimeout(() => setShowStageBanner(false), 2200);
@@ -175,6 +183,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       const newAff = Math.max(0, Math.min(100, aff + chosen.affChange));
       setAff(newAff);
       setMinAff(m => Math.min(m, newAff));
+      popAff(chosen.affChange);
       setMsgs(m => [...m, { r: "ai", c: chosen.response }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff });
 
@@ -225,7 +234,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       const aiText = cleanAI(raw);
       incDailyCount();
       const { newAff, statDelta } = parseAI(aiText);
-      if (newAff !== null) { setAff(newAff); setMinAff(m => Math.min(m, newAff)); }
+      if (newAff !== null) { popAff(newAff - aff); setAff(newAff); setMinAff(m => Math.min(m, newAff)); }
       if (Object.keys(statDelta).length > 0) { onStatChg(statDelta); setDeltas(statDelta); setTimeout(() => setDeltas({}), 2500); }
       setMsgs(m => [...m, { r: "ai", c: aiText }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff || aff });
@@ -321,9 +330,18 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
 
       {/* 하단 대화 UI */}
       <div className="input-area" style={{position:"relative",zIndex:10,padding:"0 12px 8px",maxHeight:"48vh",display:"flex",flexDirection:"column",gap:5}}>
-        {/* 호감도 바 (항상 보임) */}
-        <div style={{background:"rgba(0,0,0,0.6)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,255,255,0.07)"}}>
-          <AffBar value={aff} color={partner.color}/>
+        {/* 호감도 바 (항상 보임) + 변화 팝업 */}
+        <div style={{position:"relative",background:"rgba(0,0,0,0.6)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,255,255,0.07)"}}>
+          <div key={affPop?.id||"bar"} style={{animation:affPop?"affPulse 0.5s ease":"none"}}>
+            <AffBar value={aff} color={partner.color}/>
+          </div>
+          {affPop && (
+            <div key={affPop.id} style={{position:"absolute",right:14,top:-2,fontSize:15,fontWeight:900,fontFamily:"'Noto Sans KR',sans-serif",
+              color:affPop.delta>0?"#4ade80":"#ff5a5a",textShadow:"0 2px 8px rgba(0,0,0,0.7)",
+              animation:"affFloat 1.1s cubic-bezier(.3,.7,.4,1) forwards",pointerEvents:"none",zIndex:5}}>
+              {affPop.delta>0?`＋${affPop.delta} ❤`:`${affPop.delta} 💔`}
+            </div>
+          )}
         </div>
         {/* 대화창 */}
         <div style={{background:"rgba(4,2,10,0.88)",backdropFilter:"blur(24px)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,overflow:"hidden",flex:1,display:"flex",flexDirection:"column",boxShadow:"0 -8px 40px rgba(0,0,0,0.5)"}}>
