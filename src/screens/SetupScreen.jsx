@@ -11,6 +11,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
   const [ci, setCi] = useState(0);
   const [custom, setCustom] = useState({말주변:33,외모:33,유머:34});
   const [tab, setTab] = useState("play");
+  const [statsOpen, setStatsOpen] = useState(false); // 능력치 설정 접기(기본 닫힘)
   useEffect(() => { bgm.stop(); if (!muted) bgm.play("menu"); return () => bgm.stop(); }, []);
   const stats = pi===3?custom:PRESETS[pi].s;
   const total = Object.values(custom).reduce((a,b)=>a+b,0);
@@ -32,18 +33,18 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
 
         {/* 타이틀 헤더 */}
         <div style={{textAlign:"center",marginBottom:22,paddingTop:4}}>
-          <div style={{fontSize:8,letterSpacing:8,color:"rgba(255,200,140,0.4)",fontFamily:"monospace",marginBottom:7}}>AI INTERACTIVE VISUAL NOVEL</div>
-          <h1 style={{fontSize:28,fontWeight:900,background:"linear-gradient(135deg,#ffb347,#ff6b9d,#c8a4ff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",fontFamily:"'Nanum Myeongjo',serif",letterSpacing:-0.5,lineHeight:1.2}}>강준모의 소개팅</h1>
-          <div style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:7,padding:"4px 12px",background:"rgba(255,200,140,0.06)",border:"1px solid rgba(255,200,140,0.12)",borderRadius:20}}>
-            <span style={{fontSize:11,color:"rgba(255,200,140,0.5)"}}>🏆</span>
-            <span style={{fontSize:10,color:"rgba(255,255,255,0.3)",fontFamily:"monospace"}}>{Object.keys(achs).length}/{ACHS.length} 달성</span>
+          <div style={{fontSize:11,letterSpacing:2,color:"rgba(212,169,96,0.65)",fontFamily:"'Nanum Myeongjo',serif",marginBottom:9}}>모태솔로, 스물아홉의 첫 소개팅</div>
+          <h1 style={{fontSize:30,fontWeight:800,color:"#d4a960",fontFamily:"'Nanum Myeongjo',serif",letterSpacing:1,lineHeight:1.2,textShadow:"0 2px 20px rgba(212,169,96,0.25)"}}>강준모의 소개팅</h1>
+          <div style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:10,padding:"4px 12px",background:"rgba(212,169,96,0.07)",border:"1px solid rgba(212,169,96,0.16)",borderRadius:20}}>
+            <span style={{fontSize:11,color:"rgba(212,169,96,0.6)"}}>🏆</span>
+            <span style={{fontSize:10,color:"rgba(245,230,211,0.4)",fontFamily:"monospace"}}>{Object.keys(achs).length}/{ACHS.length} 달성</span>
           </div>
         </div>
 
         {/* 탭 네비게이션 */}
         <div style={{display:"flex",gap:3,marginBottom:20,background:"rgba(0,0,0,0.4)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)",backdropFilter:"blur(16px)"}}>
           {[["play","🎮","시작하기"],["ach","🏆","업적"],["resume","📋","이력서"],["gallery","🔓","히든엔딩"]].map(([id,icon,label])=>(
-            <button key={id} onClick={()=>setTab(id)} style={{flex:1,padding:"9px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:tab===id?"rgba(255,179,71,0.15)":"transparent",border:tab===id?"1px solid rgba(255,179,71,0.28)":"1px solid transparent",borderRadius:10,color:tab===id?"#ffb347":"rgba(255,255,255,0.38)",fontSize:10,fontWeight:tab===id?700:400,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.2s",boxShadow:tab===id?"0 2px 10px rgba(255,179,71,0.12)":"none"}}>
+            <button key={id} onClick={()=>setTab(id)} style={{flex:1,padding:"9px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,background:tab===id?"rgba(212,169,96,0.15)":"transparent",border:tab===id?"1px solid rgba(212,169,96,0.3)":"1px solid transparent",borderRadius:10,color:tab===id?"#d4a960":"rgba(245,230,211,0.4)",fontSize:10,fontWeight:tab===id?700:400,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.2s",boxShadow:tab===id?"0 2px 10px rgba(212,169,96,0.12)":"none"}}>
               <span style={{fontSize:14}}>{icon}</span>
               <span>{label}</span>
             </button>
@@ -104,24 +105,25 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
             </div>
           </div>
 
-          {/* 스탯 프리셋 */}
+          {/* 스탯 프리셋 (접기 — 기본 닫힘, 안 열면 현재 프리셋으로 바로 시작) */}
           <div style={{marginBottom:16}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-              <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
-              <span style={{fontSize:10,color:"rgba(255,255,255,0.35)",letterSpacing:3,fontFamily:"monospace"}}>준모 능력치 설정</span>
-              <div style={{height:1,flex:1,background:"rgba(255,255,255,0.07)"}}/>
-            </div>
+            <button onClick={()=>setStatsOpen(o=>!o)} style={{width:"100%",display:"flex",alignItems:"center",gap:8,marginBottom:statsOpen?12:0,padding:"11px 14px",background:"rgba(0,0,0,0.35)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,cursor:"pointer",backdropFilter:"blur(14px)"}}>
+              <span style={{fontSize:12}}>⚙️</span>
+              <span style={{flex:1,textAlign:"left",fontSize:11,color:"rgba(245,230,211,0.6)",fontFamily:"'Noto Sans KR',sans-serif"}}>준모 능력치 <span style={{color:"#d4a960",fontWeight:700}}>{pi===3?"직접 설정":PRESETS[pi].n.replace(/[^가-힣 ]/g,"").trim()}</span></span>
+              <span style={{fontSize:10,color:"rgba(245,230,211,0.35)"}}>{statsOpen?"접기 ▲":"바꾸기 ▼"}</span>
+            </button>
+            {statsOpen && (<>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:10}}>
               {PRESETS.map((p,i)=>(
                 <button key={i} onClick={()=>setPi(i)}
                   style={{padding:"13px 14px",
-                    background:pi===i?"rgba(255,179,71,0.1)":"rgba(0,0,0,0.35)",
-                    border:`1px solid ${pi===i?"rgba(255,179,71,0.35)":"rgba(255,255,255,0.07)"}`,
+                    background:pi===i?"rgba(212,169,96,0.1)":"rgba(0,0,0,0.35)",
+                    border:`1px solid ${pi===i?"rgba(212,169,96,0.35)":"rgba(255,255,255,0.07)"}`,
                     borderRadius:13,cursor:"pointer",textAlign:"left",transition:"all 0.2s",
                     transform:pi===i?"scale(1.02)":"scale(1)",
                     backdropFilter:"blur(14px)",
-                    boxShadow:pi===i?"0 4px 16px rgba(255,179,71,0.1)":"none"}}>
-                  <div style={{fontSize:13,fontWeight:800,color:pi===i?"#ffb347":"rgba(255,255,255,0.68)",fontFamily:"'Noto Sans KR',sans-serif",marginBottom:4}}>{p.n}</div>
+                    boxShadow:pi===i?"0 4px 16px rgba(212,169,96,0.1)":"none"}}>
+                  <div style={{fontSize:13,fontWeight:800,color:pi===i?"#d4a960":"rgba(245,230,211,0.68)",fontFamily:"'Noto Sans KR',sans-serif",marginBottom:4}}>{p.n}</div>
                   <div style={{fontSize:10,color:"rgba(255,255,255,0.32)",lineHeight:1.5}}>{p.d}</div>
                 </button>
               ))}
@@ -160,16 +162,17 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
                 ))}
               </div>
             )}
+            </>)}
           </div>
 
           {/* 시작 버튼 */}
           <button onClick={()=>ok&&onStart(stats,PARTNERS[ci],0,[])} disabled={!ok}
             style={{width:"100%",padding:"15px",
-              background:ok?"linear-gradient(135deg,#ff6b9d,#ffb347)":"rgba(255,255,255,0.04)",
-              border:"none",borderRadius:15,color:ok?"white":"rgba(255,255,255,0.25)",
+              background:ok?"linear-gradient(135deg,#e0b877,#c8974a)":"rgba(255,255,255,0.04)",
+              border:"none",borderRadius:15,color:ok?"#1a1410":"rgba(255,255,255,0.25)",
               fontWeight:900,fontSize:15,cursor:ok?"pointer":"not-allowed",
               fontFamily:"'Noto Sans KR',sans-serif",
-              boxShadow:ok?"0 10px 36px rgba(255,107,157,0.35),0 2px 0 rgba(255,255,255,0.1) inset":"none",
+              boxShadow:ok?"0 10px 36px rgba(212,169,96,0.35),0 2px 0 rgba(255,255,255,0.15) inset":"none",
               transition:"all 0.2s",letterSpacing:0.5}}>
             ☕ 지금 바로 소개팅 시작
           </button>
@@ -177,7 +180,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
           {saved && (
             <div style={{marginTop:10,display:"flex",gap:8}}>
               <button onClick={()=>onStart(saved.stats,PARTNERS.find(p=>p.id===saved.partnerId)||PARTNERS[0],saved.si,saved.hist)}
-                style={{flex:1,padding:"11px",background:"rgba(124,158,255,0.09)",border:"1px solid rgba(124,158,255,0.22)",borderRadius:12,color:"#9ab4ff",fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",backdropFilter:"blur(10px)"}}>
+                style={{flex:1,padding:"11px",background:"rgba(212,169,96,0.1)",border:"1px solid rgba(212,169,96,0.28)",borderRadius:12,color:"#d4a960",fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",backdropFilter:"blur(10px)"}}>
                 💾 이어하기 — 스테이지 {saved.si+1}
               </button>
               <button onClick={onClearSave}
@@ -211,7 +214,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
             {resume.length === 0 ? (
               <div style={{textAlign:"center",padding:"32px 0",color:"rgba(255,255,255,0.2)",fontSize:12}}>아직 기록이 없어요.<br/>첫 소개팅을 시작해봐요!</div>
             ) : resume.map((r, i) => (
-              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:r.ok?"rgba(255,179,71,0.06)":"rgba(255,68,68,0.05)",border:`1px solid ${r.ok?"rgba(255,179,71,0.15)":"rgba(255,68,68,0.1)"}`,borderRadius:12,marginBottom:6}}>
+              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:r.ok?"rgba(212,169,96,0.06)":"rgba(255,68,68,0.05)",border:`1px solid ${r.ok?"rgba(212,169,96,0.15)":"rgba(255,68,68,0.1)"}`,borderRadius:12,marginBottom:6}}>
                 <span style={{fontSize:18}}>{r.ok?"✅":"❌"}</span>
                 <div style={{flex:1}}>
                   <div style={{fontSize:12,color:"rgba(255,255,255,0.8)",fontFamily:"'Noto Sans KR',sans-serif"}}>{r.partner} · S{r.stage}</div>
