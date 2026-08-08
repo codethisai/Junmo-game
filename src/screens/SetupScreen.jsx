@@ -20,11 +20,10 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
 
   return (
     <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",fontFamily:"'Noto Sans KR',sans-serif",overflowY:"auto",overflowX:"hidden",WebkitOverflowScrolling:"touch",position:"relative"}}>
-      {/* 파스텔 그라데이션 배경 (크림핑크→하늘→라벤더) */}
-      <div style={{position:"fixed",inset:0,background:"linear-gradient(165deg,#fff0f5 0%,#ffe0ec 35%,#f0e4fb 70%,#e8dcf5 100%)"}}/>
-      {/* 몽환 블러 오브 (핑크·하늘) */}
-      <div style={{position:"fixed",top:"-8%",left:"-10%",width:"55%",height:"40%",background:"radial-gradient(circle,rgba(255,160,190,0.45),transparent 70%)",filter:"blur(40px)"}}/>
-      <div style={{position:"fixed",bottom:"-6%",right:"-10%",width:"55%",height:"42%",background:"radial-gradient(circle,rgba(168,216,234,0.4),transparent 70%)",filter:"blur(40px)"}}/>
+      {/* 남산 야경 타이틀 배경 */}
+      <div style={{position:"fixed",inset:0,backgroundImage:"url(/assets/backgrounds/title_namsan.webp)",backgroundSize:"cover",backgroundPosition:"center"}}/>
+      {/* 가독성 베일 (상단 살짝·하단 카드영역 밝게) */}
+      <div style={{position:"fixed",inset:0,background:"linear-gradient(180deg,rgba(40,30,60,0.28) 0%,rgba(255,240,248,0.12) 42%,rgba(255,244,250,0.42) 78%,rgba(255,242,249,0.6) 100%)"}}/>
 
       <MuteBtn muted={muted} onToggle={onMute}/>
 
@@ -32,8 +31,8 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
 
         {/* 타이틀 헤더 */}
         <div style={{textAlign:"center",marginBottom:22,paddingTop:4}}>
-          <div style={{fontSize:11,letterSpacing:2,color:"#c97b9a",fontFamily:"'Nanum Myeongjo',serif",marginBottom:9}}>모태솔로, 스물아홉의 첫 소개팅</div>
-          <h1 style={{fontSize:30,fontWeight:800,color:"#ff6f9c",fontFamily:"'Nanum Myeongjo',serif",letterSpacing:1,lineHeight:1.2,textShadow:"0 2px 16px rgba(255,143,171,0.4)"}}>강준모의 소개팅</h1>
+          <div style={{fontSize:11,letterSpacing:2,color:"#ffe1ec",fontFamily:"'Nanum Myeongjo',serif",marginBottom:9,textShadow:"0 1px 8px rgba(60,30,60,0.7)"}}>모태솔로, 스물아홉의 첫 소개팅</div>
+          <h1 style={{fontSize:32,fontWeight:800,color:"#fff",fontFamily:"'Nanum Myeongjo',serif",letterSpacing:1,lineHeight:1.2,textShadow:"0 2px 18px rgba(255,120,160,0.7), 0 1px 4px rgba(60,20,50,0.6)"}}>강준모의 소개팅</h1>
           <div style={{display:"inline-flex",alignItems:"center",gap:6,marginTop:10,padding:"4px 12px",background:"rgba(255,143,171,0.14)",border:"1px solid rgba(255,143,171,0.3)",borderRadius:20}}>
             <span style={{fontSize:11}}>🏆</span>
             <span style={{fontSize:10,color:"#8a6b7a",fontFamily:"monospace"}}>{Object.keys(achs).length}/{ACHS.length} 달성</span>
@@ -56,9 +55,9 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
           {/* 파트너 선택 섹션 */}
           <div style={{marginBottom:16}}>
             <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-              <div style={{height:1,flex:1,background:"rgba(255,143,171,0.25)"}}/>
-              <span style={{fontSize:10,color:"#c97b9a",letterSpacing:3,fontFamily:"monospace"}}>누구랑 만날까요</span>
-              <div style={{height:1,flex:1,background:"rgba(255,143,171,0.25)"}}/>
+              <div style={{height:1,flex:1,background:"rgba(255,255,255,0.35)"}}/>
+              <span style={{fontSize:10,color:"#fff",letterSpacing:3,fontFamily:"monospace",textShadow:"0 1px 6px rgba(60,30,60,0.7)"}}>누구랑 만날까요</span>
+              <div style={{height:1,flex:1,background:"rgba(255,255,255,0.35)"}}/>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>
               {PARTNERS.map((p,i)=>(
