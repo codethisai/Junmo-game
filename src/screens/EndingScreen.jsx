@@ -20,8 +20,8 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
     <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",fontFamily:"'Noto Sans KR',sans-serif",position:"relative",overflow:"hidden",background:"#050308"}}>
       {/* 배경 */}
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${bgImg})`,backgroundSize:"cover",backgroundPosition:"center",filter:ok?"none":"grayscale(0.7) brightness(0.5)"}}/>
-      <div style={{position:"absolute",inset:0,background:ok?`linear-gradient(180deg,rgba(5,3,8,0.2) 0%,rgba(5,3,8,0.7) 50%,rgba(5,3,8,0.97) 100%)`:`linear-gradient(180deg,rgba(5,3,8,0.5) 0%,rgba(5,3,8,0.9) 50%,rgba(5,3,8,0.99) 100%)`}}/>
-      {final && <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 40%,rgba(255,215,0,0.08) 0%,transparent 60%)"}}/>}
+      <div style={{position:"absolute",inset:0,background:ok?`linear-gradient(180deg,rgba(255,230,242,0.15) 0%,rgba(255,225,240,0.35) 50%,rgba(255,235,245,0.72) 100%)`:`linear-gradient(180deg,rgba(5,3,8,0.5) 0%,rgba(5,3,8,0.9) 50%,rgba(5,3,8,0.99) 100%)`}}/>
+      {final && <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 40%,rgba(255,200,220,0.18) 0%,transparent 60%)"}}/>}
       <MuteBtn muted={muted} onToggle={onMute}/>
 
       {/* 캐릭터 */}
@@ -36,31 +36,31 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
 
       {/* 결과 카드 */}
       <div style={{position:"relative",zIndex:10,padding:"0 16px 20px"}}>
-        <div style={{background:"rgba(4,2,10,0.92)",backdropFilter:"blur(30px)",border:`1px solid ${accentColor}22`,borderRadius:20,padding:"20px 20px",textAlign:"center",boxShadow:`0 -16px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04)`}}>
+        <div style={{background: ok?"rgba(255,251,253,0.94)":"rgba(20,10,16,0.9)",backdropFilter:"blur(30px)",border:`1px solid ${ok?"rgba(255,143,171,0.28)":accentColor+"22"}`,borderRadius:20,padding:"20px 20px",textAlign:"center",boxShadow: ok?"0 -16px 50px rgba(160,96,120,0.25)":"0 -16px 60px rgba(0,0,0,0.6)"}}>
           <div style={{position:"absolute",top:0,left:"20%",right:"20%",height:1,background:`linear-gradient(90deg,transparent,${accentColor}66,transparent)`}}/>
           {final ? (
             <>
-              <div style={{fontSize:9,letterSpacing:6,color:`${accentColor}88`,fontFamily:"monospace",marginBottom:8}}>TRUE ENDING UNLOCKED</div>
+              <div style={{fontSize:9,letterSpacing:6,color:"#e59400",fontFamily:"monospace",marginBottom:8}}>TRUE ENDING UNLOCKED</div>
               <div style={{fontSize:32,marginBottom:8}}>💒</div>
-              <h2 style={{fontSize:24,fontWeight:900,background:"linear-gradient(135deg,#ff6b9d,#ffd93d,#7c9eff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:10,fontFamily:"'Nanum Myeongjo',serif"}}>모솔 완전 탈출!</h2>
-              <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,lineHeight:1.9,marginBottom:16}}>강준모, 29세. 남중 → 남고 → 공대 → 군대 → IT 스타트업.<br/>그 긴 여정 끝에 <span style={{color:partner.color,fontWeight:700}}>{partner.name}</span>을(를) 만났다.<br/>🧙 29년 만에 마법사의 저주가 풀렸다.</p>
+              <h2 style={{fontSize:24,fontWeight:900,background:"linear-gradient(135deg,#ff6f9c,#c86ad0)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:10,fontFamily:"'Nanum Myeongjo',serif"}}>모솔 완전 탈출!</h2>
+              <p style={{color:"#6b5b6e",fontSize:12,lineHeight:1.9,marginBottom:16}}>강준모, 29세. 남중 → 남고 → 공대 → 군대 → IT 스타트업.<br/>그 긴 여정 끝에 <span style={{color:partner.color,fontWeight:700}}>{partner.name}</span>을(를) 만났다.<br/>🧙 29년 만에 마법사의 저주가 풀렸다.</p>
               <div style={{display:"flex",gap:6,justifyContent:"center",marginBottom:16,flexWrap:"wrap"}}>
-                {Object.entries(stats).map(([k,v])=>(<div key={k} style={{padding:"4px 10px",background:"rgba(255,255,255,0.04)",borderRadius:8,fontSize:10,color:"rgba(255,255,255,0.5)",fontFamily:"monospace"}}>{k} {v}</div>))}
+                {Object.entries(stats).map(([k,v])=>(<div key={k} style={{padding:"4px 10px",background:"rgba(255,143,171,0.1)",borderRadius:8,fontSize:10,color:"#8a6b7a",fontFamily:"monospace"}}>{k} {v}</div>))}
               </div>
-              <button onClick={()=>onNext("reset")} style={{width:"100%",padding:"13px",background:"linear-gradient(135deg,#ff6b9d,#ffd93d,#7c9eff)",border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:15,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:"0 8px 40px rgba(255,107,157,0.4)"}}>다시 처음부터 🔄</button>
+              <button onClick={()=>onNext("reset")} style={{width:"100%",padding:"13px",background:"linear-gradient(135deg,#ff9ec0,#ff6f9c)",border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:15,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:"0 8px 30px rgba(255,111,156,0.4)"}}>다시 처음부터 🔄</button>
             </>
           ) : ok ? (
             <>
-              <div style={{fontSize:9,letterSpacing:5,color:`${partner.color}66`,fontFamily:"monospace",marginBottom:6}}>STAGE {stage.id} CLEAR</div>
+              <div style={{fontSize:9,letterSpacing:5,color:partner.color,fontFamily:"monospace",marginBottom:6}}>STAGE {stage.id} CLEAR</div>
               <div style={{fontSize:28,marginBottom:6}}>{ending.e}</div>
               <h2 style={{fontSize:20,fontWeight:900,color:partner.color,marginBottom:6,fontFamily:"'Nanum Myeongjo',serif"}}>{ending.l}</h2>
-              <p style={{color:"rgba(255,255,255,0.4)",fontSize:12,marginBottom:4}}>{ending.d}</p>
+              <p style={{color:"#6b5b6e",fontSize:12,marginBottom:4}}>{ending.d}</p>
               {STAGES[stage.id] && (
-                <div style={{padding:"8px 12px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:10,marginBottom:14,marginTop:8,fontSize:11,color:"rgba(255,255,255,0.3)"}}>
+                <div style={{padding:"8px 12px",background:"rgba(255,143,171,0.08)",border:"1px solid rgba(255,143,171,0.16)",borderRadius:10,marginBottom:14,marginTop:8,fontSize:11,color:"#8a6b7a"}}>
                   NEXT → <span style={{color:partner.color}}>{STAGES[stage.id]?.title}</span>
                 </div>
               )}
-              <button onClick={()=>onNext(stage.id>=5?"reset":"next")} style={{width:"100%",padding:"13px",background:`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.8))`,border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:14,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:`0 8px 32px ${partner.color}44`}}>
+              <button onClick={()=>onNext(stage.id>=5?"reset":"next")} style={{width:"100%",padding:"13px",background:`linear-gradient(135deg,${partner.color},#ff9ec0)`,border:"none",borderRadius:14,color:"white",fontWeight:900,fontSize:14,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",boxShadow:`0 8px 32px ${partner.color}44`}}>
                 {stage.id >= 5 ? "처음부터 🔄" : "다음 스테이지 →"}
               </button>
             </>
