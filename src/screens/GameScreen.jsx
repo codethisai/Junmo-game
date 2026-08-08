@@ -34,6 +34,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const [showStageBanner, setShowStageBanner] = useState(true);
   const [hoveredChoice, setHoveredChoice] = useState(null);
   const [affPop, setAffPop] = useState(null); // 호감도 변화 팝업 {delta, id}
+  const [cgOverlay, setCgOverlay] = useState(null); // 이벤트 CG 전체화면 {src}
   const eventFiredRef = useRef(false);
 
   // 호감도 변화 팝업 트리거 (+N ❤ / −N 💔) — 누르는 손맛
@@ -204,6 +205,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
             }
           }
           setTimeout(() => {
+            if (nextTurn.cg) setCgOverlay(nextTurn.cg); // 이벤트 CG 전체화면
             if (nextTurn.scene) setMsgs(m => [...m, { r: "scene", c: nextTurn.scene }]);
             setChoices(nextTurn.choices.map(c => c.text));
           }, 300);
@@ -263,6 +265,14 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(5,3,8,0.3) 0%,rgba(5,3,8,0.15) 40%,rgba(5,3,8,0.6) 65%,rgba(5,3,8,0.95) 100%)"}}/>
 
       <MuteBtn muted={muted} onToggle={onMute}/>
+
+      {/* 이벤트 CG 전체화면 (탭하면 닫힘) */}
+      {cgOverlay && (
+        <div onClick={()=>setCgOverlay(null)} style={{position:"fixed",inset:0,zIndex:200,background:"#000",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",animation:"fadeIn 0.4s ease"}}>
+          <img src={cgOverlay} alt="event" style={{maxWidth:"100%",maxHeight:"100%",objectFit:"contain",animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)"}}/>
+          <div style={{position:"absolute",bottom:"6%",left:0,right:0,textAlign:"center",fontSize:12,color:"rgba(255,255,255,0.75)",fontFamily:"'Noto Sans KR',sans-serif",textShadow:"0 2px 8px rgba(0,0,0,0.8)",animation:"fadeIn 1s ease 0.6s both",pointerEvents:"none"}}>탭하여 계속 ▸</div>
+        </div>
+      )}
 
       {/* 스테이지 전환 배너 */}
       {showStageBanner && (
