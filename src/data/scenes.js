@@ -251,11 +251,10 @@ export const SCENES = {
     // ⬇️ 그림 오면 이 경로만 jieun_s5_lotteworld.webp 로 바꾸면 됨. (지금은 빈화면 방지용 벚꽃 배경)
     bg: "/assets/backgrounds/jieun_s5_seokchon_cherry.webp",
     characters: {
-      // TODO 첨부: 교복 입은 지은 (smile/neutral/bored)
-      // placeholder = 기존 S5 지은(원피스) — 교복 그림 오기 전까지 안 깨지게
-      jieun_smile:   "/assets/characters/jieun_smile_s5.webp",
-      jieun_neutral: "/assets/characters/jieun_neutral_s5.webp",
-      jieun_bored:   "/assets/characters/jieun_bored_s5.webp",
+      // 교복 지은 (노란 머리띠·후드) — 2026-08-08 적용. smile=V사인/neutral=별머리띠미소/bored=손괴고한숨
+      jieun_smile:   "/assets/characters/jieun_smile_uniform.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_uniform.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_uniform.webp",
     },
   },
 };
