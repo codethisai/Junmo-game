@@ -248,8 +248,7 @@ export const SCENES = {
 
   JIEUN_S5_LOTTE: {
     name: "잠실 롯데월드 (교복 데이트)",
-    // ⬇️ 그림 오면 이 경로만 jieun_s5_lotteworld.webp 로 바꾸면 됨. (지금은 빈화면 방지용 벚꽃 배경)
-    bg: "/assets/backgrounds/jieun_s5_seokchon_cherry.webp",
+    bg: "/assets/backgrounds/jieun_s5_lotteworld.webp",
     characters: {
       // 교복 지은 (노란 머리띠·후드) — 2026-08-08 적용. smile=V사인/neutral=별머리띠미소/bored=손괴고한숨
       jieun_smile:   "/assets/characters/jieun_smile_uniform.webp",
