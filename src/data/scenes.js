@@ -235,14 +235,12 @@ export const SCENES = {
   // 실제 그림 오면 이 경로에 파일만 떨어뜨리면 자동 반영.
   JIEUN_S4_HOME: {
     name: "지은 자취방 (첫눈, 원정 간병)",
-    // ⬇️ 그림 오면 이 경로만 jieun_s4_home.webp 로 바꾸면 됨. (지금은 빈화면 방지용 기존 배경)
-    bg: "/assets/backgrounds/jieun_s4_jeongdok.webp",
+    bg: "/assets/backgrounds/jieun_s4_home.webp",
     characters: {
-      // TODO 첨부: 헝클어진 머리·맨투맨 환자 몰골 지은 (smile=열내린안도 / neutral=앓는중 / bored=차단)
-      // placeholder = 기존 S4 지은(차콜 터틀넥) — 그림 오기 전까지 안 깨지게
-      jieun_smile:   "/assets/characters/jieun_smile_s4.webp",
-      jieun_neutral: "/assets/characters/jieun_neutral_s4.webp",
-      jieun_bored:   "/assets/characters/jieun_bored_s4.webp",
+      // 아픈 지은(집순이 니트·안경·똥머리) — 2026-08-08 적용. smile=머그컵안도 / neutral=이마짚음앓는중 / bored=담요팔짱시큰둥
+      jieun_smile:   "/assets/characters/jieun_smile_home.webp",
+      jieun_neutral: "/assets/characters/jieun_neutral_home.webp",
+      jieun_bored:   "/assets/characters/jieun_bored_home.webp",
     },
   },
 
