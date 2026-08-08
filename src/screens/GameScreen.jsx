@@ -131,12 +131,12 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     .trim();
 
   const fmt = (text) => text
-    .replace(/\*([^*]+)\*/g, '<em style="color:rgba(255,255,255,0.4);font-style:italic;font-size:12px;">$1</em>')
+    .replace(/\*([^*]+)\*/g, '<em style="color:#9a8592;font-style:italic;font-size:12px;">$1</em>')
     .replace(/\[호감도:?\s*\d+\/?100\]/g, '')
     .replace(/\[말주변[±+\-\d\s]+외모[±+\-\d\s]+유머[±+\-\d\s]+\]/g, '')
     .replace(new RegExp(partner.name + '\\s*:', 'g'), `<span style="color:${partner.color};font-weight:700;">${partner.name}:</span>`)
-    .replace(/준모\s*속마음\s*:/g, '<span style="color:rgba(255,200,100,0.7);font-size:11px;">💭 준모 속마음:</span>')
-    .replace(/준모\s*내면\s*:/g, '<span style="color:rgba(255,200,100,0.7);font-size:11px;">💭 준모 속마음:</span>')
+    .replace(/준모\s*속마음\s*:/g, '<span style="color:#c78500;font-size:11px;">💭 준모 속마음:</span>')
+    .replace(/준모\s*내면\s*:/g, '<span style="color:#c78500;font-size:11px;">💭 준모 속마음:</span>')
     .trim();
 
   const parseAI = (text) => {
@@ -280,18 +280,18 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       {/* 상단 HUD */}
       <div style={{position:"relative",zIndex:10,padding:"14px 16px 0",display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
         {/* 스테이지 정보 */}
-        <div style={{background:"rgba(0,0,0,0.55)",backdropFilter:"blur(20px)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:14,padding:"10px 16px"}}>
+        <div style={{background:"rgba(255,250,252,0.82)",backdropFilter:"blur(20px)",border:"1px solid rgba(255,143,171,0.2)",borderRadius:14,padding:"10px 16px",boxShadow:"0 4px 14px rgba(160,96,120,0.12)"}}>
           <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
-            <span style={{fontSize:9,color:"rgba(255,255,255,0.3)",letterSpacing:3,fontFamily:"monospace"}}>STAGE {stage.id}/5</span>
+            <span style={{fontSize:9,color:"#b09aa5",letterSpacing:3,fontFamily:"monospace"}}>STAGE {stage.id}/5</span>
             <div style={{display:"flex",gap:3}}>
-              {Array.from({length:5},(_,i)=>(<div key={i} style={{width:5,height:5,borderRadius:"50%",background:i<stage.id?partner.color:"rgba(255,255,255,0.1)"}}/>))}
+              {Array.from({length:5},(_,i)=>(<div key={i} style={{width:5,height:5,borderRadius:"50%",background:i<stage.id?partner.color:"rgba(190,160,180,0.3)"}}/>))}
             </div>
           </div>
-          <div style={{fontSize:14,fontWeight:800,color:"white",marginBottom:2}}>{stage.icon} {stage.title}</div>
-          <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>{partner.emoji} {partner.name} · {partner.stages[stage.id-1]?.loc}</div>
+          <div style={{fontSize:14,fontWeight:800,color:"#4f4152",marginBottom:2}}>{stage.icon} {stage.title}</div>
+          <div style={{fontSize:10,color:"#8a6b7a"}}>{partner.emoji} {partner.name} · {partner.stages[stage.id-1]?.loc}</div>
         </div>
         {/* 스탯 토글 버튼 */}
-        <button onClick={()=>setShowStats(s=>!s)} style={{background:"rgba(0,0,0,0.5)",backdropFilter:"blur(16px)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"8px 14px",color:"rgba(255,255,255,0.6)",fontSize:11,cursor:"pointer",fontFamily:"monospace"}}>
+        <button onClick={()=>setShowStats(s=>!s)} style={{background:"rgba(255,250,252,0.82)",backdropFilter:"blur(16px)",border:"1px solid rgba(255,143,171,0.2)",borderRadius:12,padding:"8px 14px",color:"#8a6b7a",fontSize:11,cursor:"pointer",fontFamily:"monospace",boxShadow:"0 4px 14px rgba(160,96,120,0.1)"}}>
           {showStats?"접기":"내 스탯 ▸"}
         </button>
       </div>
@@ -331,50 +331,50 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       {/* 하단 대화 UI */}
       <div className="input-area" style={{position:"relative",zIndex:10,padding:"0 12px 8px",maxHeight:"48vh",display:"flex",flexDirection:"column",gap:5}}>
         {/* 호감도 바 (항상 보임) + 변화 팝업 */}
-        <div style={{position:"relative",background:"rgba(0,0,0,0.6)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,255,255,0.07)"}}>
+        <div style={{position:"relative",background:"rgba(255,250,252,0.82)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,143,171,0.2)"}}>
           <div key={affPop?.id||"bar"} style={{animation:affPop?"affPulse 0.5s ease":"none"}}>
             <AffBar value={aff} color={partner.color}/>
           </div>
           {affPop && (
             <div key={affPop.id} style={{position:"absolute",right:14,top:-2,fontSize:15,fontWeight:900,fontFamily:"'Noto Sans KR',sans-serif",
-              color:affPop.delta>0?"#4ade80":"#ff5a5a",textShadow:"0 2px 8px rgba(0,0,0,0.7)",
+              color:affPop.delta>0?"#2fb344":"#e5484d",textShadow:"0 2px 6px rgba(255,255,255,0.8)",
               animation:"affFloat 1.1s cubic-bezier(.3,.7,.4,1) forwards",pointerEvents:"none",zIndex:5}}>
               {affPop.delta>0?`＋${affPop.delta} ❤`:`${affPop.delta} 💔`}
             </div>
           )}
         </div>
         {/* 대화창 */}
-        <div style={{background:"rgba(4,2,10,0.88)",backdropFilter:"blur(24px)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,overflow:"hidden",flex:1,display:"flex",flexDirection:"column",boxShadow:"0 -8px 40px rgba(0,0,0,0.5)"}}>
+        <div style={{background:"rgba(255,251,253,0.92)",backdropFilter:"blur(24px)",border:"1px solid rgba(255,143,171,0.22)",borderRadius:16,overflow:"hidden",flex:1,display:"flex",flexDirection:"column",boxShadow:"0 -8px 40px rgba(160,96,120,0.18)"}}>
           {/* 화자 이름 바 */}
-          <div style={{padding:"8px 14px",borderBottom:"1px solid rgba(255,255,255,0.05)",display:"flex",alignItems:"center",gap:8,background:"rgba(255,255,255,0.015)"}}>
+          <div style={{padding:"8px 14px",borderBottom:"1px solid rgba(255,143,171,0.14)",display:"flex",alignItems:"center",gap:8,background:"rgba(255,143,171,0.05)"}}>
             <div style={{width:7,height:7,borderRadius:"50%",background:partner.color,boxShadow:`0 0 8px ${partner.color}`}}/>
-            <span style={{fontSize:11,color:"rgba(255,255,255,0.5)",fontFamily:"'Noto Sans KR',sans-serif"}}>{partner.emoji} {partner.name}</span>
-            <span style={{marginLeft:"auto",fontSize:9,color:"rgba(255,255,255,0.25)",fontFamily:"monospace"}}>T{turn}/{stageMaxTurns}</span>
+            <span style={{fontSize:11,color:"#8a6b7a",fontFamily:"'Noto Sans KR',sans-serif"}}>{partner.emoji} {partner.name}</span>
+            <span style={{marginLeft:"auto",fontSize:9,color:"#b09aa5",fontFamily:"monospace"}}>T{turn}/{stageMaxTurns}</span>
           </div>
           {/* 메시지 */}
           <div ref={chatRef} className="chat-area" style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:60,maxHeight:160}}>
             {msgs.length === 0 && (
               <div style={{textAlign:"center",padding:"16px 8px"}}>
-                <div style={{fontSize:11,color:"rgba(255,255,255,0.25)",lineHeight:1.8,marginBottom:8}}>{partner.stages[stage.id-1]?.desc}</div>
-                <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"6px 14px",background:`${partner.color}10`,border:`1px dashed ${partner.color}30`,borderRadius:20}}>
-                  <span style={{fontSize:11,color:`${partner.color}99`}}>💬 아래 입력창에 말을 걸어보세요</span>
+                <div style={{fontSize:11,color:"#9a8592",lineHeight:1.8,marginBottom:8}}>{partner.stages[stage.id-1]?.desc}</div>
+                <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"6px 14px",background:`${partner.color}14`,border:`1px dashed ${partner.color}55`,borderRadius:20}}>
+                  <span style={{fontSize:11,color:partner.color}}>💬 아래 입력창에 말을 걸어보세요</span>
                 </div>
               </div>
             )}
             {msgs.map((m, i) => (
               m.r === "scene"
-                ? <div key={i} style={{textAlign:"center",padding:"4px 8px",fontSize:11,color:"rgba(255,255,255,0.3)",fontStyle:"italic",lineHeight:1.7}}>{m.c}</div>
+                ? <div key={i} style={{textAlign:"center",padding:"4px 8px",fontSize:11,color:"#a58a99",fontStyle:"italic",lineHeight:1.7}}>{m.c}</div>
                 : (
               <div key={i} style={{display:"flex",flexDirection:m.r==="user"?"row-reverse":"row",gap:6,alignItems:"flex-start",animation:"fadeIn 0.3s ease"}}>
                 {m.r === "ai" && (
-                  <div style={{width:26,height:26,borderRadius:"50%",background:`linear-gradient(135deg,${partner.color},rgba(255,255,255,0.1))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,flexShrink:0}}>{partner.emoji}</div>
+                  <div style={{width:26,height:26,borderRadius:"50%",background:`linear-gradient(135deg,${partner.color},rgba(255,255,255,0.5))`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,flexShrink:0}}>{partner.emoji}</div>
                 )}
                 <div style={{maxWidth:"85%",padding:"8px 12px",borderRadius:m.r==="user"?"12px 4px 12px 12px":"4px 12px 12px 12px",
-                  background:m.r==="user"?"rgba(255,107,157,0.08)":m.r==="system"?"rgba(255,179,71,0.06)":"rgba(255,255,255,0.04)",
-                  border:`1px solid ${m.r==="user"?"rgba(255,107,157,0.15)":m.r==="system"?"rgba(255,179,71,0.15)":"rgba(255,255,255,0.05)"}`,
-                  fontSize:12.5,lineHeight:1.8,color:m.r==="system"?"rgba(255,200,100,0.8)":"rgba(255,255,255,0.85)"}}>
+                  background:m.r==="user"?"rgba(255,143,171,0.16)":m.r==="system"?"rgba(255,193,80,0.16)":"rgba(255,255,255,0.75)",
+                  border:`1px solid ${m.r==="user"?"rgba(255,143,171,0.3)":m.r==="system"?"rgba(240,165,0,0.28)":"rgba(255,143,171,0.16)"}`,
+                  fontSize:12.5,lineHeight:1.8,color:m.r==="system"?"#c78500":"#4f4152"}}>
                   {m.r==="user"
-                    ? <span style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>💬 {m.c}</span>
+                    ? <span style={{color:"#a06079",fontSize:11}}>💬 {m.c}</span>
                     : <span dangerouslySetInnerHTML={{__html:fmt(m.c)}}/>}
                 </div>
               </div>
@@ -390,7 +390,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
                 </div>
               </div>
             )}
-            {ended && <div style={{textAlign:"center",padding:8,color:"rgba(255,255,255,0.3)",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 집계 중...</div>}
+            {ended && <div style={{textAlign:"center",padding:8,color:"#a58a99",fontSize:11,fontFamily:"monospace"}}>⏳ 결과 집계 중...</div>}
           </div>
           {/* 돌발 이벤트 모달 */}
           {event && (
@@ -420,14 +420,14 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           {/* 선택지 카드 */}
           {choices.length > 0 && !loading && !ended && (
             <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
-              {isScripted && <div style={{fontSize:9,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4,marginBottom:2}}>선택하세요</div>}
+              {isScripted && <div style={{fontSize:9,color:"#b09aa5",textAlign:"right",paddingRight:4,marginBottom:2}}>선택하세요</div>}
               {choices.map((c, i) => (
                 <button key={i} className="choice-btn"
                   onClick={() => isScripted ? sendScripted(i) : (() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); })()}
                   onMouseEnter={() => setHoveredChoice(i)}
                   onMouseLeave={() => setHoveredChoice(null)}
-                  style={{textAlign:"left",padding:"8px 12px",background:hoveredChoice===i?`${partner.color}28`:i===0?`${partner.color}18`:i===1?"rgba(255,255,255,0.04)":"rgba(255,255,255,0.02)",
-                    border:`1px solid ${hoveredChoice===i?partner.color+"66":i===0?partner.color+"33":"rgba(255,255,255,0.07)"}`,borderRadius:10,color:hoveredChoice===i?partner.color:i===0?partner.color:"rgba(255,255,255,0.6)",
+                  style={{textAlign:"left",padding:"8px 12px",background:hoveredChoice===i?`${partner.color}22`:i===0?`${partner.color}12`:"rgba(255,255,255,0.7)",
+                    border:`1px solid ${hoveredChoice===i?partner.color+"88":i===0?partner.color+"44":"rgba(255,143,171,0.18)"}`,borderRadius:10,color:hoveredChoice===i?partner.color:i===0?partner.color:"#5f4f62",
                     fontSize:12,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
                     display:"flex",alignItems:"center",gap:6,width:"100%",transform:hoveredChoice===i?"scale(1.02)":"scale(1)",boxShadow:hoveredChoice===i?`0 4px 12px ${partner.color}33`:"none"}}>
                   <span style={{display:"flex",alignItems:"center",opacity:hoveredChoice===i?1:0.6,transition:"opacity 0.15s"}}>
@@ -436,7 +436,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
                   {c}
                 </button>
               ))}
-              <div style={{fontSize:9.5,color:"rgba(255,255,255,0.2)",textAlign:"right",paddingRight:4}}>골라도 되고, 직접 입력해도 돼요</div>
+              <div style={{fontSize:9.5,color:"#b09aa5",textAlign:"right",paddingRight:4}}>골라도 되고, 직접 입력해도 돼요</div>
             </div>
           )}
           {/* 턴 압박 바 */}
@@ -452,28 +452,28 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           )}
           {/* 스크립트 방식: 선택지만 / AI 방식: 입력창 */}
           {!isScripted && (
-            <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.05)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(255,30,30,0.05)":"rgba(0,0,0,0.3)",transition:"all 0.5s"}}>
+            <div style={{padding:"8px 10px",borderTop:`1px solid ${turnsLeft<=3?"rgba(229,72,77,0.3)":"rgba(255,143,171,0.14)"}`,display:"flex",gap:6,background:turnsLeft<=3?"rgba(229,72,77,0.06)":"rgba(255,143,171,0.05)",transition:"all 0.5s"}}>
               <input ref={inpRef} value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&send()} disabled={loading||ended}
                 placeholder={ended?"결과 집계중...":turnsLeft<=3?`남은 기회 ${turnsLeft}턴, 신중하게!`:"뭐라고 할까요? (Enter로 보내기)"}
-                style={{flex:1,background:"rgba(255,255,255,0.04)",border:`1px solid ${turnsLeft<=3?"rgba(255,68,68,0.3)":"rgba(255,255,255,0.07)"}`,borderRadius:10,padding:"9px 12px",color:"rgba(255,255,255,0.85)",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
-                onFocus={e=>{e.target.style.border=`1px solid ${partner.color}66`}}
-                onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(255,68,68,0.3)":"1px solid rgba(255,255,255,0.07)"}}/>
+                style={{flex:1,background:"rgba(255,255,255,0.85)",border:`1px solid ${turnsLeft<=3?"rgba(229,72,77,0.3)":"rgba(255,143,171,0.22)"}`,borderRadius:10,padding:"9px 12px",color:"#4f4152",fontSize:16,outline:"none",fontFamily:"'Noto Sans KR',sans-serif",transition:"all 0.3s"}}
+                onFocus={e=>{e.target.style.border=`1px solid ${partner.color}88`}}
+                onBlur={e=>{e.target.style.border=turnsLeft<=3?"1px solid rgba(229,72,77,0.3)":"1px solid rgba(255,143,171,0.22)"}}/>
               <button onClick={send} disabled={loading||ended||!inp.trim()}
-                style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},rgba(255,150,0,0.9))`:"rgba(255,255,255,0.04)",border:"none",borderRadius:10,color:"white",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
+                style={{padding:"9px 18px",background:inp.trim()&&!loading&&!ended?`linear-gradient(135deg,${partner.color},#ff9ec0)`:"rgba(255,255,255,0.5)",border:"none",borderRadius:10,color:inp.trim()&&!loading&&!ended?"white":"#c7b0bc",fontWeight:800,fontSize:13,cursor:inp.trim()&&!loading&&!ended?"pointer":"not-allowed",transition:"all 0.2s",minWidth:50,boxShadow:inp.trim()&&!loading&&!ended?`0 4px 16px ${partner.color}44`:"none"}}>
                 {loading ? "···" : "전송"}
               </button>
             </div>
           )}
         </div>
         {/* 힌트 */}
-        <div style={{display:"flex",justifyContent:"center",gap:12,fontSize:9,color:"rgba(255,255,255,0.18)",fontFamily:"monospace",alignItems:"center"}}>
+        <div style={{display:"flex",justifyContent:"center",gap:12,fontSize:9,color:"rgba(120,90,110,0.7)",fontFamily:"monospace",alignItems:"center",textShadow:"0 1px 3px rgba(255,255,255,0.5)"}}>
           <span style={{display:"flex",alignItems:"center",gap:3}}>
-            <SaveIcon color="rgba(255,255,255,0.3)" /> 자동저장
+            <SaveIcon color="rgba(120,90,110,0.7)" /> 자동저장
           </span>
           <span>·</span>
           <span>❤ 85점 이상 클리어</span>
           <span>·</span>
-          <span>💡 {partner.name}은 <span style={{color:partner.color+"aa"}}>{partner.fav.split(">")[0].trim()}</span>을 제일 봐요</span>
+          <span>💡 {partner.name}은 <span style={{color:partner.color}}>{partner.fav.split(">")[0].trim()}</span>을 제일 봐요</span>
         </div>
       </div>
     </div>
