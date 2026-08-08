@@ -36,9 +36,20 @@ const css = `
   @keyframes stageTitleIn { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes toastIn { from{transform:translateX(120%)} to{transform:translateX(0)} }
 
-  /* 모바일 최적화 */
-  html, body { height: 100%; }
+  /* 모바일 최적화 — 앱 느낌 (웹 티 제거) */
+  html, body {
+    height: 100%;
+    margin: 0;
+    overscroll-behavior: none;              /* 당겨서 새로고침·고무줄 바운스 차단 */
+    -webkit-tap-highlight-color: transparent;/* 탭 파란 하이라이트 제거 */
+    -webkit-user-select: none;
+    user-select: none;                       /* 텍스트 드래그 선택 차단 (앱처럼) */
+    touch-action: manipulation;              /* 더블탭 확대 지연 제거 */
+    -webkit-touch-callout: none;
+  }
   #root { height: 100%; }
+  /* 입력창은 선택 가능해야 함(예외) */
+  input, textarea { -webkit-user-select: text; user-select: text; }
   .game-root {
     height: 100dvh;
     display: flex;
@@ -64,6 +75,9 @@ const css = `
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
+  /* 탭 반응 — 게임 손맛 (누르면 살짝 눌림) */
+  button:active { transform: scale(0.96); filter: brightness(1.05); }
+  button { transition: transform 0.08s ease, filter 0.08s ease; }
   @media (max-width: 480px) {
     .char-img { height: 55vw !important; max-height: 280px !important; }
     .char-img-sub { height: 44vw !important; max-height: 220px !important; }
