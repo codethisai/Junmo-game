@@ -1,0 +1,19 @@
+{
+  "name": "강준모의 소개팅",
+  "short_name": "준모의 소개팅",
+  "description": "모태솔로, 스물아홉의 첫 소개팅 — AI 연애 시뮬레이션",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff0f5",
+  "theme_color": "#ff6f9c",
+  "lang": "ko",
+  "dir": "ltr",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
