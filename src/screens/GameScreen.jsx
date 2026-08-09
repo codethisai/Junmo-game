@@ -342,7 +342,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
       <div className="input-area" style={{position:"relative",zIndex:10,padding:"0 12px 8px",maxHeight:"48vh",display:"flex",flexDirection:"column",gap:5}}>
         {/* 호감도 바 (항상 보임) + 변화 팝업 */}
         <div style={{position:"relative",background:"rgba(255,250,252,0.82)",backdropFilter:"blur(16px)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,143,171,0.2)"}}>
-          <div key={affPop?.id||"bar"} style={{animation:affPop?"affPulse 0.5s ease":"none"}}>
+          <div key="affbar" style={{animation:affPop?"affPulse 0.5s ease":"none"}}>
             <AffBar value={aff} color={partner.color}/>
           </div>
           {affPop && (
@@ -362,7 +362,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
             <span style={{marginLeft:"auto",fontSize:9,color:"#b09aa5",fontFamily:"monospace"}}>T{turn}/{stageMaxTurns}</span>
           </div>
           {/* 메시지 */}
-          <div ref={chatRef} className="chat-area" style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:60,maxHeight:160}}>
+          <div ref={chatRef} className="chat-area" style={{flex:1,overflowY:"auto",padding:"10px 14px",display:"flex",flexDirection:"column",gap:8,minHeight:0,maxHeight:160}}>
             {msgs.length === 0 && (
               <div style={{textAlign:"center",padding:"16px 8px"}}>
                 <div style={{fontSize:11,color:"#9a8592",lineHeight:1.8,marginBottom:8}}>{partner.stages[stage.id-1]?.desc}</div>
@@ -429,7 +429,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           )}
           {/* 선택지 카드 */}
           {choices.length > 0 && !loading && !ended && (
-            <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5}}>
+            <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5,flexShrink:0,overflowY:"auto",maxHeight:"32vh"}}>
               {isScripted && <div style={{fontSize:9,color:"#b09aa5",textAlign:"right",paddingRight:4,marginBottom:2}}>선택하세요</div>}
               {choices.map((c, i) => (
                 <button key={i} className="choice-btn"

@@ -15,8 +15,10 @@ export default function BackstoryScreen({ onDone, muted, onMute }) {
   const s = BACKSTORY[sc];
   return (
     <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",position:"relative",overflowY:"auto",WebkitOverflowScrolling:"touch",fontFamily:"'Noto Sans KR',sans-serif"}}>
-      {/* 파스텔 그라데이션 배경 */}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(165deg,#fff0f5 0%,#ffe0ec 35%,#f0e4fb 70%,#e8dcf5 100%)"}}/>
+      {/* 한강 노을 러닝 셀카 배경 */}
+      <div style={{position:"absolute",inset:0,backgroundImage:"url(/assets/backgrounds/title_hangang_run.webp)",backgroundSize:"cover",backgroundPosition:"center top"}}/>
+      {/* 파스텔 베일 (은은하게·글 가독성 유지) */}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(165deg,rgba(255,240,245,0.78) 0%,rgba(255,224,236,0.72) 35%,rgba(240,228,251,0.76) 70%,rgba(232,220,245,0.8) 100%)"}}/>
       {/* 몽환 블러 오브 */}
       <div style={{position:"absolute",top:"-8%",left:"-10%",width:"55%",height:"38%",background:"radial-gradient(circle,rgba(255,160,190,0.4),transparent 70%)",filter:"blur(40px)"}}/>
       <div style={{position:"absolute",bottom:"-6%",right:"-10%",width:"55%",height:"40%",background:"radial-gradient(circle,rgba(168,216,234,0.38),transparent 70%)",filter:"blur(40px)"}}/>
