@@ -13,6 +13,16 @@ import StatChip from "../components/StatChip.jsx";
 import MuteBtn from "../components/MuteBtn.jsx";
 import "./GameScreen.css";
 
+// 선택지 순서를 매 턴 랜덤 셔플 (정답이 항상 맨 위에 오지 않게) — 원본 인덱스(oi) 보존
+function shuffleChoices(arr) {
+  const a = arr.map((c, i) => ({ t: c.text, oi: i }));
+  for (let k = a.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1));
+    [a[k], a[j]] = [a[j], a[k]];
+  }
+  return a;
+}
+
 export default function GameScreen({ stage, partner, stats, onStatChg, hist, onEnd, onSave, muted, onMute }) {
   const script = getScript(partner.id, stage.id);
   const isScripted = !!script;
@@ -29,7 +39,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const [ended, setEnded]   = useState(false);
   const [deltas, setDeltas] = useState({});
   const [showStats, setShowStats] = useState(false);
-  const [choices, setChoices] = useState(() => script?.turns[0]?.choices.map(c => c.text) || []);
+  const [choices, setChoices] = useState(() => script?.turns[0]?.choices ? shuffleChoices(script.turns[0].choices) : []);
   const [event, setEvent] = useState(null);
   const [showStageBanner, setShowStageBanner] = useState(true);
   const [hoveredChoice, setHoveredChoice] = useState(null);
@@ -207,7 +217,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           setTimeout(() => {
             if (nextTurn.cg) setCgOverlay(nextTurn.cg); // 이벤트 CG 전체화면
             if (nextTurn.scene) setMsgs(m => [...m, { r: "scene", c: nextTurn.scene }]);
-            setChoices(nextTurn.choices.map(c => c.text));
+            setChoices(shuffleChoices(nextTurn.choices));
           }, 300);
         }
       }
@@ -431,19 +441,19 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
           {choices.length > 0 && !loading && !ended && (
             <div style={{padding:"6px 10px 2px",display:"flex",flexDirection:"column",gap:5,flexShrink:0,overflowY:"auto",maxHeight:"32vh"}}>
               {isScripted && <div style={{fontSize:9,color:"#b09aa5",textAlign:"right",paddingRight:4,marginBottom:2}}>선택하세요</div>}
-              {choices.map((c, i) => (
-                <button key={i} className="choice-btn"
-                  onClick={() => isScripted ? sendScripted(i) : (() => { setInp(c); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); })()}
-                  onMouseEnter={() => setHoveredChoice(i)}
+              {choices.map((c, pos) => (
+                <button key={pos} className="choice-btn"
+                  onClick={() => isScripted ? sendScripted(c.oi) : (() => { setInp(c.t); setChoices([]); setTimeout(() => inpRef.current?.focus(), 50); })()}
+                  onMouseEnter={() => setHoveredChoice(pos)}
                   onMouseLeave={() => setHoveredChoice(null)}
-                  style={{textAlign:"left",padding:"8px 12px",background:hoveredChoice===i?`${partner.color}22`:i===0?`${partner.color}12`:"rgba(255,255,255,0.7)",
-                    border:`1px solid ${hoveredChoice===i?partner.color+"88":i===0?partner.color+"44":"rgba(255,143,171,0.18)"}`,borderRadius:10,color:hoveredChoice===i?partner.color:i===0?partner.color:"#5f4f62",
+                  style={{textAlign:"left",padding:"8px 12px",background:hoveredChoice===pos?`${partner.color}22`:"rgba(255,255,255,0.7)",
+                    border:`1px solid ${hoveredChoice===pos?partner.color+"88":"rgba(255,143,171,0.18)"}`,borderRadius:10,color:hoveredChoice===pos?partner.color:"#5f4f62",
                     fontSize:12,cursor:"pointer",fontFamily:"'Noto Sans KR',sans-serif",lineHeight:1.5,transition:"all 0.15s",
-                    display:"flex",alignItems:"center",gap:6,width:"100%",transform:hoveredChoice===i?"scale(1.02)":"scale(1)",boxShadow:hoveredChoice===i?`0 4px 12px ${partner.color}33`:"none"}}>
-                  <span style={{display:"flex",alignItems:"center",opacity:hoveredChoice===i?1:0.6,transition:"opacity 0.15s"}}>
-                    {getChoiceIcon(i, partner.color)}
+                    display:"flex",alignItems:"center",gap:6,width:"100%",transform:hoveredChoice===pos?"scale(1.02)":"scale(1)",boxShadow:hoveredChoice===pos?`0 4px 12px ${partner.color}33`:"none"}}>
+                  <span style={{display:"flex",alignItems:"center",opacity:hoveredChoice===pos?1:0.6,transition:"opacity 0.15s"}}>
+                    {getChoiceIcon(pos, partner.color)}
                   </span>
-                  {c}
+                  {c.t}
                 </button>
               ))}
               <div style={{fontSize:9.5,color:"#b09aa5",textAlign:"right",paddingRight:4}}>골라도 되고, 직접 입력해도 돼요</div>
