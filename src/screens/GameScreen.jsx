@@ -23,9 +23,24 @@ function shuffleChoices(arr) {
   return a;
 }
 
+// 스탯 궁합: (배분 − 33) × 히로인 가중치 → 강/보통/약
+function statMatch(statVal, weight) {
+  const e = ((statVal ?? 33) - 33) * (weight ?? 1);
+  if (e >= 15) return "strong";
+  if (e <= -15) return "weak";
+  return "mid";
+}
+
 export default function GameScreen({ stage, partner, stats, onStatChg, hist, onEnd, onSave, muted, onMute }) {
   const script = getScript(partner.id, stage.id);
   const isScripted = !!script;
+
+  // 스탯 궁합 (v1: 외모=첫인상 / 유머=긍정보너스 / 말주변=지뢰완화)
+  const statW  = partner.statW || { 말주변:1, 외모:1, 유머:1 };
+  const mLook  = statMatch(stats?.외모,  statW.외모);
+  const mHumor = statMatch(stats?.유머,  statW.유머);
+  const mTalk  = statMatch(stats?.말주변, statW.말주변);
+  const startAff = 50 + (mLook === "strong" ? 5 : mLook === "weak" ? -4 : 0);
 
   const [msgs, setMsgs]     = useState(() => {
     if (script?.opening) return [{ r: "system", c: script.opening }];
@@ -33,8 +48,8 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   });
   const [inp, setInp]       = useState("");
   const [loading, setLoading] = useState(false);
-  const [aff, setAff]       = useState(50);
-  const [minAff, setMinAff] = useState(50);
+  const [aff, setAff]       = useState(startAff);
+  const [minAff, setMinAff] = useState(startAff);
   const [turn, setTurn]     = useState(0);
   const [ended, setEnded]   = useState(false);
   const [deltas, setDeltas] = useState({});
@@ -48,10 +63,10 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
   const eventFiredRef = useRef(false);
 
   // 호감도 변화 팝업 트리거 (+N ❤ / −N 💔) — 누르는 손맛
-  const popAff = (delta) => {
+  const popAff = (delta, note) => {
     if (!delta) return;
-    setAffPop({ delta, id: Date.now() });
-    setTimeout(() => setAffPop(null), 1100);
+    setAffPop({ delta, note, id: Date.now() });
+    setTimeout(() => setAffPop(null), 1300);
   };
 
   useEffect(() => {
@@ -191,10 +206,15 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     setChoices([]);
 
     setTimeout(() => {
-      const newAff = Math.max(0, Math.min(100, aff + chosen.affChange));
+      // 스탯 보정: 유머(긍정 +1) / 말주변(지뢰 감점 절반)
+      let delta = chosen.affChange;
+      let note = "";
+      if (delta > 0 && mHumor === "strong") { delta += 1; note = "유머 +1"; }
+      else if (delta < 0 && mTalk === "strong") { delta = Math.ceil(delta / 2); note = "말주변 완화"; }
+      const newAff = Math.max(0, Math.min(100, aff + delta));
       setAff(newAff);
       setMinAff(m => Math.min(m, newAff));
-      popAff(chosen.affChange);
+      popAff(delta, note);
       setMsgs(m => [...m, { r: "ai", c: chosen.response }]);
       onSave({ stats, partnerId: partner.id, si: stage.id - 1, hist, aff: newAff });
 
@@ -360,6 +380,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
               color:affPop.delta>0?"#2fb344":"#e5484d",textShadow:"0 2px 6px rgba(255,255,255,0.8)",
               animation:"affFloat 1.1s cubic-bezier(.3,.7,.4,1) forwards",pointerEvents:"none",zIndex:5}}>
               {affPop.delta>0?`＋${affPop.delta} ❤`:`${affPop.delta} 💔`}
+              {affPop.note && <span style={{display:"block",fontSize:9,fontWeight:600,color:"#a06079",textAlign:"right",marginTop:1}}>({affPop.note})</span>}
             </div>
           )}
         </div>
