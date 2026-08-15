@@ -4,6 +4,9 @@ import { BACKSTORY } from "../data/content.js";
 import { bgm } from "../utils/audio.js";
 import MuteBtn from "../components/MuteBtn.jsx";
 
+// 프롤로그 배경: 맨 처음 = 매거진 커버, 이후 스텝마다 화보 3장 순환 (상호명 임시)
+const MAG_BGS = ["mag_cover.webp", "mag_ed1.webp", "mag_ed2.webp", "mag_ed3.webp"];
+
 export default function BackstoryScreen({ onDone, muted, onMute }) {
   const [sc, setSc] = useState(0);
   const [vis, setVis] = useState(true);
@@ -13,12 +16,14 @@ export default function BackstoryScreen({ onDone, muted, onMute }) {
     else onDone();
   };
   const s = BACKSTORY[sc];
+  // 스텝별 배경: 0 = 커버, 1~ = 화보 3장 순환
+  const bgFile = sc === 0 ? MAG_BGS[0] : MAG_BGS[1 + ((sc - 1) % (MAG_BGS.length - 1))];
   return (
     <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",position:"relative",overflowY:"auto",WebkitOverflowScrolling:"touch",fontFamily:"'Noto Sans KR',sans-serif"}}>
-      {/* 한강 노을 러닝 셀카 배경 */}
-      <div style={{position:"absolute",inset:0,backgroundImage:"url(/assets/backgrounds/title_hangang_run.webp)",backgroundSize:"cover",backgroundPosition:"center top"}}/>
-      {/* 파스텔 베일 (은은하게·글 가독성 유지) */}
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(165deg,rgba(255,240,245,0.78) 0%,rgba(255,224,236,0.72) 35%,rgba(240,228,251,0.76) 70%,rgba(232,220,245,0.8) 100%)"}}/>
+      {/* 매거진 화보 배경 (스텝마다 전환) */}
+      <div style={{position:"absolute",inset:0,backgroundImage:`url(/assets/backgrounds/${bgFile})`,backgroundSize:"cover",backgroundPosition:"center top"}}/>
+      {/* 가독성 베일 (상단 옅게 커버 보이게 · 하단 카드 가독성) */}
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(30,20,35,0.20) 0%,rgba(255,244,250,0.42) 50%,rgba(255,240,247,0.66) 100%)"}}/>
       {/* 몽환 블러 오브 */}
       <div style={{position:"absolute",top:"-8%",left:"-10%",width:"55%",height:"38%",background:"radial-gradient(circle,rgba(255,160,190,0.4),transparent 70%)",filter:"blur(40px)"}}/>
       <div style={{position:"absolute",bottom:"-6%",right:"-10%",width:"55%",height:"40%",background:"radial-gradient(circle,rgba(168,216,234,0.38),transparent 70%)",filter:"blur(40px)"}}/>
