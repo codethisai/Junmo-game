@@ -1,13 +1,13 @@
 /* ═══ BGM (오디오 파일 재생 + 신스 폴백) ═══ */
-// 슬롯별 오디오 파일: 있으면 파일 재생(루프), 없으면 아래 신스로 폴백
+// 일단 전 게임 공용 한 곡. 슬롯별 곡 생기면 TRACKS에 추가하면 그게 우선.
+const DEFAULT_TRACK = "/assets/audio/menu.mp3";
 const TRACKS = {
-  menu: "/assets/audio/menu.mp3",
-  // cafe / success / fail / ending: 곡 나오면 여기에 추가
+  // 예: cafe: "/assets/audio/cafe.mp3", ending: "/assets/audio/ending.mp3"
 };
 const FILE_VOLUME = 0.35;
 
 export class BGMPlayer {
-  constructor() { this._ctx = null; this._gain = null; this._sources = []; this._timer = null; this._running = false; this._audio = null; }
+  constructor() { this._ctx = null; this._gain = null; this._sources = []; this._timer = null; this._running = false; this._audio = null; this._audioUrl = null; }
   _getCtx() {
     if (!this._ctx || this._ctx.state === "closed") {
       try { this._ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; }
@@ -19,22 +19,28 @@ export class BGMPlayer {
     if (this._timer) { clearTimeout(this._timer); this._timer = null; }
     this._sources.forEach(s => { try { s.stop(0); } catch {} });
     this._sources = [];
-    if (this._audio) { try { this._audio.pause(); } catch {} this._audio = null; }
+    if (this._audio) { try { this._audio.pause(); } catch {} this._audio = null; this._audioUrl = null; }
   }
   play(type) {
-    this.stop();
-    // 1) 파일이 있으면 파일 재생 (loop)
-    const url = TRACKS[type];
+    // 1) 파일 재생 (슬롯 전용 곡 없으면 공용 한 곡)
+    const url = TRACKS[type] || DEFAULT_TRACK;
     if (url) {
+      // 같은 곡이 이미 재생 중이면 그대로 유지 (화면 전환에도 끊김 없이)
+      if (this._audio && this._audioUrl === url) {
+        if (this._audio.paused) this._audio.play().catch(() => {});
+        return;
+      }
+      this.stop();
       try {
         const a = new Audio(url);
         a.loop = true; a.volume = FILE_VOLUME;
-        a.play().catch(() => {}); // 자동재생 차단 시 무시 (사용자 제스처 후 재생됨)
-        this._audio = a;
+        a.play().catch(() => {}); // 자동재생 차단 시 무시 (사용자 제스처 후 재생)
+        this._audio = a; this._audioUrl = url;
         return;
       } catch {}
     }
     // 2) 폴백: 신스 생성
+    this.stop();
     const ctx = this._getCtx();
     if (!ctx) return;
     const master = ctx.createGain(); master.gain.value = 0.05; master.connect(ctx.destination);

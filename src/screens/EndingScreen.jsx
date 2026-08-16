@@ -14,7 +14,7 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
     : (ok ? (IMGS[partner.imgs.smile2] || IMGS[partner.imgs.smile]) : IMGS[partner.imgs.cold]);
   const kImg = ok ? IMGS.junmo_happy : IMGS.junmo_shocked;
   const bgImg = bgForStage(stage.id - 1);
-  useEffect(() => { bgm.stop(); if (!muted) bgm.play(final ? "ending" : ok ? "success" : "fail"); return () => bgm.stop(); }, []);
+  useEffect(() => { if (!muted) bgm.play(final ? "ending" : ok ? "success" : "fail"); }, []);
 
   return (
     <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",fontFamily:"'Noto Sans KR',sans-serif",position:"relative",overflow:"hidden",background:"#050308"}}>

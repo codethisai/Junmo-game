@@ -10,7 +10,7 @@ const MAG_BGS = ["mag_cover.webp", "mag_ed1.webp", "mag_ed2.webp", "mag_ed3.webp
 export default function BackstoryScreen({ onDone, muted, onMute }) {
   const [sc, setSc] = useState(0);
   const [vis, setVis] = useState(true);
-  useEffect(() => { bgm.stop(); if (!muted) bgm.play("menu"); return () => bgm.stop(); }, []);
+  useEffect(() => { if (!muted) bgm.play("menu"); }, []);
   const next = () => {
     if (sc < BACKSTORY.length - 1) { setVis(false); setTimeout(() => { setSc(s=>s+1); setVis(true); }, 220); }
     else onDone();

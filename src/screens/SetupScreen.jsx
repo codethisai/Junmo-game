@@ -12,7 +12,7 @@ export default function SetupScreen({ onStart, saved, onClearSave, achs, muted, 
   const [custom, setCustom] = useState({말주변:33,외모:33,유머:34});
   const [tab, setTab] = useState("play");
   const [statsOpen, setStatsOpen] = useState(false); // 능력치 설정 접기(기본 닫힘)
-  useEffect(() => { bgm.stop(); if (!muted) bgm.play("menu"); return () => bgm.stop(); }, []);
+  useEffect(() => { if (!muted) bgm.play("menu"); }, []);
   const stats = pi===3?custom:PRESETS[pi].s;
   const total = Object.values(custom).reduce((a,b)=>a+b,0);
   const ok = pi!==3||total===100;

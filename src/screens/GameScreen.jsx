@@ -140,7 +140,7 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     pImgFallback;
   const kImg  = kimoImg(aff);
 
-  useEffect(() => { bgm.stop(); if (!muted) bgm.play(stage.bgm); return () => bgm.stop(); }, []);
+  useEffect(() => { if (!muted) bgm.play(stage.bgm); }, []);
   useEffect(() => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight; }, [msgs, loading]);
 
   useEffect(() => {
