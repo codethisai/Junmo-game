@@ -3,7 +3,7 @@ import { STAGE_EVENTS } from "../data/stages.js";
 import { SCENES } from "../data/scenes.js";
 import { bgm } from "../utils/audio.js";
 import { callGroq } from "../utils/ai.js";
-import { buildSys, bgForStage, partnerImg, kimoImg, judge } from "../utils/helpers.js";
+import { buildSys, bgForStage, partnerImg, judge } from "../utils/helpers.js";
 import { getChoiceIcon } from "../components/ChoiceIcons.jsx";
 import { SaveIcon, AlarmIcon } from "../components/GameIcons.jsx";
 import { MAX_TURNS, DAILY_LIMIT, MAX_HISTORY, EVENT_TURN_MIN, EVENT_TURN_MAX } from "../constants.js";
@@ -138,7 +138,6 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
     scene.characters[`yujung_${charExpression}`] ||
     scene.characters.yujung_smile ||
     pImgFallback;
-  const kImg  = kimoImg(aff);
 
   useEffect(() => { if (!muted) bgm.play(stage.bgm); }, []);
   useEffect(() => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight; }, [msgs, loading]);
@@ -361,10 +360,6 @@ export default function GameScreen({ stage, partner, stats, onStatChg, hist, onE
         {/* 상대방 캐릭터 (중앙-우측) */}
         <div className="char-img" style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-10%)",height:"78vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.8s cubic-bezier(.34,1.4,.64,1)"}}>
           <img src={pImg} alt={partner.name} onError={(e)=>{ if(e.currentTarget.dataset.fb) return; e.currentTarget.dataset.fb="1"; e.currentTarget.src=pImgFallback; }} style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 40px rgba(0,0,0,0.8))"}}/>
-        </div>
-        {/* 준모 (좌측) */}
-        <div className="char-img-sub" style={{position:"absolute",bottom:0,left:"0%",height:"62vh",display:"flex",alignItems:"flex-end",opacity:0.85,animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)",filter:"brightness(0.8) contrast(0.9)"}}>
-          <img src={kImg} alt="준모" style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 30px rgba(0,0,0,0.9))"}}/>
         </div>
       </div>
 

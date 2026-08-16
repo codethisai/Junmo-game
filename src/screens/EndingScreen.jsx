@@ -12,7 +12,6 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
   const pImg = partner.endImg
     ? (ok ? partner.endImg.ok : partner.endImg.fail)
     : (ok ? (IMGS[partner.imgs.smile2] || IMGS[partner.imgs.smile]) : IMGS[partner.imgs.cold]);
-  const kImg = ok ? IMGS.junmo_happy : IMGS.junmo_shocked;
   const bgImg = bgForStage(stage.id - 1);
   useEffect(() => { if (!muted) bgm.play(final ? "ending" : ok ? "success" : "fail"); }, []);
 
@@ -28,9 +27,6 @@ export default function EndingScreen({ ending, stage, partner, stats, onNext, mu
       <div style={{flex:1,display:"flex",alignItems:"flex-end",justifyContent:"center",position:"relative",paddingBottom:0}}>
         <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-10%)",height:"60vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.8s cubic-bezier(.34,1.4,.64,1)",filter:`drop-shadow(0 0 ${ok?"60px":"30px"} ${ok?accentColor+"44":"rgba(0,0,0,0.8)"})`}}>
           <img src={pImg} alt={partner.name} style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom"}}/>
-        </div>
-        <div style={{position:"absolute",bottom:0,left:"2%",height:"48vh",display:"flex",alignItems:"flex-end",animation:"charAppear 0.6s cubic-bezier(.34,1.4,.64,1)",opacity:0.9}}>
-          <img src={kImg} alt="준모" style={{height:"100%",width:"auto",objectFit:"contain",objectPosition:"bottom",filter:"drop-shadow(0 0 20px rgba(0,0,0,0.9))"}}/>
         </div>
       </div>
 
